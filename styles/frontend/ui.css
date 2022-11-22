@@ -1,0 +1,87 @@
+html {
+    @apply scroll-smooth;
+}
+
+body {
+    @apply bg-white dark:bg-secondary-900 text-secondary-500 dark:text-secondary-400;
+}
+
+header, footer, main, section {
+    @apply transition-all duration-200;
+}
+
+.main-wrapper {
+    @apply flex-grow flex flex-col;
+}
+
+main.page-main>header {
+    @apply relative flex flex-col justify-end z-10 h-[314px] md:h-[330px] pb-6 after:absolute after:inset-0 after:bg-gradient-to-t after:from-primary-600 after:to-transparent after:-z-10;
+}
+
+main.page-main>header .bg-img {
+    @apply absolute inset-0 z-0 after:absolute after:inset-0 after:bg-gradient-to-t after:from-primary-600 after:to-transparent;
+}
+
+.section {
+    @apply py-20 sm:py-32;
+}
+
+main.page-main section {
+    @apply py-12 sm:py-20 !important;
+}
+
+.container {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.container .section-header {
+    @apply mx-auto md:text-center;
+}
+
+.container .section-header .section-header-title {
+    @apply text-3xl sm:text-4xl text-secondary-900 font-extrabold tracking-tight dark:text-secondary-50 transition-all duration-200;
+}
+
+.container .section-header .section-header-subtitle {
+    @apply mt-4 max-w-3xl mx-auto;
+}
+
+.container .section-body {
+    @apply mx-auto mt-16;
+}
+
+.container .section-subtitle {
+    @apply whitespace-pre-wrap font-bold text-2xl text-secondary-900 tracking-tight dark:text-secondary-50 mb-4;
+}
+
+.image-cover{
+    @apply w-full h-full object-cover;
+}
+
+.btn {
+    @apply inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 transition-all duration-200;
+}
+
+.btn-primary {
+    @apply bg-primary-600 text-white hover:text-secondary-100 hover:bg-primary-500 active:bg-primary-800 active:text-primary-100 focus-visible:outline-primary-600;
+}
+
+#listening input[type=range]::-webkit-slider-thumb {
+    @apply h-4 rounded-full w-1 bg-secondary-700 appearance-none;
+}
+
+#listening input[type=range]::-moz-range-thumb {
+    @apply h-4 rounded-full w-1 bg-secondary-700;
+}
+
+.form-group {
+    @apply mb-4;
+}
+
+.form-group label {
+    @apply block font-medium mb-2;
+}
+
+.form-group input {
+    @apply block w-full appearance-none rounded-md border border-secondary-200 bg-secondary-50 px-3 py-2 text-secondary-900 placeholder-secondary-400 focus:border-primary-600 focus:bg-white focus:outline-none focus:ring-primary-600 sm:text-sm;
+}
