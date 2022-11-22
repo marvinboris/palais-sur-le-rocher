@@ -18,7 +18,7 @@ export default function NavItem({ href, icon: Icon, exact, children }: NavItemPr
     const content = <>
         {Icon && <span className='mr-[6.65px]'><Icon className="w-4 text-primary-600/20" /></span>}
 
-        <span className={active ? 'relative after:inline-block after:ml-0.5 after:w-1 after:h-1 after:rounded-full after:bg-primary-600' : ''}>{children}</span>
+        <span>{children}</span>
     </>
 
     return href.startsWith('#') ? <a href={href} className={classNames(active ? 'text-primary-600' : 'text-secondary-700 hover:text-primary-600', "truncate font-semibold text-sm leading-6 dark:text-secondary-200 dark:hover:text-primary-600 inline-flex items-center transition-all duration-200")}>

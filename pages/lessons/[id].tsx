@@ -1,13 +1,13 @@
-import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ReactElement } from 'react'
 
 import { useLessonContext } from '../../app/contexts/lesson';
+import { Lesson } from '../../app/models';
 import { LessonInterface } from '../../app/models/lesson';
 
 import Layout, { Head } from "../../components/frontend/navigation/layout";
-import Duration from '../../components/frontend/ui/blocks/lesson/duration';
+import DurationBlock from '../../components/frontend/ui/blocks/lesson/duration';
 
 type LessonType = LessonInterface & { _id: string, link: string }
 
@@ -53,7 +53,7 @@ const LessonPage = ({ lessons }: LessonPageProps) => {
 
                         <h1 className="text-4xl md:text-6xl font-extrabold">{description}</h1>
 
-                        <p className="text-xs sm:text-sm mt-8"><span className='font-semibold'>{episode}: {subtitle}</span> • {new Date(date).toDateString()} • <span className="font-semibold"><Duration urls={[audio!]} /></span></p>
+                        <p className="text-xs sm:text-sm mt-8"><span className='font-semibold'>{episode}: {subtitle}</span> • {new Date(date).toDateString()} • <span className="font-semibold"><DurationBlock urls={[audio!]} /></span></p>
                     </div>
                 </div>
             </header>
@@ -74,8 +74,9 @@ LessonPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps() {
-    const lessons = await axios.get('/api/frontend/lessons');
-    return { props: { lessons, } };
+    const lessons = await Lesson.find()
+
+    return { props: { lessons: JSON.parse(JSON.stringify(lessons.map(lesson => lesson.toObject()))) } }
 }
 
 export default LessonPage

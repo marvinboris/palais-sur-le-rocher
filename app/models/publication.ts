@@ -2,7 +2,7 @@ import { Model, Schema, Types } from "mongoose"
 import slugify from 'slugify'
 import { CategoryInterface } from "./category"
 
-const directory = '/images/publication/'
+const directory = '/images/publications/'
 
 export interface PublicationInterface {
     title: string

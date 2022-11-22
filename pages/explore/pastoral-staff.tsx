@@ -1,11 +1,11 @@
-import axios from 'axios';
 import Image from 'next/image';
 import { ReactElement } from 'react'
 
+import { StaffMember } from '../../app/models';
 import { StaffMemberInterface } from '../../app/models/staff-member';
 
 import Layout, { Head } from "../../components/frontend/navigation/layout";
-import StaffMember from '../../components/frontend/ui/blocks/staff-member';
+import StaffMemberBlock from '../../components/frontend/ui/blocks/staff-member';
 
 type StaffMemberType = StaffMemberInterface & { _id: string }
 
@@ -23,7 +23,7 @@ interface PastoralStaffPageProps {
 }
 
 const PastoralStaffPage = ({ pastoralStaff }: PastoralStaffPageProps) => {
-    const renderStaffMember = (staffMember: StaffMemberType, index: number) => <StaffMember key={`staff-member-${staffMember.name}-${index}`} {...staffMember} />
+    const renderStaffMember = (staffMember: StaffMemberType, index: number) => <StaffMemberBlock key={`staff-member-${staffMember.name}-${index}`} {...staffMember} />
 
     const principalsContent = pastoralStaff.principals.map(renderStaffMember)
     const staffContent = pastoralStaff.staff.map(renderStaffMember)
@@ -66,7 +66,12 @@ PastoralStaffPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps() {
-    const pastoralStaff = await axios.get('/api/frontend/explore/pastoral-staff');
+    const staffMembers = await StaffMember.find()
+
+    const pastoralStaff = JSON.parse(JSON.stringify({
+        principals: staffMembers.filter(member => member.principal).map(member => member.toObject()),
+        staff: staffMembers.filter(member => !member.principal).map(member => member.toObject())
+    }))
     return { props: { pastoralStaff } }
 }
 

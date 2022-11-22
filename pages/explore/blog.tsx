@@ -1,12 +1,12 @@
-import axios from 'axios';
 import Image from 'next/image';
 import { ReactElement } from 'react'
 
+import { Publication } from '../../app/models';
 import { CategoryInterface } from '../../app/models/category';
 import { PublicationInterface } from '../../app/models/publication';
 
 import Layout, { Head } from "../../components/frontend/navigation/layout";
-import Publication from '../../components/frontend/ui/blocks/publication';
+import PublicationBlock from '../../components/frontend/ui/blocks/publication';
 
 type PublicationType = Omit<PublicationInterface, 'category'> & { _id: string, link: string, category: CategoryInterface }
 
@@ -21,7 +21,7 @@ interface BlogPageProps {
 }
 
 const BlogPage = ({ blog }: BlogPageProps) => {
-    const renderPublication = (publication: PublicationType, index: number) => <Publication key={`publication-${publication.link}-${index}`} {...publication} />
+    const renderPublication = (publication: PublicationType, index: number) => <PublicationBlock key={`publication-${publication.link}-${index}`} {...publication} />
 
     const blogContent = blog.map(renderPublication)
 
@@ -60,8 +60,9 @@ BlogPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps() {
-    const blog = await axios.get('/api/frontend/explore/blog');
-    return { props: { blog } }
+    const publications = await Publication.find().populate('category')
+        
+    return { props: { blog: JSON.parse(JSON.stringify(publications.map(publication => publication.toObject()))) } }
 }
 
 export default BlogPage

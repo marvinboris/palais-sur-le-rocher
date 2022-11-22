@@ -22,8 +22,7 @@ export const MethodSchema = new Schema<MethodInterface, Model<MethodInterface>>(
     },
     logo: {
         type: String,
-        required: true,
-        get: (logo: string) => directory + logo
+        get: (logo: string) => logo ? directory + logo : undefined
     },
     isActive: {
         type: Boolean,

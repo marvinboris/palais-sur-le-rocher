@@ -1,7 +1,8 @@
-import axios from 'axios'
-import Image from 'next/image'
+import { Types } from 'mongoose'
+import NextImage from 'next/image'
 import { ReactElement } from 'react'
 
+import { Event, Image, Ministry, Publication, Testimonial } from '../app/models'
 import { CategoryInterface } from '../app/models/category'
 import { EventInterface } from '../app/models/event'
 import { ImageInterface } from '../app/models/image'
@@ -10,11 +11,11 @@ import { PublicationInterface } from '../app/models/publication'
 import { TestimonialInterface } from '../app/models/testimonial'
 
 import Layout, { Head } from '../components/frontend/navigation/layout'
-import Event from "../components/frontend/ui/blocks/event"
+import EventBlock from "../components/frontend/ui/blocks/event"
 import ImageBlock from "../components/frontend/ui/blocks/image"
-import Ministry from '../components/frontend/ui/blocks/ministry'
-import Publication from '../components/frontend/ui/blocks/publication'
-import Testimony from "../components/frontend/ui/blocks/testimonial"
+import MinistryBlock from '../components/frontend/ui/blocks/ministry'
+import PublicationBlock from '../components/frontend/ui/blocks/publication'
+import TestimonialBlock from "../components/frontend/ui/blocks/testimonial"
 
 import { NextPageWithLayout } from './_app'
 
@@ -28,20 +29,20 @@ type EventType = EventInterface & { _id: string, link: string }
 type ImageType = ImageInterface & { _id: string }
 type MinistryType = MinistryInterface & { _id: string, link: string }
 type PublicationType = Omit<PublicationInterface, 'category'> & { _id: string, link: string, category: CategoryInterface }
-type TestimonyType = TestimonialInterface & { _id: string }
+type TestimonialType = TestimonialInterface & { _id: string }
 
-const renderPublication = (publication: PublicationType, index: number) => <Publication key={`publication-${publication.link}-${index}`} {...publication} />
-const renderMinistry = (ministry: MinistryType, index: number) => <Ministry key={`ministry-${ministry.name}-${index}`} {...ministry} />
+const renderPublication = (publication: PublicationType, index: number) => <PublicationBlock key={`publication-${publication.link}-${index}`} {...publication} />
+const renderMinistry = (ministry: MinistryType, index: number) => <MinistryBlock key={`ministry-${ministry.name}-${index}`} {...ministry} />
 const renderImage = (image: ImageType, index: number) => <ImageBlock key={`image-${image.photo}-${index}`} {...image} />
-const renderEvent = (event: EventType, index: number) => <Event key={`event-${event.link}-${index}`} {...event} />
-const renderTestimony = (testimony: TestimonyType, index: number) => <Testimony key={`testimony-${testimony.body}-${index}`} {...testimony} />
+const renderEvent = (event: EventType, index: number) => <EventBlock key={`event-${event.link}-${index}`} {...event} />
+const renderTestimony = (testimony: TestimonialType, index: number) => <TestimonialBlock key={`testimony-${testimony.body}-${index}`} {...testimony} />
 
 interface HomeDataType {
   publications: PublicationType[],
   ministries: MinistryType[],
   gallery: ImageType[],
   events: EventType[],
-  testimonies: TestimonyType[],
+  testimonies: TestimonialType[],
 }
 
 interface HomePageProps {
@@ -88,7 +89,7 @@ const HomePage: NextPageWithLayout<HomePageProps> = ({ home }) => {
             <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
               <div className="lg:pl-20">
                 <div className="max-w-xs sm:max-w-sm md:max-w-md lg:max-x-lg xl:max-x-xl px-2.5 mx-auto">
-                  <Image width={1920} height={1920} alt="Image de présentation" src="/images/marek-piwnicki-k6ncmbh6pHk-unsplash.jpg" decoding="async" data-nimg="future" className="aspect-square rounded-2xl bg-secondary-100 object-cover dark:bg-secondary-800 text-transparent" loading="lazy" />
+                  <NextImage width={1920} height={1920} alt="Image de présentation" src="/images/marek-piwnicki-k6ncmbh6pHk-unsplash.jpg" decoding="async" data-nimg="future" className="aspect-square rounded-2xl bg-secondary-100 object-cover dark:bg-secondary-800 text-transparent" loading="lazy" />
                 </div>
               </div>
 
@@ -218,7 +219,20 @@ HomePage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps() {
-  const home = await axios.get('/api/frontend/home');
+  const gallery = await Image.find().limit(12)
+  const publications = await Publication.find().populate<{ category: CategoryInterface }>('category').limit(3)
+  const ministries = await Ministry.find().limit(4)
+  const events = await Event.find().limit(4)
+  const testimonies = await Testimonial.find().limit(3)
+
+  const home = JSON.parse(JSON.stringify({
+    publications: publications.map(publication => publication.toObject()),
+    testimonies: testimonies.map(testimonial => testimonial.toObject()),
+    ministries: ministries.map(ministry => ministry.toObject()),
+    gallery: gallery.map(image => image.toObject()),
+    events: events.map(event => event.toObject()),
+  }))
+
   return { props: { home } }
 }
 

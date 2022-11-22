@@ -1,7 +1,7 @@
-import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ReactElement } from 'react'
+import { Ministry } from '../../app/models';
 
 import { MinistryInterface } from '../../app/models/ministry';
 
@@ -52,8 +52,9 @@ MinistryPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps() {
-    const ministries = await axios.get('/api/frontend/ministries');
-    return { props: { ministries, } };
+    const ministries = await Ministry.find()
+
+    return { props: { ministries: JSON.parse(JSON.stringify(ministries.map(ministry => ministry.toObject()))) } };
 }
 
 export default MinistryPage

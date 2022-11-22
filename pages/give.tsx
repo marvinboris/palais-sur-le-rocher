@@ -1,7 +1,7 @@
-import axios from 'axios'
 import Image from 'next/image'
 import { ReactElement } from 'react'
 
+import { Method } from '../app/models'
 import { MethodInterface } from '../app/models/method'
 
 import Layout, { Head } from '../components/frontend/navigation/layout'
@@ -82,8 +82,10 @@ GivePage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps() {
-    const give = await axios.get('/api/frontend/give');
-    return { props: { give } }
+    const methods = await Method.find()
+
+        
+    return { props: { give: JSON.parse(JSON.stringify(methods.map(method => method.toObject()))) } }
 }
 
 export default GivePage

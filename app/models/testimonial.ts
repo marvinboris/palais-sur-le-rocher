@@ -7,7 +7,7 @@ export interface TestimonialInterface {
     title: string
     body: string
     photo?: string
-    isActive: boolean
+    isActive?: boolean
     createdAt?: Date
     updatedAt?: Date
 }
@@ -33,5 +33,6 @@ export const TestimonialSchema = new Schema<TestimonialInterface, Model<Testimon
     isActive: {
         type: Boolean,
         required: true,
+        default: true
     },
 }, { timestamps: true, toObject: { getters: true } })

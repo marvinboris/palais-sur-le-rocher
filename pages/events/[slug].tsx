@@ -1,8 +1,8 @@
-import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ReactElement } from 'react'
 
+import { Event } from '../../app/models';
 import { EventInterface } from '../../app/models/event';
 
 import Layout, { Head } from "../../components/frontend/navigation/layout";
@@ -52,8 +52,9 @@ EventPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export async function getServerSideProps() {
-    const events = await axios.get('/api/frontend/events');
-    return { props: { events } };
+    const events = await Event.find()
+
+    return { props: { events: JSON.parse(JSON.stringify(events.map(event => event.toObject()))) } };
 }
 
 export default EventPage
