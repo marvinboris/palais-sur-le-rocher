@@ -63,10 +63,10 @@ const ManagerDashboardPage: NextPageWithLayout = () => {
                         </div>
                     </StatCard>
 
-                    <StatCard color='blue' title={blocks.services}>
+                    <StatCard color='blue' title={blocks.events}>
                         <div className="flex items-end justify-between">
                             <div className='pb-[7px] md:pb-[5px]'>
-                                <span className="font-bold text-3xl md:text-lg">{data && data.blocks && data.blocks.services}</span>
+                                <span className="font-bold text-3xl md:text-lg">{data && data.blocks && data.blocks.events}</span>
                             </div>
 
                             <div><WrenchIcon className='w-20 md:w-11 text-blue/20' /></div>

@@ -14,7 +14,7 @@ export default function Photo({ photo, see, title }: PhotoProps) {
         <span>{see}</span>
 
         <span className="ml-auto">
-            <View action={<EyeIcon className="w-5 text-green cursor-pointer" />}>
+            <View title={title} action={<EyeIcon className="w-5 text-green cursor-pointer" />}>
                 <Image width={1920} height={1920} src={photo} className="w-full" alt={title} />
             </View>
         </span>
