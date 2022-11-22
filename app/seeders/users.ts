@@ -5,7 +5,7 @@ import type { UserInterface } from "../models/user";
 
 const users: UserInterface[] = [
     { name: 'Boris Ndouma', email: 'jaris.ultio.21@gmail.com', password: '12345', phone: '237655588688' },
-    { name: 'Safrilen', email: 'contact@safrilen.com', password: '12345', phone: '237655588688' },
+    { name: 'Palais sur le Rocher', email: 'contact@psr.com', password: '12345', phone: '237655588688' },
 ]
 
 export default async function usersSeed() {

@@ -1,3 +1,16 @@
-type ResourceType = 'users' | 'roles' | 'testimonials' | 'images' | 'features' | 'events' | 'ministries'
+type ResourceType =
+    'admins' |
+    'categories' |
+    'events' |
+    'features' |
+    'images' |
+    'lessons' |
+    'methods' |
+    'ministries' |
+    'publications' |
+    'roles' |
+    'staff_members' |
+    'testimonials' |
+    'users'
 
 export default ResourceType

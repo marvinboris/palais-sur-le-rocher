@@ -40,12 +40,18 @@ export default function SideDrawer() {
                                     const resource = prefix.split('-').join('_')
 
                                     return <NavItem key={JSON.stringify(cms.sidebar.menu[resource as ResourceType])} icon={{
+                                        admins: UserGroupIcon,
                                         users: UserGroupIcon,
                                         roles: TagIcon,
                                         features: CogIcon,
                                         images: PhotoIcon,
                                         events: WrenchIcon,
                                         ministries: ShoppingBagIcon,
+                                        categories: ShoppingBagIcon,
+                                        publications: ShoppingBagIcon,
+                                        methods: ShoppingBagIcon,
+                                        lessons: ShoppingBagIcon,
+                                        staff_members: ChatBubbleOvalLeftEllipsisIcon,
                                         testimonials: ChatBubbleOvalLeftEllipsisIcon,
                                     }[resource as ResourceType]} href={`/${role}/${prefix}`}>{cms.sidebar.menu[resource as ResourceType].title}</NavItem>
                                 })}

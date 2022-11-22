@@ -21,7 +21,7 @@ type Props = { edit?: boolean }
 
 const initialState = {
     name: '',
-    price: '',
+    body: '',
     description: '',
     photo: '',
     isActive: '1',
@@ -29,7 +29,7 @@ const initialState = {
     add: false,
 }
 
-export default function ManageAddOrEditProducts({ edit }: Props) {
+export default function ManageAddOrEditMinistries({ edit }: Props) {
     const { status, data: backend, message } = useAppSelector(selectBackend)
 
     const { content } = useContentContext()
@@ -48,7 +48,7 @@ export default function ManageAddOrEditProducts({ edit }: Props) {
             <div className="md:col-span-2">
                 <div className="flex-1 grid gap-y-2 gap-x-4 grid-cols-1 md:grid-cols-2 overflow-auto">
                     <Input inputSize='sm' type="text" icon={ShoppingBagIcon} onChange={inputChangeHandler} value={state.name as string} name="name" required label={form.name} />
-                    <Input inputSize='sm' type="text" icon={BanknotesIcon} onChange={inputChangeHandler} value={state.price as string} name="price" required label={form.price} />
+                    <TextArea inputSize='sm' className="col-span-2" onChange={inputChangeHandler} value={state.body as string} name="body" required label={form.body} />
                     <TextArea inputSize='sm' className="col-span-2" onChange={inputChangeHandler} value={state.description as string} name="description" required label={form.description} />
                     <Select inputSize='sm' icon={EyeIcon} label={form.is_active} onChange={inputChangeHandler} value={state.isActive as string} name="isActive" required>
                         <option>{form.select_status}</option>

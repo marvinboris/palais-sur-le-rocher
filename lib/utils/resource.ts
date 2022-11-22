@@ -15,6 +15,7 @@ import ResourceInputType from "../../app/types/resource-input"
 import handleRequest from "../formidable"
 
 type Fields = { [key: string]: (fields: formidable.Fields) => Promise<any> | any }
+type Keys = { [key: string]: (instance: any) => Promise<any> | any }
 
 export const manageResource = (req: NextApiRequest, res: NextApiResponse, { information, cms, model, slug, resource, singular, file, fields, data }: {
     data: (req: NextApiRequest) => Promise<{ total: number, [key: string]: any[] | number }>
@@ -32,11 +33,20 @@ export const manageResource = (req: NextApiRequest, res: NextApiResponse, { info
     return {
         get: async () => res.json(await data(req)),
         info: !information ? () => { } : async () => res.json(await information()),
-        show: !slug || !information ? () => { } : async () => {
+        show: !slug || !information ? () => { } : async (config?: { keys?: Keys }) => {
             const instance = await model.findById(slug[0])
             if (!instance) return res.json({ message: message(cms.backend.messages[resource].not_found, 'danger') })
 
-            return res.json({ [singular]: instance.toObject(), ...(await information()) })
+            const input: ResourceInputType = {}
+            const entries = await Promise.all(fields.map(async key => {
+                const value = (config && config.keys && key in config.keys) ? (config.keys[key](instance) instanceof Promise ? await config.keys[key](instance) : config.keys[key](instance)) : instance[key]
+                return [key, value]
+            }))
+            entries.forEach(([key, value]) => {
+                input[key] = value
+            });
+
+            return res.json({ [singular]: { ...instance.toObject(), ...input }, ...(await information()) })
         },
         post: async (config?: { fields?: Fields }) => {
             const { fields: _fields, files } = await handleRequest(req, { uploadDir: file ? file.uploadDir : undefined })

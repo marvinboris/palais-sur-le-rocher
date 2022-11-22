@@ -10,7 +10,6 @@ export const data = async (req: NextApiRequest) => {
     let total = 0
 
     const regex = new RegExp(search as string, 'i')
-    console.log(regex);
 
     const data = await Feature
         .find({

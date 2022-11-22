@@ -24,7 +24,7 @@ const initialState = {
     add: false,
 }
 
-export default function ManageAddOrEditRoles({ edit }: Props) {
+export default function ManageAddOrEditFeatures({ edit }: Props) {
     const { status, data: backend, message } = useAppSelector(selectBackend)
 
     const { content } = useContentContext()

@@ -33,12 +33,11 @@ export default async function handler(
 
         if (req.method === 'GET') {
             if (slug[0] === 'info') return manage.info()
-            else {
-                const user = await User.findById(slug[0]).select('-password')
-                if (!user) return res.json({ message: message(cms.backend.messages.users.not_found, 'danger') })
-
-                return res.json({ user: user.toObject(), ...(await information()) })
-            }
+            else return manage.show({
+                keys: {
+                    password: () => '',
+                }
+            })
         } else if (req.method === 'PATCH') return manage.patch({
             fields: {
                 phone: fields => fields.phone,

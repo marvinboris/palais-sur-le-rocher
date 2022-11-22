@@ -17,7 +17,7 @@
                 "twitter": "https:\/\/twitter.com\/marvinboris1",
                 "linkedin": "https:\/\/www.linkedin.com\/in\/boris-ndouma-852454180\/"
             },
-            "email": "contact@safrilen.com",
+            "email": "contact@psr.com",
             "phone": "+237 653 411 116",
             "map": "https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d3613.8073542448806!2d55.1406664!3d25.0745178!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2scm!4v1665798706407!5m2!1sen!2scm"
         }
@@ -174,6 +174,31 @@
                     "add": "Ajouter un ministère",
                     "index": "Liste des ministères"
                 },
+                "methods": {
+                    "title": "Méthodes",
+                    "add": "Ajouter un méthode",
+                    "index": "Liste des méthodes"
+                },
+                "lessons": {
+                    "title": "Enseignements",
+                    "add": "Ajouter un enseignement",
+                    "index": "Liste des enseignements"
+                },
+                "categories": {
+                    "title": "Catégories",
+                    "add": "Ajouter une catégorie",
+                    "index": "Liste des catégories"
+                },
+                "publications": {
+                    "title": "Publications",
+                    "add": "Ajouter une publication",
+                    "index": "Liste des publications"
+                },
+                "staff_members": {
+                    "title": "Membres du staff",
+                    "add": "Ajouter un membre",
+                    "index": "Liste des membres"
+                },
                 "testimonials": {
                     "title": "Témoignages",
                     "add": "Ajouter un témoignage",
@@ -255,22 +280,52 @@
                 "deleted": "Param\u00e8tre supprim\u00e9 avec succ\u00e8s."
             },
             "events": {
-                "not_found": "Service introuvable.",
-                "created": "Service cr\u00e9\u00e9 avec succ\u00e8s.",
-                "updated": "Service modifi\u00e9 avec succ\u00e8s.",
-                "deleted": "Service supprim\u00e9 avec succ\u00e8s."
+                "not_found": "Evènement introuvable.",
+                "created": "Evènement cr\u00e9\u00e9 avec succ\u00e8s.",
+                "updated": "Evènement modifi\u00e9 avec succ\u00e8s.",
+                "deleted": "Evènement supprim\u00e9 avec succ\u00e8s."
             },
             "ministries": {
-                "not_found": "Produit introuvable.",
-                "created": "Produit cr\u00e9\u00e9 avec succ\u00e8s.",
-                "updated": "Produit modifi\u00e9 avec succ\u00e8s.",
-                "deleted": "Produit supprim\u00e9 avec succ\u00e8s."
+                "not_found": "Ministère introuvable.",
+                "created": "Ministère cr\u00e9\u00e9 avec succ\u00e8s.",
+                "updated": "Ministère modifi\u00e9 avec succ\u00e8s.",
+                "deleted": "Ministère supprim\u00e9 avec succ\u00e8s."
+            },
+            "methods": {
+                "not_found": "Méthode introuvable.",
+                "created": "Méthode cr\u00e9\u00e9e avec succ\u00e8s.",
+                "updated": "Méthode modifi\u00e9e avec succ\u00e8s.",
+                "deleted": "Méthode supprim\u00e9e avec succ\u00e8s."
+            },
+            "categories": {
+                "not_found": "Catégorie introuvable.",
+                "created": "Catégorie cr\u00e9\u00e9e avec succ\u00e8s.",
+                "updated": "Catégorie modifi\u00e9e avec succ\u00e8s.",
+                "deleted": "Catégorie supprim\u00e9e avec succ\u00e8s."
+            },
+            "publications": {
+                "not_found": "Publication introuvable.",
+                "created": "Publication cr\u00e9\u00e9e avec succ\u00e8s.",
+                "updated": "Publication modifi\u00e9e avec succ\u00e8s.",
+                "deleted": "Publication supprim\u00e9e avec succ\u00e8s."
+            },
+            "lessons": {
+                "not_found": "Enseignement introuvable.",
+                "created": "Enseignement cr\u00e9\u00e9 avec succ\u00e8s.",
+                "updated": "Enseignement modifi\u00e9 avec succ\u00e8s.",
+                "deleted": "Enseignement supprim\u00e9 avec succ\u00e8s."
             },
             "testimonials": {
                 "not_found": "Témoignage introuvable.",
                 "created": "Témoignage cr\u00e9\u00e9 avec succ\u00e8s.",
                 "updated": "Témoignage modifi\u00e9 avec succ\u00e8s.",
                 "deleted": "Témoignage supprim\u00e9 avec succ\u00e8s."
+            },
+            "staff_members": {
+                "not_found": "Membre introuvable.",
+                "created": "Membre cr\u00e9\u00e9 avec succ\u00e8s.",
+                "updated": "Membre modifi\u00e9 avec succ\u00e8s.",
+                "deleted": "Membre supprim\u00e9 avec succ\u00e8s."
             },
             "images": {
                 "not_found": "Image introuvable.",
@@ -409,9 +464,10 @@
                 "index": "Liste des évènements",
                 "form": {
                     "title": "Titre",
+                    "description": "Description",
                     "body": "Contenu",
                     "photo": "Photo",
-                    "service_photo": "Photo du évènement",
+                    "event_photo": "Photo du évènement",
                     "is_active": "Statut",
                     "select_status": "S\u00e9lectionner le statut",
                     "created_at": "Cr\u00e9\u00e9 le"
@@ -427,10 +483,70 @@
                     "description": "Description",
                     "body": "Contenu",
                     "photo": "Photo",
-                    "product_photo": "Photo du ministère",
+                    "ministry_photo": "Photo du ministère",
                     "is_active": "Statut",
                     "select_status": "S\u00e9lectionner le statut",
                     "created_at": "Cr\u00e9\u00e9 le"
+                }
+            },
+            "categories": {
+                "title": "Catégories",
+                "add": "Ajouter une catégorie",
+                "edit": "Modifier une catégorie",
+                "index": "Liste des catégories",
+                "form": {
+                    "name": "Nom",
+                    "is_active": "Statut",
+                    "select_status": "S\u00e9lectionner le statut",
+                    "created_at": "Cr\u00e9\u00e9e le"
+                }
+            },
+            "publications": {
+                "title": "Publications",
+                "add": "Ajouter une publication",
+                "edit": "Modifier une publication",
+                "index": "Liste des publications",
+                "form": {
+                    "title": "Titre",
+                    "description": "Description",
+                    "body": "Contenu",
+                    "category": "Catégorie",
+                    "photo": "Photo",
+                    "publication_photo": "Photo de la publication",
+                    "is_active": "Statut",
+                    "select_status": "S\u00e9lectionner le statut",
+                    "created_at": "Cr\u00e9\u00e9e le"
+                }
+            },
+            "lessons": {
+                "title": "Enseignements",
+                "add": "Ajouter un enseignement",
+                "edit": "Modifier un enseignement",
+                "index": "Liste des enseignements",
+                "form": {
+                    "episode": "Episode",
+                    "date": "Date",
+                    "description": "Description",
+                    "subtitle": "Sous-titre",
+                    "notes": "Notes",
+                    "audio": "Audio",
+                    "lesson_audio": "Audio de l'enseignement",
+                    "created_at": "Cr\u00e9\u00e9 le"
+                }
+            },
+            "methods": {
+                "title": "Méthodes",
+                "add": "Ajouter une méthode",
+                "edit": "Modifier une méthode",
+                "index": "Liste des méthodes",
+                "form": {
+                    "name": "Nom",
+                    "description": "Description",
+                    "logo": "Logo",
+                    "method_logo": "Logo de la méthode",
+                    "is_active": "Statut",
+                    "select_status": "S\u00e9lectionner le statut",
+                    "created_at": "Cr\u00e9\u00e9e le"
                 }
             },
             "testimonials": {
@@ -457,7 +573,7 @@
                 "form": {
                     "src": "Lien",
                     "photo": "Photo",
-                    "created_at": "Cr\u00e9\u00e9 le"
+                    "created_at": "Cr\u00e9\u00e9e le"
                 }
             }
         }

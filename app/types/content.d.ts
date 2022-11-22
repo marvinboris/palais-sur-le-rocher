@@ -44,6 +44,11 @@ export default interface ContentType {
                     testimonials: { title: string, add: string, index: string }
                     events: { title: string, add: string, index: string }
                     ministries: { title: string, add: string, index: string }
+                    categories: { title: string, add: string, index: string }
+                    publications: { title: string, add: string, index: string }
+                    lessons: { title: string, add: string, index: string }
+                    methods: { title: string, add: string, index: string }
+                    staff_members: { title: string, add: string, index: string }
                     images: { title: string, add: string, index: string }
                     cms: { title: string, global: string, general: string, auth: string, backend: string, frontend: string }
                     settings: { title: string, cms: string, language: string }
@@ -64,6 +69,11 @@ export default interface ContentType {
                 features: { not_found: string, created: string, updated: string, deleted: string },
                 events: { not_found: string, created: string, updated: string, deleted: string },
                 ministries: { not_found: string, created: string, updated: string, deleted: string },
+                categories: { not_found: string, created: string, updated: string, deleted: string },
+                publications: { not_found: string, created: string, updated: string, deleted: string },
+                lessons: { not_found: string, created: string, updated: string, deleted: string },
+                methods: { not_found: string, created: string, updated: string, deleted: string },
+                staff_members: { not_found: string, created: string, updated: string, deleted: string },
                 testimonials: { not_found: string, created: string, updated: string, deleted: string },
                 images: { not_found: string, created: string, updated: string, deleted: string },
                 notifications: { not_found: string }
@@ -103,11 +113,27 @@ export default interface ContentType {
                 },
                 events: {
                     title: string, add: string, edit: string, index: string
-                    form: { title: string, body: string, photo: string, service_photo: string, is_active: string, select_status: string, created_at: string }
+                    form: { title: string, description: string, body: string, photo: string, event_photo: string, is_active: string, select_status: string, created_at: string }
                 },
                 ministries: {
                     title: string, add: string, edit: string, index: string
-                    form: { name: string, description: string, price: string, photo: string, product_photo: string, is_active: string, select_status: string, created_at: string }
+                    form: { name: string, description: string, body: string, photo: string, ministry_photo: string, is_active: string, select_status: string, created_at: string }
+                },
+                categories: {
+                    title: string, add: string, edit: string, index: string
+                    form: { name: string, is_active: string, select_status: string, created_at: string }
+                },
+                publications: {
+                    title: string, add: string, edit: string, index: string
+                    form: { title: string, description: string, body: string, category: string, select_category: string, publication_photo: string, is_active: string, select_status: string, photo: string }
+                },
+                methods: {
+                    title: string, add: string, edit: string, index: string
+                    form: { name: string, description: string, logo: string, method_logo: string, is_active: string, select_status: string, created_at: string }
+                },
+                lessons: {
+                    title: string, add: string, edit: string, index: string
+                    form: { episode: string, date: string, description: string, subtitle: string, notes: string, audio: string, method_audio: string, is_active: string, select_status: string, created_at: string }
                 },
                 notifications: {
                     title: string, show: string, index: string
@@ -119,6 +145,10 @@ export default interface ContentType {
                         title: string
                         form: { select_language: string }
                     }
+                },
+                staff_members: {
+                    title: string, add: string, edit: string, index: string
+                    form: { name: string, title: string, description: string, photo: string, staff_member_photo: string, is_active: string, principal: string, select_status: string, created_at: string }
                 },
                 testimonials: {
                     title: string, add: string, edit: string, index: string
@@ -147,7 +177,7 @@ export default interface ContentType {
             components: {
                 form: { loading: string },
                 section: { read_more: string }
-                service_block: { read_more: string }
+                event_block: { read_more: string }
                 give: {
                     title: string,
                     subtitle: string,
@@ -157,7 +187,7 @@ export default interface ContentType {
                         email: string,
                         phone: string,
                         address: string,
-                        select_service: string,
+                        select_event: string,
                         date: string,
                         comment: string,
                         continue: string
