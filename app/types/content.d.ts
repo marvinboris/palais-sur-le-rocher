@@ -45,9 +45,11 @@ export default interface ContentType {
                     events: { title: string, add: string, index: string }
                     ministries: { title: string, add: string, index: string }
                     categories: { title: string, add: string, index: string }
+                    subscribers: { title: string, add: string, index: string }
                     publications: { title: string, add: string, index: string }
                     lessons: { title: string, add: string, index: string }
                     methods: { title: string, add: string, index: string }
+                    donations: { title: string, add: string, index: string }
                     staff_members: { title: string, add: string, index: string }
                     images: { title: string, add: string, index: string }
                     cms: { title: string, global: string, general: string, auth: string, backend: string, frontend: string }
@@ -70,9 +72,11 @@ export default interface ContentType {
                 events: { not_found: string, created: string, updated: string, deleted: string },
                 ministries: { not_found: string, created: string, updated: string, deleted: string },
                 categories: { not_found: string, created: string, updated: string, deleted: string },
+                subscribers: { not_found: string, created: string, updated: string, deleted: string },
                 publications: { not_found: string, created: string, updated: string, deleted: string },
                 lessons: { not_found: string, created: string, updated: string, deleted: string },
                 methods: { not_found: string, created: string, updated: string, deleted: string },
+                donations: { not_found: string, created: string, updated: string, deleted: string },
                 staff_members: { not_found: string, created: string, updated: string, deleted: string },
                 testimonials: { not_found: string, created: string, updated: string, deleted: string },
                 images: { not_found: string, created: string, updated: string, deleted: string },
@@ -123,6 +127,10 @@ export default interface ContentType {
                     title: string, add: string, edit: string, index: string
                     form: { name: string, is_active: string, select_status: string, created_at: string }
                 },
+                subscribers: {
+                    title: string, add: string, edit: string, index: string
+                    form: { first_name: string, email: string, created_at: string }
+                },
                 publications: {
                     title: string, add: string, edit: string, index: string
                     form: { title: string, description: string, body: string, category: string, select_category: string, publication_photo: string, is_active: string, select_status: string, photo: string }
@@ -131,9 +139,13 @@ export default interface ContentType {
                     title: string, add: string, edit: string, index: string
                     form: { name: string, description: string, logo: string, method_logo: string, is_active: string, select_status: string, created_at: string }
                 },
+                donations: {
+                    title: string, add: string, edit: string, index: string
+                    form: { method: string, transaction: string, amount: string, created_at: string }
+                },
                 lessons: {
                     title: string, add: string, edit: string, index: string
-                    form: { episode: string, date: string, description: string, subtitle: string, notes: string, audio: string, method_audio: string, is_active: string, select_status: string, created_at: string }
+                    form: { episode: string, date: string, description: string, subtitle: string, notes: string, audio: string, lesson_audio: string, is_active: string, select_status: string, created_at: string }
                 },
                 notifications: {
                     title: string, show: string, index: string

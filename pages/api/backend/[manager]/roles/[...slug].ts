@@ -51,6 +51,10 @@ export default async function handler(
             return res.json({ role: { ...role.toObject(), features }, ...(await information()) })
         }
     } else if (req.method === 'PATCH') return manage.patch({
+        validate: {
+            name: { required: true },
+            description: { required: true },
+        },
         fields: {
             features: fields => {
                 const allFields = Object.keys(fields).filter(field => field.includes('features')).map(field => field.split('[').filter((_c, i) => i > 0).join('').split(']'))

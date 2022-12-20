@@ -37,6 +37,12 @@ export default async function handler(
                 }
             })
         } else if (req.method === 'PATCH') return manage.patch({
+            validate: {
+                title: { required: true },
+                description: { required: true },
+                body: { required: true },
+                category: { required: true },
+            },
             fields: {
                 isActive: fields => fields.isActive == '1',
             }

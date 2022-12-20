@@ -17,6 +17,7 @@ export const data = async (req: NextApiRequest) => {
         .find({
             $or: [
                 { title: regex },
+                { description: regex },
                 { body: regex },
             ]
         })
@@ -33,7 +34,7 @@ export const uploadDir = path.join(process.cwd(), 'public', 'images', 'events')
 export const resource = 'events'
 export const resourceConfig = {
     singular: 'event',
-    fields: ['title', 'body', 'isActive'],
+    fields: ['title', 'description', 'body', 'isActive'],
     file: { name: 'photo', uploadDir }
 }
 
@@ -55,6 +56,11 @@ export default async function handler(
 
         if (req.method === 'GET') return manage.get()
         else if (req.method === 'POST') return manage.post({
+            validate: {
+                title: { required: true },
+                description: { required: true },
+                body: { required: true },
+            },
             fields: {
                 isActive: fields => fields.isActive == '1',
             }

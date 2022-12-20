@@ -55,7 +55,7 @@ const AuthUserLoginPage = () => {
         </div>
 
         <div className="text-center">
-            <Button type='submit'>{status === Status.LOADING ? <div className='w-8 h-8 rounded-full border border-t-transparent border-white animate-spin' /> : "Continuer"}</Button>
+            <Button status={status} type='submit'>Continuer</Button>
         </div>
     </form>
 }

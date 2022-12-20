@@ -179,6 +179,11 @@
                     "add": "Ajouter un méthode",
                     "index": "Liste des méthodes"
                 },
+                "donations": {
+                    "title": "Dons",
+                    "add": "Ajouter un don",
+                    "index": "Liste des dons"
+                },
                 "lessons": {
                     "title": "Enseignements",
                     "add": "Ajouter un enseignement",
@@ -188,6 +193,11 @@
                     "title": "Catégories",
                     "add": "Ajouter une catégorie",
                     "index": "Liste des catégories"
+                },
+                "subscribers": {
+                    "title": "Abonnés",
+                    "add": "Ajouter un don",
+                    "index": "Liste des dons"
                 },
                 "publications": {
                     "title": "Publications",
@@ -297,11 +307,23 @@
                 "updated": "Méthode modifi\u00e9e avec succ\u00e8s.",
                 "deleted": "Méthode supprim\u00e9e avec succ\u00e8s."
             },
+            "donations": {
+                "not_found": "Don introuvable.",
+                "created": "Don cr\u00e9\u00e9 avec succ\u00e8s.",
+                "updated": "Don modifi\u00e9 avec succ\u00e8s.",
+                "deleted": "Don supprim\u00e9 avec succ\u00e8s."
+            },
             "categories": {
                 "not_found": "Catégorie introuvable.",
                 "created": "Catégorie cr\u00e9\u00e9e avec succ\u00e8s.",
                 "updated": "Catégorie modifi\u00e9e avec succ\u00e8s.",
                 "deleted": "Catégorie supprim\u00e9e avec succ\u00e8s."
+            },
+            "subscribers": {
+                "not_found": "Abonné introuvable.",
+                "created": "Abonné cr\u00e9\u00e9 avec succ\u00e8s.",
+                "updated": "Abonné modifi\u00e9 avec succ\u00e8s.",
+                "deleted": "Abonné supprim\u00e9 avec succ\u00e8s."
             },
             "publications": {
                 "not_found": "Publication introuvable.",
@@ -501,6 +523,17 @@
                     "created_at": "Cr\u00e9\u00e9e le"
                 }
             },
+            "subscribers": {
+                "title": "Abonnés",
+                "add": "Ajouter un abonné",
+                "edit": "Modifier un abonné",
+                "index": "Liste des abonnés",
+                "form": {
+                    "first_name": "Prénom(s)",
+                    "email": "Adresse mail",
+                    "created_at": "Cr\u00e9\u00e9e le"
+                }
+            },
             "publications": {
                 "title": "Publications",
                 "add": "Ajouter une publication",
@@ -546,6 +579,18 @@
                     "method_logo": "Logo de la méthode",
                     "is_active": "Statut",
                     "select_status": "S\u00e9lectionner le statut",
+                    "created_at": "Cr\u00e9\u00e9e le"
+                }
+            },
+            "donations": {
+                "title": "Dons",
+                "add": "Ajouter un don",
+                "edit": "Modifier un don",
+                "index": "Liste des dons",
+                "form": {
+                    "method": "Méthode de paiement",
+                    "transaction": "Détails de la transaction",
+                    "amount": "Montant",
                     "created_at": "Cr\u00e9\u00e9e le"
                 }
             },

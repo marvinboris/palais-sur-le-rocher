@@ -65,6 +65,13 @@ export default async function handler(
 
         if (req.method === 'GET') return manage.get()
         else if (req.method === 'POST') return manage.post({
+            validate: {
+                name: { required: true },
+                email: { required: true, isEmail: true },
+                phone: { required: true },
+                password: { required: true },
+                role: { required: true },
+            },
             fields: {
                 phone: fields => `237${fields.phone}`,
                 password: async fields => await bcrypt.hash(fields.password as string, 12)

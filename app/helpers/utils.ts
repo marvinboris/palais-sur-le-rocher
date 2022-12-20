@@ -1,4 +1,6 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
+
+import ValidationType from '../types/validation'
 
 export const setAuthToken = (token?: string | undefined | null) => {
     if (token) axios.defaults.headers.common['x-auth-token'] = token
@@ -43,26 +45,28 @@ export const timeFromTimestamp = (timestamp: number) => {
     return `${twoDigits(hours)} : ${twoDigits(minutes)} : ${twoDigits(seconds)}`;
 }
 
-export const checkValidity = (value = '', rules: { [key: string]: boolean | number }) => {
-    let isValid = true;
+export const checkValidity = (value = '', rules: ValidationType) => {
+    const validation: { [key: string]: boolean } = {};
 
-    if (rules.required) isValid = (value.trim() !== '' && isValid);
+    if (rules.required) validation.required = value.trim() !== '';
 
-    if (rules.minLength) isValid = (value.length >= rules.minLength && isValid);
+    if (rules.confirm) validation.confirm = value === rules.confirm;
 
-    if (rules.maxLength) isValid = (value.length <= rules.maxLength && isValid);
+    if (rules.minLength) validation.minLength = value.length >= rules.minLength;
+
+    if (rules.maxLength) validation.maxLength = value.length <= rules.maxLength;
 
     if (rules.isEmail) {
         const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-        isValid = (pattern.test(value) && isValid);
+        validation.isEmail = pattern.test(value);
     }
 
     if (rules.isNumeric) {
         const pattern = /^\d+$/;
-        isValid = (pattern.test(value) && isValid);
+        validation.isNumeric = pattern.test(value);
     }
 
-    return isValid;
+    return validation;
 };
 
 export const htmlEntities = (str: string) => {
@@ -117,8 +121,6 @@ export const manageResource = async (
                 data = params[0];
                 url = `/api/backend/${role}/${root}?page=${page}&show=${show}&search=${search}`;
                 res = await axios.post(url, data);
-                if (res.status === 422) throw new Error(Object.values(res.data.errors).join('\n'));
-                else if (res.status !== 200 && res.status !== 201) throw new Error(res.data.error.message);
                 return res.data
 
             case 'patch':
@@ -133,7 +135,6 @@ export const manageResource = async (
                 data = params[1];
                 url = `/api/backend/${role}/${root}/${id}?page=${page}&show=${show}&search=${search}`;
                 res = await axios.patch(url, data);
-                if (res.status === 422) throw new Error(Object.values(res.data.errors).join('\n'));
                 return res.data
 
             case 'delete':
@@ -147,10 +148,10 @@ export const manageResource = async (
                 id = params[0];
                 url = `/api/backend/${role}/${root}/${id}?page=${page}&show=${show}&search=${search}`;
                 res = await axios.delete(url);
-                if (res.status === 422) throw new Error(Object.values(res.data.errors).join('\n'));
                 return res.data
         }
     } catch (error) {
         console.log(error);
+        return (error as AxiosError).response!.data
     }
 }

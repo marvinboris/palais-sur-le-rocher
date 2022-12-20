@@ -3,6 +3,7 @@ import { Document, Model, PopulatedDoc, Schema, Types } from "mongoose"
 import { FeatureInterface } from './feature';
 
 export interface RoleInterface {
+    id?: string
     name: string
     description: string
     features: { feature?: PopulatedDoc<Document<Types.ObjectId> & FeatureInterface>, access: ('c' | 'u' | 'd')[] }[]

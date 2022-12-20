@@ -4,6 +4,7 @@ import slugify from 'slugify'
 const directory = '/images/ministries/'
 
 export interface MinistryInterface {
+    id?: string
     name: string
     description: string
     body: string

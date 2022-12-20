@@ -5,6 +5,7 @@ import { CategoryInterface } from "./category"
 const directory = '/images/publications/'
 
 export interface PublicationInterface {
+    id?: string
     title: string
     description: string
     body: string

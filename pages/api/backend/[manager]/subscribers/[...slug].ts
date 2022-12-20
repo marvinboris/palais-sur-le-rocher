@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse, PageConfig } from "next";
 
-import { data, resource, resourceConfig } from '.';
+import { data, resource, resourceConfig } from '.'
 
-import { Event } from '../../../../../app/models';
+import { Subscriber } from "../../../../../app/models";
 
 import { getCms, handleError, methodNotAllowed } from "../../../../../lib/utils";
-import { manageResource } from '../../../../../lib/utils/resource';
+import { manageResource } from "../../../../../lib/utils/resource";
 
 const information = async () => {
     return {}
@@ -23,27 +23,19 @@ export default async function handler(
         // const manager = await getAccount(req)
         const manage = manageResource(req, res, {
             data, information,
-            model: Event,
+            model: Subscriber,
             cms, slug, resource,
             ...resourceConfig,
         })
 
         if (req.method === 'GET') {
             if (slug[0] === 'info') return manage.info()
-            else return manage.show({
-                keys: {
-                    isActive: keys => keys.isActive ? '1' : '0',
-                }
-            })
+            else return manage.show()
         } else if (req.method === 'PATCH') return manage.patch({
             validate: {
-                title: { required: true },
-                description: { required: true },
-                body: { required: true },
+                firstName: { required: true },
+                email: { required: true, isEmail: true },
             },
-            fields: {
-                isActive: fields => fields.isActive == '1',
-            }
         })
         else if (req.method === 'DELETE') return manage.delete()
         else methodNotAllowed(req, res)

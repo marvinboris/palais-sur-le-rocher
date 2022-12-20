@@ -30,15 +30,15 @@ export default async function handler(
 
         if (req.method === 'GET') {
             if (slug[0] === 'info') return manage.info()
-            else return manage.show({
-                keys: {
-                    isActive: keys => keys.isActive ? '1' : '0',
-                }
-            })
+            else return manage.show()
         } else if (req.method === 'PATCH') return manage.patch({
-            fields: {
-                isActive: fields => fields.isActive == '1',
-            }
+            validate: {
+                episode: { isNumeric: true },
+                date: { required: true },
+                description: { required: true },
+                subtitle: { required: true },
+                notes: { required: true },
+            },
         })
         else if (req.method === 'DELETE') return manage.delete()
         else methodNotAllowed(req, res)

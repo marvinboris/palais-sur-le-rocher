@@ -56,9 +56,13 @@ export default async function handler(
 
         if (req.method === 'GET') return manage.get()
         else if (req.method === 'POST') return manage.post({
-            fields: {
-                isActive: fields => fields.isActive == '1',
-            }
+            validate: {
+                episode: { isNumeric: true },
+                date: { required: true },
+                description: { required: true },
+                subtitle: { required: true },
+                notes: { required: true },
+            },
         })
         else methodNotAllowed(req, res)
     } catch (error) {

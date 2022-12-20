@@ -1,4 +1,4 @@
-import { AdjustmentsHorizontalIcon, ChatBubbleOvalLeftEllipsisIcon, WrenchIcon, CogIcon, ComputerDesktopIcon, PhotoIcon, TagIcon, UserGroupIcon, UserPlusIcon, Cog8ToothIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
+import { AdjustmentsHorizontalIcon, ChatBubbleOvalLeftEllipsisIcon, CogIcon, ComputerDesktopIcon, PhotoIcon, TagIcon, UserGroupIcon, UserPlusIcon, Cog8ToothIcon, BellIcon, ChatBubbleLeftEllipsisIcon, UserIcon, CreditCardIcon, BookOpenIcon, UsersIcon, HomeIcon, RectangleStackIcon } from "@heroicons/react/24/outline";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -40,19 +40,20 @@ export default function SideDrawer() {
                                     const resource = prefix.split('-').join('_')
 
                                     return <NavItem key={JSON.stringify(cms.sidebar.menu[resource as ResourceType])} icon={{
-                                        admins: UserGroupIcon,
+                                        admins: UserPlusIcon,
                                         users: UserGroupIcon,
                                         roles: TagIcon,
                                         features: CogIcon,
-                                        images: PhotoIcon,
-                                        events: WrenchIcon,
-                                        ministries: ShoppingBagIcon,
-                                        categories: ShoppingBagIcon,
-                                        publications: ShoppingBagIcon,
-                                        methods: ShoppingBagIcon,
-                                        lessons: ShoppingBagIcon,
-                                        staff_members: ChatBubbleOvalLeftEllipsisIcon,
+                                        events: BellIcon,
+                                        ministries: HomeIcon,
+                                        subscribers: UserIcon,
+                                        categories: RectangleStackIcon,
+                                        publications: ChatBubbleLeftEllipsisIcon,
+                                        methods: CreditCardIcon,
+                                        lessons: BookOpenIcon,
+                                        staff_members: UsersIcon,
                                         testimonials: ChatBubbleOvalLeftEllipsisIcon,
+                                        images: PhotoIcon,
                                     }[resource as ResourceType]} href={`/${role}/${prefix}`}>{cms.sidebar.menu[resource as ResourceType].title}</NavItem>
                                 })}
                                 {(role === 'admin' || data && 'role' in data && data.role.features.find(({prefix}) => prefix === 'cms')) && <NavItem icon={Cog8ToothIcon} href={`/${role}/cms`} items={Object.entries(cms.sidebar.menu.cms).filter(([key]) => !['icon', 'title'].includes(key)).map(([key, label]) => ({ href: `/${key}`, label }))}>{cms.sidebar.menu.cms.title}</NavItem>}

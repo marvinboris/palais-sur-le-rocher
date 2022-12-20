@@ -3,6 +3,7 @@ import { Model, Schema } from "mongoose"
 const directory = '/audios/lessons/'
 
 export interface LessonInterface {
+    id?: string
     episode: number
     date: number
     description: string

@@ -1,10 +1,10 @@
+import { Cog8ToothIcon } from "@heroicons/react/24/outline";
 import React, { Fragment, ReactNode, useState } from "react";
 
 import { htmlEntities } from "../../../../../app/helpers/utils";
-import ContentType from "../../../../../app/types/content";
-import Select from "../../../../frontend/ui/form/select";
 
-import TextArea from "../../../../frontend/ui/form/text-area";
+import Select from "../../form/select";
+import TextArea from "../../form/text-area";
 
 type StringObject = { [key: string]: string | string[] | StringObject }
 type AddParams = { regex: string, action: (item: string | StringObject) => ReactNode }[]
@@ -15,7 +15,7 @@ const recursiveDeepness = (paramItem: StringObject, paramName: string, paramId: 
     const mainId = `${paramId}-${item}`;
     const mainValue = (paramValue as StringObject)[item];
     const mainDeepness = paramDeepness.concat(item);
-console.log('mainValue', mainValue);
+    console.log('mainValue', mainValue);
 
     let prepend;
     const findPrepend = paramPrepends.find(el => (new RegExp(el.regex.replace(/\[/g, '\\[').replace(/\]/g, '\\]'))).test(mainName));
@@ -27,7 +27,7 @@ console.log('mainValue', mainValue);
 
     return typeof mainItem === 'string' ? <Fragment key={Math.random() + mainName}>
         {prepend}
-        <TextArea inputSize="sm" key={`${Math.random() + mainName}-input`} name={mainName} id={mainId} label={htmlEntities(mainItem) as string} placeholder={htmlEntities(mainItem) as string} defaultValue={mainValue as string} />
+        <TextArea key={`${Math.random() + mainName}-input`} name={mainName} id={mainId} label={<span title={htmlEntities(mainItem) as string}>{htmlEntities(mainItem) as string}</span>} placeholder={htmlEntities(mainItem) as string} defaultValue={mainValue as string} />
         {append}
     </Fragment> : recursiveDeepness(mainItem as StringObject, mainName, mainId, mainValue as string | StringObject, mainDeepness, paramPrepends, paramAppends);
 });
@@ -88,7 +88,7 @@ export const WithPages = ({ cmsExample, cmsValue, part }: WithPagesProps) => {
 
     return <>
         <div>
-            <Select inputSize="sm" name="section" label={'Section'} onChange={e => setActiveSection(e.target.value)} value={activeSection}>
+            <Select name="section" label={'Section'} icon={Cog8ToothIcon} onChange={e => setActiveSection(e.target.value)} value={activeSection}>
                 {sectionsOptions}
             </Select>
         </div>

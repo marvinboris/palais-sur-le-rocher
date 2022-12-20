@@ -50,6 +50,10 @@ export default async function handler(
 
     if (req.method === 'GET') return manage.get()
     else if (req.method === 'POST') return manage.post({
+        validate: {
+            name: { required: true },
+            description: { required: true },
+        },
         fields: {
             features: fields => {
                 const allFields = Object.keys(fields).filter(field => field.includes('features')).map(field => field.split('[').filter((_c, i) => i > 0).join('').split(']'))

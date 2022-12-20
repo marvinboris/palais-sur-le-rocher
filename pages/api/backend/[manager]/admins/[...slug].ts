@@ -3,7 +3,6 @@ import { NextApiRequest, NextApiResponse, PageConfig } from "next";
 
 import { data, resource, resourceConfig } from '.';
 
-import { message } from '../../../../../app/helpers/utils';
 import { Admin } from '../../../../../app/models';
 
 import { getCms, handleError, methodNotAllowed } from "../../../../../lib/utils";
@@ -34,10 +33,15 @@ export default async function handler(
             if (slug[0] === 'info') return manage.info()
             else return manage.show({
                 keys: {
-                    password: () => '',
+                    password: () => ''
                 }
             })
         } else if (req.method === 'PATCH') return manage.patch({
+            validate: {
+                name: { required: true },
+                email: { required: true, isEmail: true },
+                phone: { required: true },
+            },
             fields: {
                 phone: fields => fields.phone,
                 password: async fields => fields.password ? await bcrypt.hash(fields.password as string, 12) : undefined

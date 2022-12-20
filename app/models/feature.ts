@@ -1,6 +1,7 @@
 import { Model, Schema } from "mongoose"
 
 export interface FeatureInterface {
+    id?: string
     name: string
     prefix: string
     createdAt?: Date

@@ -35,10 +35,16 @@ export default async function handler(
             if (slug[0] === 'info') return manage.info()
             else return manage.show({
                 keys: {
-                    password: () => '',
+                    password: () => ''
                 }
             })
         } else if (req.method === 'PATCH') return manage.patch({
+            validate: {
+                name: { required: true },
+                email: { required: true, isEmail: true },
+                phone: { required: true },
+                role: { required: true },
+            },
             fields: {
                 phone: fields => fields.phone,
                 password: async fields => fields.password ? await bcrypt.hash(fields.password as string, 12) : undefined

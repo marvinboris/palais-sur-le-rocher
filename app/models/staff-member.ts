@@ -3,6 +3,7 @@ import { Model, Schema } from "mongoose"
 const directory = '/images/staff-members/'
 
 export interface StaffMemberInterface {
+    id?: string
     name: string
     title: string
     description: string

@@ -3,6 +3,7 @@ import { Model, Schema } from "mongoose"
 const directory = '/images/gallery/'
 
 export interface ImageInterface {
+    id?: string
     photo?: string
     createdAt?: Date
     updatedAt?: Date

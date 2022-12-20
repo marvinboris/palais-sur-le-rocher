@@ -4,6 +4,7 @@ import slugify from 'slugify'
 const directory = '/images/events/'
 
 export interface EventInterface {
+    id?: string
     title: string
     description: string
     body: string

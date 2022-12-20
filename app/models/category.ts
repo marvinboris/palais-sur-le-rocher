@@ -2,6 +2,7 @@ import { Model, Schema } from "mongoose"
 import slugify from 'slugify'
 
 export interface CategoryInterface {
+    id?: string
     name: string
     slug?: string
     isActive?: boolean

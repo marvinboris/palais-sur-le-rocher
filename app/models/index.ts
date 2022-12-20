@@ -8,6 +8,7 @@ import { ImageInterface, ImageSchema } from './image'
 import { LessonInterface, LessonSchema } from './lesson'
 import { MethodInterface, MethodSchema } from './method'
 import { MinistryInterface, MinistrySchema } from './ministry'
+import { SubscriberInterface, SubscriberSchema } from './subscriber'
 import { PublicationInterface, PublicationSchema } from './publication'
 import { RoleInterface, RoleSchema } from './role'
 import { StaffMemberInterface, StaffMemberSchema } from './staff-member'
@@ -22,6 +23,7 @@ export const Image = models.Image as Model<ImageInterface> || model<ImageInterfa
 export const Lesson = models.Lesson as Model<LessonInterface> || model<LessonInterface>("Lesson", LessonSchema)
 export const Method = models.Method as Model<MethodInterface> || model<MethodInterface>("Method", MethodSchema)
 export const Ministry = models.Ministry as Model<MinistryInterface> || model<MinistryInterface>("Ministry", MinistrySchema)
+export const Subscriber = models.Subscriber as Model<SubscriberInterface> || model<SubscriberInterface>("Subscriber", SubscriberSchema)
 export const Publication = models.Publication as Model<PublicationInterface> || model<PublicationInterface>("Publication", PublicationSchema)
 export const Role = models.Role as Model<RoleInterface> || model<RoleInterface>("Role", RoleSchema)
 export const StaffMember = models.StaffMember as Model<StaffMemberInterface> || model<StaffMemberInterface>("StaffMember", StaffMemberSchema)

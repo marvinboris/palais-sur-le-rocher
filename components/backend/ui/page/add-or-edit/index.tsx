@@ -1,6 +1,6 @@
 import { ArrowDownOnSquareIcon } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/router'
-import { ComponentProps, ReactNode, useEffect, useState } from 'react'
+import { ComponentProps, Dispatch, ReactNode, SetStateAction, useEffect, useMemo, useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../../../app/hooks'
 import { useContentContext } from '../../../../../app/contexts/content'
@@ -15,6 +15,7 @@ import { Head } from '../../../navigation/layout'
 
 import Button from '../../form/button'
 import PageTitle from '../../title/page'
+
 import * as utility from '../../utils'
 
 type Props = {
@@ -26,7 +27,7 @@ type Props = {
     children?: ReactNode
     staticChild?: ReactNode
     state: ManagerResourceManageStateType
-    setState: (state: ManagerResourceManageStateType | ((state: ManagerResourceManageStateType) => ManagerResourceManageStateType)) => void
+    setState: Dispatch<SetStateAction<ManagerResourceManageStateType>>
 }
 
 const ManagerAddOrEdit = ({ initialState, resource, singular, edit, icon, children, staticChild, state, setState }: Props) => {
@@ -41,8 +42,8 @@ const ManagerAddOrEdit = ({ initialState, resource, singular, edit, icon, childr
 
     const [isMounted, setIsMounted] = useState(false)
 
-    const [params] = useState({ role: role!, resource })
-    const [props] = useState({
+    const params = useMemo(() => ({ role: role!, resource }), [resource, role])
+    const props = useMemo(() => ({
         ...{
             auth: { role: role! },
             backend: { status, data: backend!, message },
@@ -60,25 +61,25 @@ const ManagerAddOrEdit = ({ initialState, resource, singular, edit, icon, childr
             info: () => dispatch(info(params)),
             post: (data: any) => dispatch(post({ ...params, data })),
         })
-    })
+    }), [backend, content, dispatch, edit, message, params, role, router, status])
 
     useEffect(() => {
         if (status === Status.IDLE && !backend) utility.add.lifecycle.componentDidMount(props, setIsMounted)
 
         return () => {
-            if (backend) dispatch(reset())
+            if (backend && !backend.message) dispatch(reset())
         }
     }, [backend, dispatch, props, status])
 
     useEffect(() => {
-        if (!state._id) utility.add.lifecycle.componentDidUpdate(resource, singular)({ ...props, backend: { status, data: backend, message } }, state, setState, () => setState({ ...initialState }))
-    }, [backend, initialState, message, props, resource, setState, singular, state, status])
+        if (!state._id) utility.add.lifecycle.componentDidUpdate(resource, singular)(props, state, setState, () => setState({ ...initialState }))
+    }, [initialState, message, props, resource, setState, singular, state, status])
 
     const _content = <div>
         {children}
 
         <div className='mt-5'>
-            <Button pill color='green' icon={ArrowDownOnSquareIcon}>{save}</Button>
+            <Button color='green' icon={ArrowDownOnSquareIcon}>{save}</Button>
         </div>
     </div>
 
@@ -87,7 +88,7 @@ const ManagerAddOrEdit = ({ initialState, resource, singular, edit, icon, childr
 
         <PageTitle icon={icon} title={cms.title} subtitle={edit ? cms.edit : cms.add} />
 
-        <utility.add.lifecycle.render icon={icon} props={{ ...props, backend: { status, data: backend!, message } }} isMounted={isMounted} resource={resource}>
+        <utility.add.lifecycle.render icon={icon} props={props} isMounted={isMounted} resource={resource}>
             {staticChild}
             {_content}
         </utility.add.lifecycle.render>

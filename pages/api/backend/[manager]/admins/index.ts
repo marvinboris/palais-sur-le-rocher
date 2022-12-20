@@ -19,6 +19,7 @@ export const data = async (req: NextApiRequest) => {
             $or: [
                 { name: regex },
                 { email: regex },
+                { phone: regex },
             ]
         })
         .select('-password')
@@ -36,7 +37,7 @@ export const data = async (req: NextApiRequest) => {
 export const resource = 'admins'
 export const resourceConfig = {
     singular: 'admin',
-    fields: ['name', 'email', 'phone', 'password', 'role'],
+    fields: ['name', 'email', 'phone', 'password'],
     file: {
         name: 'photo',
         uploadDir: path.join(process.cwd(), 'public', 'images', 'admins'),
@@ -61,6 +62,12 @@ export default async function handler(
 
         if (req.method === 'GET') return manage.get()
         else if (req.method === 'POST') return manage.post({
+            validate: {
+                name: { required: true },
+                email: { required: true, isEmail: true },
+                phone: { required: true },
+                password: { required: true },
+            },
             fields: {
                 phone: fields => `237${fields.phone}`,
                 password: async fields => await bcrypt.hash(fields.password as string, 12)

@@ -4,17 +4,18 @@ import { ChangeEvent, FormEvent, ReactElement, useEffect, useState } from 'react
 
 import { NextPageWithLayout } from '../../_app'
 
-import Layout, { Head } from '../../../components/backend/navigation/layout'
+import { useContentContext } from '../../../app/contexts/content'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import Status from '../../../app/types/enums/status'
 
+import Layout, { Head } from '../../../components/backend/navigation/layout'
 import Button from '../../../components/backend/ui/form/button'
+import Input from '../../../components/backend/ui/form/input'
+import InputImage from '../../../components/backend/ui/form/input-image'
 import PageTitle from '../../../components/backend/ui/title/page'
 
-import Input from '../../../components/frontend/ui/form/input'
-import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { selectAuth } from '../../../features/auth/authSlice'
-import { useContentContext } from '../../../app/contexts/content'
 import { get, patch, selectBackend } from '../../../features/backend/backendSlice'
-import Status from '../../../app/types/enums/status'
 
 type ValueType = any
 type SetValueType = (value: ValueType | ((value: ValueType) => ValueType)) => void
@@ -90,18 +91,12 @@ const ManagerCmsGlobalPage: NextPageWithLayout = () => {
                     </div>
 
                     <form onSubmit={submitHandler}>
-                        <div className='grid md:grid-cols-3'>
+                        <div className='grid md:grid-cols-3 gap-4'>
                             <div className="md:col-span-2 flex-1 grid gap-y-2 gap-x-4 grid-cols-1 md:grid-cols-2 overflow-auto">
-                                <Input inputSize='sm' type="text" onChange={onChange} value={value.app_name} name="app_name" required label={form.app_name} />
-                                <Input inputSize='sm' type="text" onChange={onChange} value={value.company_name} name="company_name" required label={form.company_name} />
+                                <Input onChange={onChange} value={value.app_name} name="app_name" required validation={{ required: true }} label={form.app_name} />
+                                <Input onChange={onChange} value={value.company_name} name="company_name" required validation={{ required: true }} label={form.company_name} />
                                 {Object.keys(logo).map(key => <div key={`global-input-logo${key}`}>
-                                    <div>{`${form.logo}(${key})`}</div>
-                                    <div onClick={() => handlePhotoChange(`logo-${key}`)} className="aspect-[5/2] cursor-pointer mt-[14px] md:mt-0 rounded-[15px] md:rounded-3xl relative flex flex-col items-center justify-center overflow-hidden text-white">
-                                        {key in value.logo && value.logo[key] && <Image width={1920} height={1920} src={value.logo[key]!} alt="User profile pic" className="absolute z-0 inset-0 image-cover" />}
-                                        <div className="absolute z-10 inset-0 bg-black/40" />
-                                        <div className="relative z-20 w-9 md:w-14 h-9 md:h-14 mb-1 md:mb-1.5 rounded-full flex items-center justify-center bg-black/30"><PencilSquareIcon className='w-4 md:w-6' /></div>
-                                        <div className="relative z-20 font-medium md:font-bold text-[14.81px]">Change</div>
-                                    </div>
+                                    <InputImage label={`${form.logo}(${key})`} name={`logo-${key}`} value={value.logo[key]!} onClick={() => handlePhotoChange(`logo-${key}`)} />
                                 </div>)}
                             </div>
                         </div>

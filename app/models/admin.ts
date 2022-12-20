@@ -3,6 +3,7 @@ import { Model, Schema } from "mongoose"
 const directory = '/images/admins/'
 
 export interface AdminInterface {
+    id?: string
     name: string
     email: string
     password: string

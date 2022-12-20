@@ -1,22 +1,23 @@
-import { CheckIcon, ExclamationCircleIcon } from '@heroicons/react/24/outline'
-import { ChangeEvent, InputHTMLAttributes, ReactNode, useState } from 'react'
+import { CheckIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { ChangeEvent, ComponentProps, ReactNode, useState } from "react";
 
-import { checkValidity, classNames } from '../../../../app/helpers/utils'
-import ValidationType from '../../../../app/types/validation'
+import { checkValidity, classNames } from "../../../../app/helpers/utils";
+import ValidationType from "../../../../app/types/validation";
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+type SelectProps = ComponentProps<'select'> & {
     icon?: (props: React.ComponentProps<'svg'>) => JSX.Element
     label?: ReactNode
     addon?: ReactNode
+    append?: ReactNode
     validation?: ValidationType
 }
 
-export default function Input({ icon: Icon, label, addon, className, validation, ...props }: InputProps) {
+export default function Select({ icon: Icon, label, addon, append, className, validation, ...props }: SelectProps) {
     const [touched, setTouched] = useState(false)
 
     const valid = validation ? Object.values(checkValidity(props.value as string, validation)).reduce((a, b) => a && b, true) : true
 
-    const onChange = props.onChange ? (e: ChangeEvent<HTMLInputElement>) => {
+    const onChange = props.onChange ? (e: ChangeEvent<HTMLSelectElement>) => {
         setTouched(true)
         props.onChange!(e)
     } : () => { }
@@ -33,7 +34,7 @@ export default function Input({ icon: Icon, label, addon, className, validation,
             </div>
 
             <div className='h-full flex-1 flex items-center relative'>
-                <input {...props} onChange={onChange} className='h-full flex-1 border-none text-sm bg-transparent text-inherit w-full outline-none focus:ring-0' />
+                <select {...props} onChange={onChange} className='h-full flex-1 border-none text-sm bg-transparent text-inherit w-full outline-none focus:ring-0' />
 
                 {touched && validation ? <div className="relative w-[47px] h-full flex items-center justify-center">
                     {valid ? <CheckIcon className='w-[18px] text-green' /> : <ExclamationCircleIcon className='w-[18px] text-red' />}

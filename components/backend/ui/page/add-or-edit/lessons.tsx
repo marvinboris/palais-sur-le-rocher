@@ -1,16 +1,12 @@
-import { ShoppingBagIcon, EyeIcon, PencilSquareIcon, BanknotesIcon } from "@heroicons/react/24/outline"
+import { BookOpenIcon, EyeIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
 import { ChangeEvent, useState } from "react"
 
 import { useContentContext } from "../../../../../app/contexts/content"
-import { useAppSelector } from "../../../../../app/hooks"
 import ManagerResourceManageStateType from "../../../../../app/types/account/manager/add-or-edit/state"
 
-import { selectBackend } from "../../../../../features/backend/backendSlice"
-
-import Alert from "../../../../frontend/ui/alert"
-import Input from "../../../../frontend/ui/form/input"
-import Select from "../../../../frontend/ui/form/select"
-import TextArea from "../../../../frontend/ui/form/text-area"
+import Input from "../../form/input"
+import Select from "../../form/select"
+import TextArea from "../../form/text-area"
 
 import * as utility from '../../utils'
 
@@ -31,8 +27,6 @@ const initialState = {
 }
 
 export default function ManageAddOrEditLessons({ edit }: Props) {
-    const { status, data: backend, message } = useAppSelector(selectBackend)
-
     const { content } = useContentContext()
     const { cms: { backend: { components: { form: { active, inactive } }, pages: { lessons: { form } } } } } = content!
 
@@ -41,23 +35,17 @@ export default function ManageAddOrEditLessons({ edit }: Props) {
     const inputChangeHandler = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => utility.add.component.inputChangeHandler(setState)(e)
     const fileUpload = (id: string) => utility.add.component.fileUpload(id)
 
-    return <ManagerAddOrEdit icon={ShoppingBagIcon} edit={edit} resource='lessons' singular='lesson' initialState={initialState} state={state} setState={setState} staticChild={<>
+    return <ManagerAddOrEdit icon={BookOpenIcon} edit={edit} resource='lessons' singular='lesson' initialState={initialState} state={state} setState={setState} staticChild={<>
         <input type="file" id="audio" name="audio" className="hidden" onChange={inputChangeHandler} accept=".m4a" />
     </>}>
-        {message && <Alert color={message.type}>{message.content}</Alert>}
-        <div className='grid md:grid-cols-3'>
+        <div className='grid md:grid-cols-3 gap-4'>
             <div className="md:col-span-2">
                 <div className="flex-1 grid gap-y-2 gap-x-4 grid-cols-1 md:grid-cols-2 overflow-auto">
-                    <Input inputSize='sm' type="text" icon={ShoppingBagIcon} onChange={inputChangeHandler} value={state.episode as string} name="episode" required label={form.episode} />
-                    <Input inputSize='sm' type="text" icon={ShoppingBagIcon} onChange={inputChangeHandler} value={state.date as string} name="date" required label={form.date} />
-                    <Input inputSize='sm' className="col-span-2" type="text" icon={ShoppingBagIcon} onChange={inputChangeHandler} value={state.subtitle as string} name="subtitle" required label={form.subtitle} />
-                    <TextArea inputSize='sm' className="col-span-2" onChange={inputChangeHandler} value={state.description as string} name="description" required label={form.description} />
-                    <TextArea inputSize='sm' className="col-span-2" onChange={inputChangeHandler} value={state.notes as string} name="notes" required label={form.notes} />
-                    <Select inputSize='sm' icon={EyeIcon} label={form.is_active} onChange={inputChangeHandler} value={state.isActive as string} name="isActive" required>
-                        <option>{form.select_status}</option>
-                        <option value={1}>{active}</option>
-                        <option value={0}>{inactive}</option>
-                    </Select>
+                    <Input icon={BookOpenIcon} onChange={inputChangeHandler} value={state.episode as string} name="episode" required validation={{ required: true }} label={form.episode} />
+                    <Input icon={BookOpenIcon} onChange={inputChangeHandler} value={state.date as string} name="date" required validation={{ required: true }} label={form.date} />
+                    <Input className="col-span-2" icon={BookOpenIcon} onChange={inputChangeHandler} value={state.subtitle as string} name="subtitle" required validation={{ required: true }} label={form.subtitle} />
+                    <TextArea className="col-span-2" onChange={inputChangeHandler} value={state.description as string} name="description" required validation={{ required: true }} label={form.description} />
+                    <TextArea className="col-span-2" onChange={inputChangeHandler} value={state.notes as string} name="notes" required validation={{ required: true }} label={form.notes} />
                 </div>
             </div>
 

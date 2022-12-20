@@ -3,6 +3,7 @@ import { Model, Schema } from "mongoose"
 const directory = '/images/methods/'
 
 export interface MethodInterface {
+    id?: string
     name: string
     description: string
     logo?: string

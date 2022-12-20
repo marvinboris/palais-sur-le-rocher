@@ -35,7 +35,7 @@ export default function Wrapper({ children }: WrapperProps) {
   const [language, setJustLanguage] = useState<LanguageType | null>(null)
   const [languages, setLanguages] = useState<LanguageType[] | null>(null)
   const [loaded, setLoaded] = useState(false)
-  const [theme, setTheme] = useState<Theme | null>(Theme.LIGHT)
+  const [theme, setTheme] = useState<Theme | null>(null)
 
   const dispatch = useAppDispatch()
   const { token, status } = useAppSelector(selectAuth)
@@ -62,6 +62,14 @@ export default function Wrapper({ children }: WrapperProps) {
     else root.classList.remove('dark')
   }, [theme])
 
+  useEffect(() => {
+    if (theme === null) {
+      const dark = localStorage.getItem('dark')
+      if (dark) setTheme(Theme.DARK)
+      else setTheme(Theme.LIGHT)
+    }
+  }, [theme])
+  
   useEffect(() => {
     if (countries === null) getCountries()
       .then(countries => setCountries(countries))

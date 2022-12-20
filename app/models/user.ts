@@ -3,6 +3,7 @@ import { Model, Schema, Types } from "mongoose"
 const directory = '/images/users/'
 
 export interface UserInterface {
+    id?: string
     name: string
     email: string
     password: string

@@ -49,7 +49,7 @@ const GivePage: NextPageWithLayout<GivePageProps> = ({ give }) => {
                             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas ipsum officiis, voluptate alias est sapiente itaque ducimus cupiditate. Mollitia explicabo aliquam exercitationem veniam. Suscipit sunt natus tempora molestias esse dicta.</p>
 
                             <div>
-                                <View title="Faire un don" action={<button className="btn btn-primary-600">Faire un don</button>}>
+                                <View title="Faire un don" action={<button className="btn btn-primary">Faire un don</button>}>
                                     <form action="">
                                         <div className="form-group">
                                             <label>Méthode de paiement</label>
@@ -61,7 +61,7 @@ const GivePage: NextPageWithLayout<GivePageProps> = ({ give }) => {
                                             <input type="number" name="amount" id="amount" required />
                                         </div>
 
-                                        <button className="btn btn-primary-600">Continuer</button>
+                                        <button className="btn btn-primary">Continuer</button>
                                     </form>
                                 </View>
                             </div>

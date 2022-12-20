@@ -8,9 +8,7 @@ import ManagerResourceManageStateType from "../../../../../app/types/account/man
 
 import { selectBackend } from "../../../../../features/backend/backendSlice"
 
-import Alert from "../../../../frontend/ui/alert"
-import Input from "../../../../frontend/ui/form/input"
-import Switch from "../../../../frontend/ui/form/switch"
+import Input from "../../form/input"
 
 import ManagerAddOrEdit from "../add-or-edit"
 
@@ -25,7 +23,7 @@ const initialState = {
 }
 
 export default function ManageAddOrEditRoles({ edit }: Props) {
-    const { status, data: backend, message } = useAppSelector(selectBackend)
+    const { data: backend } = useAppSelector(selectBackend)
 
     const { content } = useContentContext()
     const { cms: { backend: { pages: { roles: { form } } } } } = content!
@@ -93,12 +91,11 @@ export default function ManageAddOrEditRoles({ edit }: Props) {
     });
 
     return <ManagerAddOrEdit icon={TagIcon} edit={edit} resource='roles' singular='role' initialState={initialState} state={state} setState={setState}>
-        {message && <Alert className="mb-4" color={message.type}>{message.content}</Alert>}
-        <div className='grid md:grid-cols-3'>
+        <div className='grid md:grid-cols-3 gap-4'>
             <div className="md:col-span-2">
                 <div className="flex-1 grid gap-y-2 gap-x-4 grid-cols-1 md:grid-cols-2 overflow-auto">
-                    <Input inputSize='sm' type="text" icon={TagIcon} onChange={inputChangeHandler} value={state.name as string} name="name" required label={form.name} />
-                    <Input inputSize="sm" type="text" icon={PencilIcon} onChange={inputChangeHandler} value={state.description as string} name="description" required label={form.description} />
+                    <Input icon={TagIcon} onChange={inputChangeHandler} value={state.name as string} name="name" required validation={{ required: true }} label={form.name} />
+                    <Input icon={PencilIcon} onChange={inputChangeHandler} value={state.description as string} name="description" required validation={{ required: true }} label={form.description} />
                 </div>
 
                 <div className="mt-4">

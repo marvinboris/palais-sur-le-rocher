@@ -3,20 +3,18 @@ import { ChangeEvent, FormEvent, ReactElement, useEffect, useState } from 'react
 
 import { NextPageWithLayout } from '../../_app'
 
-import Layout, { Head } from '../../../components/backend/navigation/layout'
-
-import Button from '../../../components/backend/ui/form/button'
-import PageTitle from '../../../components/backend/ui/title/page'
-
-import Input from '../../../components/frontend/ui/form/input'
-import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { selectAuth } from '../../../features/auth/authSlice'
 import { useContentContext } from '../../../app/contexts/content'
-import { get, patch, selectBackend } from '../../../features/backend/backendSlice'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import Status from '../../../app/types/enums/status'
 import ContentType from '../../../app/types/content'
 
-type ValueType = ContentType["cms"]["general"]
+import Layout, { Head } from '../../../components/backend/navigation/layout'
+import Button from '../../../components/backend/ui/form/button'
+import Input from '../../../components/backend/ui/form/input'
+import PageTitle from '../../../components/backend/ui/title/page'
+
+import { selectAuth } from '../../../features/auth/authSlice'
+import { get, patch, selectBackend } from '../../../features/backend/backendSlice'
 
 const Separator = ({ sm }: { sm?: boolean }) => <div className={`md:col-span-2 xl:col-span-3 mb-${sm ? 2 : 3}`} />
 
@@ -45,37 +43,11 @@ const ManagerCmsGeneralPage: NextPageWithLayout = () => {
         if (data && data.cms && data.cms.general) setValue({ ...data.cms.general })
     }, [data])
 
-    const onChange = (e: ChangeEvent<HTMLInputElement>, ...deepness: (string | number)[]) => {
-        const valueCopy: any = { ...value };
-
-        if (deepness.length === 1) {
-            valueCopy[deepness[0]] = e.target.value;
-            return setValue(valueCopy);
-        }
-
-        const subValues = [];
-        let subValue: any = { ...value };
-        for (let i = 0; i < deepness.length - 1; i++) {
-            const element = deepness[i];
-            subValue = subValue[element];
-            subValues.push(subValue);
-        }
-        subValues[subValues.length - 1][deepness[deepness.length - 1]] = e.target.value;
-        for (let i = 1; i < deepness.length - 1; i++) {
-            const element = deepness[deepness.length - 1 - i];
-            const index = subValues.length - 1 - i;
-            subValues[index][element] = subValues[index + 1];
-        }
-        valueCopy[deepness[0]] = subValues[0];
-
-        setValue(valueCopy);
-    }
-
     const prefix = `general`;
     const prefixId = `general`;
-    const global = ['Date', 'Time', 'Home'].map(item => <Input inputSize='sm' key={Math.random()} type="text" id={`${prefixId}-${item.toLowerCase()}`} name={`${prefix}[${item.toLowerCase()}]`} label={item} onChange={e => onChange(e, item.toLowerCase())} value={value[item.toLowerCase()]} />);
-    const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map((item, index) => <Input inputSize='sm' key={Math.random()} type="text" id={`${prefixId}-date-${index}`} name={`${prefix}[days][]`} label={item} onChange={e => onChange(e, 'days', index)} value={value.days[index]} />);
-    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((item, index) => <Input inputSize='sm' key={Math.random()} type="text" id={`${prefixId}-months-${index}`} name={`${prefix}[months][]`} label={item} onChange={e => onChange(e, 'months', index)} value={value.months[index]} />);
+    const global = ['Date', 'Time', 'Home'].map(item => <Input key={Math.random()} id={`${prefixId}-${item.toLowerCase()}`} name={`${prefix}[${item.toLowerCase()}]`} label={item} defaultValue={value[item.toLowerCase()]} />);
+    const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"].map((item, index) => <Input key={Math.random()} id={`${prefixId}-date-${index}`} name={`${prefix}[days][]`} label={item} defaultValue={value.days[index]} />);
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((item, index) => <Input key={Math.random()} id={`${prefixId}-months-${index}`} name={`${prefix}[months][]`} label={item} defaultValue={value.months[index]} />);
 
     const submitHandler = (e: FormEvent) => {
         e.preventDefault();

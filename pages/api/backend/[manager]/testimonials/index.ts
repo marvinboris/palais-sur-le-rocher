@@ -56,6 +56,11 @@ export default async function handler(
 
         if (req.method === 'GET') return manage.get()
         else if (req.method === 'POST') return manage.post({
+            validate: {
+                name: { required: true },
+                title: { required: true },
+                body: { required: true },
+            },
             fields: {
                 isActive: fields => fields.isActive == '1',
             }

@@ -7,6 +7,8 @@ type ResourceType =
     'lessons' |
     'methods' |
     'ministries' |
+    'donations' |
+    'subscribers' |
     'publications' |
     'roles' |
     'staff_members' |

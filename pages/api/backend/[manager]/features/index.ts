@@ -49,7 +49,12 @@ export default async function handler(
         })
 
         if (req.method === 'GET') return manage.get()
-        else if (req.method === 'POST') return manage.post()
+        else if (req.method === 'POST') return manage.post({
+            validate: {
+                name: { required: true },
+                prefix: { required: true },
+            }
+        })
         else methodNotAllowed(req, res)
     } catch (error) {
         handleError(res, error)

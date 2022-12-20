@@ -181,7 +181,7 @@ export default function List({ total, get, icon: Icon, data, title, subtitle, fi
                 </div>
             </div>
 
-            <div className="overflow-auto pb-5">
+            <div className="overflow-auto pb-5 scrollbar-thin scrollbar-thumb-primary-600 scrollbar-track-primary-100">
                 <table className="border-collapse table-auto w-full text-sm">
                     <thead>
                         <tr className='relative z-0 after:absolute after:inset-0 after:rounded-lg after:bg-secondary-500/10 after:-z-10'>

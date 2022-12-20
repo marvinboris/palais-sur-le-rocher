@@ -12,7 +12,7 @@ type ButtonProps = React.ComponentProps<'button'> & {
     status?: Status
 }
 
-export default function Button({ color = 'primary-600', size = '', icon, children, status, onClick }: ButtonProps) {
+export default function Button({ color = 'primary', size = '', icon, children, status, onClick }: ButtonProps) {
     const Icon = icon
 
     return <button onClick={onClick} className={classNames(`btn btn-${color} relative group`, icon ? 'btn-icon' : 'px-6', size === 'sm' ? 'h-10 px-4' : '')}>
