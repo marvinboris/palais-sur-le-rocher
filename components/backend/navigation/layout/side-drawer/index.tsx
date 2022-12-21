@@ -1,4 +1,4 @@
-import { AdjustmentsHorizontalIcon, ChatBubbleOvalLeftEllipsisIcon, CogIcon, ComputerDesktopIcon, PhotoIcon, TagIcon, UserGroupIcon, UserPlusIcon, Cog8ToothIcon, BellIcon, ChatBubbleLeftEllipsisIcon, UserIcon, CreditCardIcon, BookOpenIcon, UsersIcon, HomeIcon, RectangleStackIcon } from "@heroicons/react/24/outline";
+import { AdjustmentsHorizontalIcon, ChatBubbleOvalLeftEllipsisIcon, CogIcon, ComputerDesktopIcon, PhotoIcon, TagIcon, UserGroupIcon, UserPlusIcon, Cog8ToothIcon, BellIcon, ChatBubbleLeftEllipsisIcon, UserIcon, CreditCardIcon, BookOpenIcon, UsersIcon, HomeIcon, RectangleStackIcon, GiftIcon } from "@heroicons/react/24/outline";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -54,6 +54,7 @@ export default function SideDrawer() {
                                         staff_members: UsersIcon,
                                         testimonials: ChatBubbleOvalLeftEllipsisIcon,
                                         images: PhotoIcon,
+                                        donations: GiftIcon,
                                     }[resource as ResourceType]} href={`/${role}/${prefix}`}>{cms.sidebar.menu[resource as ResourceType].title}</NavItem>
                                 })}
                                 {(role === 'admin' || data && 'role' in data && data.role.features.find(({prefix}) => prefix === 'cms')) && <NavItem icon={Cog8ToothIcon} href={`/${role}/cms`} items={Object.entries(cms.sidebar.menu.cms).filter(([key]) => !['icon', 'title'].includes(key)).map(([key, label]) => ({ href: `/${key}`, label }))}>{cms.sidebar.menu.cms.title}</NavItem>}
