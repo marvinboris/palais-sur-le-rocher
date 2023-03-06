@@ -42,7 +42,7 @@ export const uploadDir = path.join(
 export const resource = "ministries";
 export const resourceConfig = {
   singular: "ministry",
-  fields: ["name", "description", "price", "isActive"],
+  fields: ["name", "description", "body", "isActive"],
   file: { name: "photo", uploadDir },
 };
 
@@ -69,7 +69,7 @@ export default async function handler(
         validate: {
           name: { required: true },
           description: { required: true },
-          price: { isNumeric: true },
+          body: { required: true },
         },
         fields: {
           isActive: (fields) => fields.isActive == "1",

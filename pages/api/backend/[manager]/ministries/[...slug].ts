@@ -48,7 +48,7 @@ export default async function handler(
         validate: {
           name: { required: true },
           description: { required: true },
-          price: { isNumeric: true },
+          body: { required: true },
         },
         fields: {
           isActive: (fields) => fields.isActive == "1",
