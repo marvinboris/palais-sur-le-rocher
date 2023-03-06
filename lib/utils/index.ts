@@ -40,13 +40,13 @@ export const handleError = (res: NextApiResponse, error: any | { message: string
 
 export const methodNotAllowed = (req: NextApiRequest, res: NextApiResponse) => res.status(405).json({ message: message(`Method ${req.method} not allowed`, 'danger') })
 
-export const updateImage = (photo: formidable.File, instance: any) => {
+export const updateImage = (photo: formidable.File, instance: any, name: string) => {
     if (photo.size > 0) {
-        if (instance.photo && instance.photo !== 'backend/user-pic.svg') deleteImage(instance.toObject().photo!)
+        if (instance[name] && instance[name] !== 'backend/user-pic.svg') deleteImage(instance.toObject()[name]!)
         return photo.newFilename
     } else {
         fs.unlinkSync(photo.filepath)
-        return instance.photo
+        return instance[name]
     }
 }
 

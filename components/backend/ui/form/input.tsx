@@ -1,44 +1,78 @@
-import { CheckIcon, ExclamationCircleIcon } from '@heroicons/react/24/outline'
-import { ChangeEvent, InputHTMLAttributes, ReactNode, useState } from 'react'
+import { CheckIcon, ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { ChangeEvent, InputHTMLAttributes, ReactNode, useState } from "react";
 
-import { checkValidity, classNames } from '../../../../app/helpers/utils'
-import ValidationType from '../../../../app/types/validation'
+import { checkValidity, classNames } from "../../../../app/helpers/utils";
+import ValidationType from "../../../../app/types/validation";
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
-    icon?: (props: React.ComponentProps<'svg'>) => JSX.Element
-    label?: ReactNode
-    addon?: ReactNode
-    validation?: ValidationType
-}
+  icon?: (props: React.ComponentProps<"svg">) => JSX.Element;
+  label?: ReactNode;
+  addon?: ReactNode;
+  validation?: ValidationType;
+};
 
-export default function Input({ icon: Icon, label, addon, className, validation, ...props }: InputProps) {
-    const [touched, setTouched] = useState(false)
+export default function Input({
+  icon: Icon,
+  label,
+  addon,
+  className,
+  validation,
+  ...props
+}: InputProps) {
+  const [touched, setTouched] = useState(false);
 
-    const valid = validation ? Object.values(checkValidity(props.value as string, validation)).reduce((a, b) => a && b, true) : true
+  const valid = validation
+    ? Object.values(checkValidity(props.value as string, validation)).reduce(
+        (a, b) => a && b,
+        true
+      )
+    : true;
 
-    const onChange = props.onChange ? (e: ChangeEvent<HTMLInputElement>) => {
-        setTouched(true)
-        props.onChange!(e)
-    } : () => { }
+  const onChange = props.onChange
+    ? (e: ChangeEvent<HTMLInputElement>) => {
+        setTouched(true);
+        props.onChange!(e);
+      }
+    : () => {};
 
-    return <div className={className}>
-        {label && <label htmlFor={props.id ? props.id : props.name}>{label}</label>}
+  return (
+    <div className={className}>
+      {label && (
+        <label htmlFor={props.id ? props.id : props.name}>{label}</label>
+      )}
 
-        <div className="h-12 rounded-[8px] bg-secondary-700/10 md:bg-secondary-100 flex items-center">
-            <div>
-                <div className={Icon || addon ? "min-w-[47px] flex justify-center" : "w-3"}>
-                    {Icon && <Icon className='w-[18px]' />}
-                    {addon}
-                </div>
-            </div>
-
-            <div className='h-full flex-1 flex items-center relative'>
-                <input {...props} onChange={onChange} className='h-full flex-1 border-none text-sm bg-transparent text-inherit w-full outline-none focus:ring-0' />
-
-                {touched && validation ? <div className="relative w-[47px] h-full flex items-center justify-center">
-                    {valid ? <CheckIcon className='w-[18px] text-green' /> : <ExclamationCircleIcon className='w-[18px] text-red' />}
-                </div> : <div className='w-3' />}
-            </div>
+      <div className="flex h-12 items-center rounded-[8px] bg-secondary-700/10 dark:bg-secondary-900 md:bg-secondary-100">
+        <div>
+          <div
+            className={
+              Icon || addon ? "flex min-w-[47px] justify-center" : "w-3"
+            }
+          >
+            {Icon && <Icon className="w-[18px]" />}
+            {addon}
+          </div>
         </div>
+
+        <div className="relative flex h-full flex-1 items-center">
+          <input
+            {...props}
+            onChange={onChange}
+            className="h-full w-full flex-1 border-none bg-transparent text-sm text-inherit outline-none focus:ring-0"
+          />
+
+          {touched && validation ? (
+            <div className="relative flex h-full w-[47px] items-center justify-center">
+              {valid ? (
+                <CheckIcon className="w-[18px] text-green" />
+              ) : (
+                <ExclamationCircleIcon className="w-[18px] text-red" />
+              )}
+            </div>
+          ) : (
+            <div className="w-3" />
+          )}
+        </div>
+      </div>
     </div>
+  );
 }

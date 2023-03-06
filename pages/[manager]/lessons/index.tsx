@@ -1,52 +1,93 @@
-import { BookOpenIcon } from '@heroicons/react/24/outline'
-import { ReactElement } from 'react'
+import { ReactElement, useEffect, useState } from "react";
 
-import { useContentContext } from '../../../app/contexts/content'
-import { convertDate, updateObject } from '../../../app/helpers/utils'
-import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { LessonInterface } from '../../../app/models/lesson'
+import { useContentContext } from "../../../app/contexts/content";
+import { convertDate, updateObject } from "../../../app/helpers/utils";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { LessonInterface } from "../../../app/models/lesson";
+import ResourceType from "../../../app/types/resource";
 
-import Layout from '../../../components/backend/navigation/layout'
-import Action from '../../../components/backend/ui/list/action'
-import ManageRead from '../../../components/backend/ui/page/read'
+import Layout from "../../../components/backend/navigation/layout";
+import Action from "../../../components/backend/ui/list/action";
+import ManageRead from "../../../components/backend/ui/page/read";
 
-import { selectAuth } from '../../../features/auth/authSlice'
-import { selectBackend, _delete } from '../../../features/backend/backendSlice'
+import { selectAuth } from "../../../features/auth/authSlice";
+import { selectBackend, _delete } from "../../../features/backend/backendSlice";
 
-import { NextPageWithLayout } from '../../_app'
+import { NextPageWithLayout } from "../../_app";
+
+const AudioPlayer = ({ src = "" }) => {
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const audio = new Audio(src);
+    setAudio(audio);
+
+    return () => {
+      audio.pause();
+      audio.remove();
+    };
+  }, [src]);
+
+  return audio ? (
+    <div>
+      <button onClick={() => (!audio.paused ? audio.pause() : audio.play())}>
+        {!audio.paused ? "Pause" : "Play"}
+      </button>
+    </div>
+  ) : null;
+};
 
 const ManagerLessonsPage: NextPageWithLayout = () => {
-    const dispatch = useAppDispatch()
+  const resource: ResourceType = "lessons";
 
-    const { role } = useAppSelector(selectAuth)
-    const { data: backend } = useAppSelector(selectBackend)
+  const dispatch = useAppDispatch();
 
-    const { content } = useContentContext()
-    const { cms: { backend: { components: { list: { action } }, pages: { lessons: { form } } } } } = content!
+  const { role } = useAppSelector(selectAuth);
+  const { data: backend } = useAppSelector(selectBackend);
 
-    const resource = 'lessons'
-    const props = { delete: (id: string) => dispatch(_delete({ role: role!, resource, id })) }
+  const { content } = useContentContext();
+  const {
+    cms: {
+      backend: {
+        components: {
+          list: { action },
+        },
+        pages: {
+          [resource]: { form },
+        },
+      },
+    },
+  } = content!;
 
-    const data = (backend && backend.lessons ? (backend.lessons as LessonInterface[]) : []).map(lesson => updateObject(lesson, {
-        created_at: convertDate(lesson.createdAt!),
-        action: <Action props={props} resource='lessons' item={lesson} />,
-    }));
+  const props = {
+    delete: (id: string) => dispatch(_delete({ role: role!, resource, id })),
+  };
 
-    const fields = [
-        { name: form.episode, key: 'episode' },
-        { name: form.subtitle, key: 'subtitle' },
-        { name: form.description, key: 'description' },
-        { name: form.notes, key: 'notes' },
-        { name: form.audio, key: 'audio' },
-        { name: form.created_at, key: 'created_at' },
-        { name: action, key: 'action', fixed: true }
-    ]
+  const data = (
+    backend && backend[resource] ? (backend[resource] as LessonInterface[]) : []
+  ).map((item) =>
+    updateObject(item, {
+      created_at: convertDate(item.createdAt!),
+      audio: <AudioPlayer src={item.audio} />,
+      action: <Action props={props} resource={resource} item={item} />,
+    })
+  );
 
-    return <ManageRead data={data} fields={fields} icon={BookOpenIcon} resource={resource} />
-}
+  const fields = [
+    { name: form.episode, key: "episode" },
+    { name: form.subtitle, key: "subtitle" },
+    { name: form.description, key: "description" },
+    { name: form.notes, key: "notes" },
+    { name: form.audio, key: "audio" },
+    { name: form.created_at, key: "created_at" },
+    { name: action, key: "action", fixed: true },
+  ];
+
+  return <ManageRead data={data} fields={fields} resource={resource} />;
+};
 
 ManagerLessonsPage.getLayout = function getLayout(page: ReactElement) {
-    return <Layout>{page}</Layout>
-}
+  return <Layout>{page}</Layout>;
+};
 
-export default ManagerLessonsPage
+export default ManagerLessonsPage;

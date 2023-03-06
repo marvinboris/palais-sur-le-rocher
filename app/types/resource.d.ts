@@ -8,10 +8,13 @@ type ResourceType =
     'methods' |
     'ministries' |
     'donations' |
+    'tithes' |
+    'transactions' |
     'subscribers' |
     'publications' |
     'roles' |
     'staff_members' |
+    'members' |
     'testimonials' |
     'users'
 

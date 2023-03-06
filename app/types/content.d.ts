@@ -50,14 +50,17 @@ export default interface ContentType {
                     lessons: { title: string, add: string, index: string }
                     methods: { title: string, add: string, index: string }
                     donations: { title: string, add: string, index: string }
+                    tithes: { title: string, add: string, index: string }
+                    transactions: { title: string, add: string, index: string }
                     staff_members: { title: string, add: string, index: string }
+                    members: { title: string, add: string, index: string }
                     images: { title: string, add: string, index: string }
                     cms: { title: string, global: string, general: string, auth: string, backend: string, frontend: string }
                     settings: { title: string, cms: string, language: string }
                 }
             },
             components: {
-                form: { save: string, save_add: string, selected_file: string, active: string, inactive: string },
+                form: { save: string, save_add: string, selected_file: string, active: string, inactive: string, pending: string, failed: string, completed: string },
                 list: {
                     action: string, all: string, first: string, last: string, loading: string, print: string, pdf: string, csv: string, excel: string, search: string, see: string, show: string, sl: string, showing: string, from: string
                     entries: { singular: string, plural: string }
@@ -77,7 +80,10 @@ export default interface ContentType {
                 lessons: { not_found: string, created: string, updated: string, deleted: string },
                 methods: { not_found: string, created: string, updated: string, deleted: string },
                 donations: { not_found: string, created: string, updated: string, deleted: string },
+                tithes: { not_found: string, created: string, updated: string, deleted: string },
+                transactions: { not_found: string, created: string, updated: string, deleted: string },
                 staff_members: { not_found: string, created: string, updated: string, deleted: string },
+                members: { not_found: string, created: string, updated: string, deleted: string },
                 testimonials: { not_found: string, created: string, updated: string, deleted: string },
                 images: { not_found: string, created: string, updated: string, deleted: string },
                 notifications: { not_found: string }
@@ -141,7 +147,15 @@ export default interface ContentType {
                 },
                 donations: {
                     title: string, add: string, edit: string, index: string
-                    form: { method: string, transaction: string, amount: string, created_at: string }
+                    form: { method: string, select_method: string, amount: string, created_at: string }
+                },
+                tithes: {
+                    title: string, add: string, edit: string, index: string
+                    form: { member: string, select_member: string, method: string, select_method: string, amount: string, created_at: string }
+                },
+                transactions: {
+                    title: string, add: string, edit: string, index: string
+                    form: { address: string, currency: string, tx_id: string, tx_hash: string, status: string, select_status: string, method: string, amount: string, created_at: string }
                 },
                 lessons: {
                     title: string, add: string, edit: string, index: string
@@ -161,6 +175,10 @@ export default interface ContentType {
                 staff_members: {
                     title: string, add: string, edit: string, index: string
                     form: { name: string, title: string, description: string, photo: string, staff_member_photo: string, is_active: string, principal: string, select_status: string, created_at: string }
+                },
+                members: {
+                    title: string, add: string, edit: string, index: string
+                    form: { first_name: string, last_name: string, name: string, photo: string, member_photo: string, qr_code: string, member_qr: string, is_active: string, select_status: string, created_at: string }
                 },
                 testimonials: {
                     title: string, add: string, edit: string, index: string

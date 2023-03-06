@@ -77,6 +77,7 @@ export const manageResource = (req: NextApiRequest, res: NextApiResponse, { info
     fields: string[]
     file?: { name: string, uploadDir: string }
 }) => {
+    tinify.key = process.env.TINIFY_KEY!
     return {
         get: async () => res.json(await data(req)),
         info: !information ? () => { } : async () => res.json(await information()),
@@ -108,7 +109,6 @@ export const manageResource = (req: NextApiRequest, res: NextApiResponse, { info
                 if ('size' in fileGot) {
                     if (fileGot.size > 0) {
                         const fileName = path.join(file.uploadDir, fileGot.newFilename)
-                        console.log(fileGot.size);
                         
                         tinify.fromFile(fileName).toFile(fileName)
                         input[file.name] = fileGot.newFilename
@@ -133,7 +133,15 @@ export const manageResource = (req: NextApiRequest, res: NextApiResponse, { info
 
             if (file) {
                 const { [file.name]: fileGot } = files
-                input[file.name] = updateImage(fileGot as formidable.File, instance)
+                if ('size' in fileGot) {
+                    if (fileGot.size > 0) {
+                        const fileName = path.join(file.uploadDir, fileGot.newFilename)
+                        
+                        tinify.fromFile(fileName).toFile(fileName)
+                        input[file.name] = updateImage(fileGot, instance, file.name)
+                    }
+                    else unlinkSync(fileGot.filepath)
+                }
             }
             await instance.updateOne(input)
 

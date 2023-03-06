@@ -1,61 +1,94 @@
-import { useRouter } from 'next/router'
-import { ComponentProps, useEffect, useMemo, useState } from 'react'
+import { useRouter } from "next/router";
+import { ComponentProps, useEffect, useMemo, useState } from "react";
 
-import { useContentContext } from '../../../../app/contexts/content'
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
-import Status from '../../../../app/types/enums/status'
-import ResourceType from '../../../../app/types/resource'
+import { useContentContext } from "../../../../app/contexts/content";
+import { resourceIcon } from "../../../../app/helpers/utils";
+import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
+import Status from "../../../../app/types/enums/status";
+import ResourceType from "../../../../app/types/resource";
 
-import { Head } from '../../../../components/backend/navigation/layout'
-import PageTitle from '../../../../components/backend/ui/title/page'
-import * as utility from '../../../../components/backend/ui/utils'
+import { Head } from "../../../../components/backend/navigation/layout";
+import PageTitle from "../../../../components/backend/ui/title/page";
+import * as utility from "../../../../components/backend/ui/utils";
 
-import { selectAuth } from '../../../../features/auth/authSlice'
-import { get, reset, selectBackend, _delete } from '../../../../features/backend/backendSlice'
+import { selectAuth } from "../../../../features/auth/authSlice";
+import {
+  get,
+  reset,
+  selectBackend,
+  _delete,
+} from "../../../../features/backend/backendSlice";
 
 type Props = {
-    data: { [x: string | number]: any }[]
-    icon: (props: ComponentProps<'svg'>) => JSX.Element
-    fields: { key: string, name: string, className?: string, fixed?: boolean }[]
-    resource: ResourceType
-}
+  data: { [x: string | number]: any }[];
+  fields: { key: string; name: string; className?: string; fixed?: boolean }[];
+  resource: ResourceType;
+};
 
-export default function ManageRead({ resource, icon, fields, data }: Props) {
-    const router = useRouter()
-    const dispatch = useAppDispatch()
+export default function ManageRead({ resource, fields, data }: Props) {
+  const icon = resourceIcon(resource);
 
-    const { role } = useAppSelector(selectAuth)
-    const { status, data: backend, message } = useAppSelector(selectBackend)
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-    const { content } = useContentContext()
-    const { cms: { global: { app_name }, backend: { pages: { [resource]: { index, title } } } } } = content!
+  const { role } = useAppSelector(selectAuth);
+  const { status, data: backend, message } = useAppSelector(selectBackend);
 
-    const [isMounted, setIsMounted] = useState(false)
-    const params = useMemo(() => ({ role: role!, resource }), [resource, role])
+  const { content } = useContentContext();
+  const {
+    cms: {
+      global: { app_name },
+      backend: {
+        pages: {
+          [resource]: { index, title },
+        },
+      },
+    },
+  } = content!;
 
-    useEffect(() => {
-        if (status === Status.IDLE && !(backend && backend[resource])) {
-            dispatch(get(params))
-            setIsMounted(true)
-        }
-    }, [backend, dispatch, params, resource, status])
+  const [isMounted, setIsMounted] = useState(false);
+  const params = useMemo(() => ({ role: role!, resource }), [resource, role]);
 
-    const props = useMemo(() => ({
-        auth: { role: role! },
-        backend: { status, data: backend!, message },
-        content: content!,
-        history: router,
+  useEffect(() => {
+    if (status === Status.IDLE && !(backend && backend[resource])) {
+      dispatch(get(params));
+      setIsMounted(true);
+    }
+  }, [backend, dispatch, params, resource, status]);
 
-        get: (page?: number, show?: number | string, search?: string) => dispatch(get({ ...params, page, show, search })),
-        delete: (_id: string) => dispatch(_delete({ ...params, id: _id })),
-        reset: () => dispatch(reset()),
-    }), [backend, content, dispatch, message, params, role, router, status]) 
+  const props = useMemo(
+    () => ({
+      auth: { role: role! },
+      backend: { status, data: backend!, message },
+      content: content!,
+      history: router,
 
-    return <main className='flex-1 flex flex-col'>
-        <Head link={`/${role}/${resource}`} title={`${index} | ${app_name}`} description={`${app_name} : ${index}`} />
+      get: (page?: number, show?: number | string, search?: string) =>
+        dispatch(get({ ...params, page, show, search })),
+      delete: (_id: string) => dispatch(_delete({ ...params, id: _id })),
+      reset: () => dispatch(reset()),
+    }),
+    [backend, content, dispatch, message, params, role, router, status]
+  );
 
-        <PageTitle icon={icon} title={title} subtitle={index} />
+  return (
+    <main className="flex flex-1 flex-col">
+      <Head
+        link={`/${role}/${resource}`}
+        title={`${index} | ${app_name}`}
+        description={`${app_name} : ${index}`}
+      />
 
-        <utility.index.lifecycle.render icon={icon} props={props} isMounted={isMounted} resource={resource} data={data} fields={fields} />
+      <PageTitle icon={icon} title={title} subtitle={index} />
+
+      <utility.index.lifecycle.render
+        icon={icon}
+        props={props}
+        isMounted={isMounted}
+        resource={resource}
+        data={data}
+        fields={fields}
+      />
     </main>
+  );
 }

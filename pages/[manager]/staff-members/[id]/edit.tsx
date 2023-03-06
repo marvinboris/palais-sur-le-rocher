@@ -1,16 +1,18 @@
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 
-import Layout from '../../../../components/backend/navigation/layout'
+import Layout from "../../../../components/backend/navigation/layout";
+import ManageAddOrEditStaffMembers from "../../../../components/backend/ui/page/add-or-edit/staff-members";
 
-import { _delete } from '../../../../features/backend/backendSlice'
-import ManageAddOrEditTestimonials from '../../../../components/backend/ui/page/add-or-edit/testimonials'
+import { _delete } from "../../../../features/backend/backendSlice";
 
-import { NextPageWithLayout } from '../../../_app'
+import { NextPageWithLayout } from "../../../_app";
 
-const ManagerTestimonialsEditPage: NextPageWithLayout = () => <ManageAddOrEditTestimonials edit />
+const ManagerStaffMembersEditPage: NextPageWithLayout = () => (
+  <ManageAddOrEditStaffMembers edit />
+);
 
-ManagerTestimonialsEditPage.getLayout = function getLayout(page: ReactElement) {
-    return <Layout>{page}</Layout>
-}
+ManagerStaffMembersEditPage.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
+};
 
-export default ManagerTestimonialsEditPage
+export default ManagerStaffMembersEditPage;

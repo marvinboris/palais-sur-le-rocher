@@ -184,6 +184,16 @@
                     "add": "Ajouter un don",
                     "index": "Liste des dons"
                 },
+                "tithes": {
+                    "title": "Dîmes",
+                    "add": "Ajouter une dîme",
+                    "index": "Liste des dîmes"
+                },
+                "transactions": {
+                    "title": "Transactions",
+                    "add": "Ajouter une transaction",
+                    "index": "Liste des transactions"
+                },
                 "lessons": {
                     "title": "Enseignements",
                     "add": "Ajouter un enseignement",
@@ -209,6 +219,11 @@
                     "add": "Ajouter un membre",
                     "index": "Liste des membres"
                 },
+                "members": {
+                    "title": "Membres",
+                    "add": "Ajouter un membre",
+                    "index": "Liste des membres"
+                },
                 "testimonials": {
                     "title": "Témoignages",
                     "add": "Ajouter un témoignage",
@@ -227,7 +242,10 @@
                 "save_add": "Sauvegarder & ajouter",
                 "selected_file": "Fichier s\u00e9lectionn\u00e9",
                 "active": "Actif",
-                "inactive": "Inactif"
+                "inactive": "Inactif",
+                "pending": "Pending",
+                "failed": "Failed",
+                "completed": "Completed"
             },
             "list": {
                 "action": "Action",
@@ -313,6 +331,18 @@
                 "updated": "Don modifi\u00e9 avec succ\u00e8s.",
                 "deleted": "Don supprim\u00e9 avec succ\u00e8s."
             },
+            "tithes": {
+                "not_found": "Dîme introuvable.",
+                "created": "Dîme cr\u00e9\u00e9e avec succ\u00e8s.",
+                "updated": "Dîme modifi\u00e9e avec succ\u00e8s.",
+                "deleted": "Dîme supprim\u00e9e avec succ\u00e8s."
+            },
+            "transactions": {
+                "not_found": "Transaction introuvable.",
+                "created": "Transaction cr\u00e9\u00e9e avec succ\u00e8s.",
+                "updated": "Transaction modifi\u00e9e avec succ\u00e8s.",
+                "deleted": "Transaction supprim\u00e9e avec succ\u00e8s."
+            },
             "categories": {
                 "not_found": "Catégorie introuvable.",
                 "created": "Catégorie cr\u00e9\u00e9e avec succ\u00e8s.",
@@ -344,6 +374,12 @@
                 "deleted": "Témoignage supprim\u00e9 avec succ\u00e8s."
             },
             "staff_members": {
+                "not_found": "Membre introuvable.",
+                "created": "Membre cr\u00e9\u00e9 avec succ\u00e8s.",
+                "updated": "Membre modifi\u00e9 avec succ\u00e8s.",
+                "deleted": "Membre supprim\u00e9 avec succ\u00e8s."
+            },
+            "members": {
                 "not_found": "Membre introuvable.",
                 "created": "Membre cr\u00e9\u00e9 avec succ\u00e8s.",
                 "updated": "Membre modifi\u00e9 avec succ\u00e8s.",
@@ -544,6 +580,7 @@
                     "description": "Description",
                     "body": "Contenu",
                     "category": "Catégorie",
+                    "select_category": "Sélectionner une catégorie",
                     "photo": "Photo",
                     "publication_photo": "Photo de la publication",
                     "is_active": "Statut",
@@ -589,7 +626,37 @@
                 "index": "Liste des dons",
                 "form": {
                     "method": "Méthode de paiement",
-                    "transaction": "Détails de la transaction",
+                    "select_method": "Sélectionner une méthode de paiement",
+                    "amount": "Montant",
+                    "created_at": "Cr\u00e9\u00e9 le"
+                }
+            },
+            "tithes": {
+                "title": "Dîmes",
+                "add": "Ajouter une dîme",
+                "edit": "Modifier une dîme",
+                "index": "Liste des dîmes",
+                "form": {
+                    "member": "Membre",
+                    "select_member": "Sélectionner un membre",
+                    "method": "Méthode de paiement",
+                    "select_method": "Sélectionner une méthode de paiement",
+                    "amount": "Montant",
+                    "created_at": "Cr\u00e9\u00e9e le"
+                }
+            },
+            "transactions": {
+                "title": "Transactions",
+                "add": "Ajouter une transaction",
+                "edit": "Modifier une transaction",
+                "index": "Liste des transactions",
+                "form": {
+                    "address": "Adresse",
+                    "currency": "Devise",
+                    "tx_id": "Identifiant",
+                    "tx_hash": "Hash",
+                    "status": "Statut",
+                    "method": "Méthode de paiement",
                     "amount": "Montant",
                     "created_at": "Cr\u00e9\u00e9e le"
                 }
@@ -606,6 +673,41 @@
                     "photo": "Photo",
                     "testimony_photo": "Photo du témoignage",
                     "is_active": "Statut",
+                    "select_status": "S\u00e9lectionner le statut",
+                    "created_at": "Cr\u00e9\u00e9 le"
+                }
+            },
+            "staff_members": {
+                "title": "Membres du staff",
+                "add": "Ajouter un membre",
+                "edit": "Modifier un membre",
+                "index": "Liste des membres",
+                "form": {
+                    "name": "Nom",
+                    "title": "Titre",
+                    "description": "Description",
+                    "photo": "Photo",
+                    "staff_member_photo": "Photo du membre",
+                    "principal": "Principal",
+                    "is_active": "Statut",
+                    "select_status": "S\u00e9lectionner le statut",
+                    "created_at": "Cr\u00e9\u00e9 le"
+                }
+            },
+            "members": {
+                "title": "Membres",
+                "add": "Ajouter un membre",
+                "edit": "Modifier un membre",
+                "index": "Liste des membres",
+                "form": {
+                    "first_name": "Prénom(s)",
+                    "last_name": "Nom(s)",
+                    "name": "Nom complet",
+                    "photo": "Photo",
+                    "member_photo": "Photo du membre",
+                    "is_active": "Statut",
+                    "qr_code": "Code QR",
+                    "member_qr": "Code QR du membre",
                     "select_status": "S\u00e9lectionner le statut",
                     "created_at": "Cr\u00e9\u00e9 le"
                 }

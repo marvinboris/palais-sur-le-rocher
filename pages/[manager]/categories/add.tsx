@@ -1,16 +1,18 @@
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 
-import Layout from '../../../components/backend/navigation/layout'
+import Layout from "../../../components/backend/navigation/layout";
+import ManageAddOrEditCategories from "../../../components/backend/ui/page/add-or-edit/categories";
 
-import { _delete } from '../../../features/backend/backendSlice'
-import ManageAddOrEditCategories from '../../../components/backend/ui/page/add-or-edit/categories'
+import { _delete } from "../../../features/backend/backendSlice";
 
-import { NextPageWithLayout } from '../../_app'
+import { NextPageWithLayout } from "../../_app";
 
-const ManagerCategoriesAddPage: NextPageWithLayout = () => <ManageAddOrEditCategories />
+const ManagerCategoriesAddPage: NextPageWithLayout = () => (
+  <ManageAddOrEditCategories />
+);
 
 ManagerCategoriesAddPage.getLayout = function getLayout(page: ReactElement) {
-    return <Layout>{page}</Layout>
-}
+  return <Layout>{page}</Layout>;
+};
 
-export default ManagerCategoriesAddPage
+export default ManagerCategoriesAddPage;

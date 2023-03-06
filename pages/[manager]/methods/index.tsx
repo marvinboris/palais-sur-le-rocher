@@ -1,54 +1,78 @@
-import { CreditCardIcon } from '@heroicons/react/24/outline'
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 
-import { useContentContext } from '../../../app/contexts/content'
-import { convertDate, updateObject } from '../../../app/helpers/utils'
-import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { MethodInterface } from '../../../app/models/method'
+import { useContentContext } from "../../../app/contexts/content";
+import { convertDate, updateObject } from "../../../app/helpers/utils";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { MethodInterface } from "../../../app/models/method";
+import ResourceType from "../../../app/types/resource";
 
-import Layout from '../../../components/backend/navigation/layout'
-import Action from '../../../components/backend/ui/list/action'
-import Photo from '../../../components/backend/ui/list/photo'
-import Status from '../../../components/backend/ui/list/status'
-import ManageRead from '../../../components/backend/ui/page/read'
+import Layout from "../../../components/backend/navigation/layout";
+import Action from "../../../components/backend/ui/list/action";
+import Photo from "../../../components/backend/ui/list/photo";
+import Status from "../../../components/backend/ui/list/status";
+import ManageRead from "../../../components/backend/ui/page/read";
 
-import { selectAuth } from '../../../features/auth/authSlice'
-import { selectBackend, _delete } from '../../../features/backend/backendSlice'
+import { selectAuth } from "../../../features/auth/authSlice";
+import { selectBackend, _delete } from "../../../features/backend/backendSlice";
 
-import { NextPageWithLayout } from '../../_app'
+import { NextPageWithLayout } from "../../_app";
 
 const ManagerMethodsPage: NextPageWithLayout = () => {
-    const dispatch = useAppDispatch()
+  const resource: ResourceType = "methods";
 
-    const { role } = useAppSelector(selectAuth)
-    const { data: backend } = useAppSelector(selectBackend)
+  const dispatch = useAppDispatch();
 
-    const { content } = useContentContext()
-    const { cms: { backend: { components: { list: { action, see } }, pages: { methods: { form } } } } } = content!
+  const { role } = useAppSelector(selectAuth);
+  const { data: backend } = useAppSelector(selectBackend);
 
-    const resource = 'methods'
-    const props = { delete: (id: string) => dispatch(_delete({ role: role!, resource, id })) }
+  const { content } = useContentContext();
+  const {
+    cms: {
+      backend: {
+        components: {
+          list: { action, see },
+        },
+        pages: {
+          [resource]: { form },
+        },
+      },
+    },
+  } = content!;
 
-    const data = (backend && backend.methods ? (backend.methods as MethodInterface[]) : []).map(method => updateObject(method, {
-        created_at: convertDate(method.createdAt!),
-        isActive: <Status value={method.isActive} />,
-        logo: <Photo photo={method.logo!} see={see} title={`${form.method_logo}: ${method.name}`} />,
-        action: <Action props={props} resource='methods' item={method} />,
-    }));
+  const props = {
+    delete: (id: string) => dispatch(_delete({ role: role!, resource, id })),
+  };
 
-    const fields = [
-        { name: form.name, key: 'name' },
-        { name: form.logo, key: 'logo' },
-        { name: form.is_active, key: 'isActive' },
-        { name: form.created_at, key: 'created_at' },
-        { name: action, key: 'action', fixed: true }
-    ]
+  const data = (
+    backend && backend[resource] ? (backend[resource] as MethodInterface[]) : []
+  ).map((item) =>
+    updateObject(item, {
+      created_at: convertDate(item.createdAt!),
+      isActive: <Status value={item.isActive} />,
+      logo: (
+        <Photo
+          photo={item.logo!}
+          see={see}
+          title={`${form.method_logo}: ${item.name}`}
+        />
+      ),
+      action: <Action props={props} resource={resource} item={item} />,
+    })
+  );
 
-    return <ManageRead data={data} fields={fields} icon={CreditCardIcon} resource={resource} />
-}
+  const fields = [
+    { name: form.name, key: "name", className: 'w-full' },
+    { name: form.is_active, key: "isActive" },
+    { name: form.logo, key: "logo" },
+    { name: form.created_at, key: "created_at" },
+    { name: action, key: "action", fixed: true },
+  ];
+
+  return <ManageRead data={data} fields={fields} resource={resource} />;
+};
 
 ManagerMethodsPage.getLayout = function getLayout(page: ReactElement) {
-    return <Layout>{page}</Layout>
-}
+  return <Layout>{page}</Layout>;
+};
 
-export default ManagerMethodsPage
+export default ManagerMethodsPage;

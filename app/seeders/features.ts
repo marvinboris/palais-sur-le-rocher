@@ -7,13 +7,17 @@ const features: FeatureInterface[] = [
     { name: 'Roles', prefix: 'roles' },
     { name: 'Images', prefix: 'images' },
     { name: 'Features', prefix: 'features' },
-    { name: 'EVents', prefix: 'events' },
+    { name: 'Donations', prefix: 'donations' },
+    { name: 'Tithes', prefix: 'tithes' },
+    { name: 'Transactions', prefix: 'transactions' },
     { name: 'Ministries', prefix: 'ministries' },
+    { name: 'Subscribers', prefix: 'subscribers' },
     { name: 'Categories', prefix: 'categories' },
     { name: 'Publications', prefix: 'publications' },
     { name: 'Lessons', prefix: 'lessons' },
     { name: 'Methods', prefix: 'methods' },
     { name: 'Staff members', prefix: 'staff-members' },
+    { name: 'Members', prefix: 'members' },
     { name: 'Testimonials', prefix: 'testimonials' },
 ]
 

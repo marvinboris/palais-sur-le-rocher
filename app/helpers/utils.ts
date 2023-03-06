@@ -1,11 +1,16 @@
+import { ArrowsRightLeftIcon, BanknotesIcon, BellIcon, BookOpenIcon, ChatBubbleLeftEllipsisIcon, ChatBubbleOvalLeftEllipsisIcon, CogIcon, CreditCardIcon, GiftIcon, HomeIcon, PhotoIcon, RectangleStackIcon, TagIcon, UserGroupIcon, UserIcon, UserPlusIcon, UsersIcon } from '@heroicons/react/24/outline'
 import axios, { AxiosError } from 'axios'
+import _ from 'lodash'
 
+import ResourceType from '../types/resource'
 import ValidationType from '../types/validation'
 
 export const setAuthToken = (token?: string | undefined | null) => {
     if (token) axios.defaults.headers.common['x-auth-token'] = token
     else delete axios.defaults.headers.common['x-auth-token']
 }
+
+export const capitalize = (str: string) => str.split(" ").map(word => _.capitalize(word)).join(" ")
 
 export const classNames = (...c: string[]) => c.join(' ')
 
@@ -48,7 +53,7 @@ export const timeFromTimestamp = (timestamp: number) => {
 export const checkValidity = (value = '', rules: ValidationType) => {
     const validation: { [key: string]: boolean } = {};
 
-    if (rules.required) validation.required = value.trim() !== '';
+    if (rules.required) validation.required = ((typeof value === 'string') && value.trim() !== '') || typeof value === 'number';
 
     if (rules.confirm) validation.confirm = value === rules.confirm;
 
@@ -69,6 +74,27 @@ export const checkValidity = (value = '', rules: ValidationType) => {
     return validation;
 };
 
+export const resourceIcon = (resource: ResourceType) => ({
+    admins: UserPlusIcon,
+    users: UserGroupIcon,
+    roles: TagIcon,
+    features: CogIcon,
+    events: BellIcon,
+    ministries: HomeIcon,
+    subscribers: UserIcon,
+    categories: RectangleStackIcon,
+    publications: ChatBubbleLeftEllipsisIcon,
+    methods: CreditCardIcon,
+    lessons: BookOpenIcon,
+    staff_members: UsersIcon,
+    members: UserIcon,
+    testimonials: ChatBubbleOvalLeftEllipsisIcon,
+    images: PhotoIcon,
+    donations: GiftIcon,
+    tithes: BanknotesIcon,
+    transactions: ArrowsRightLeftIcon,
+}[resource])
+
 export const htmlEntities = (str: string) => {
     if ((str === null) || (str === ''))
         return false;
@@ -83,11 +109,12 @@ export const htmlEntities = (str: string) => {
 
 export const manageResource = async (
     role: string,
-    root: string,
+    unformattedRoot: string,
     type: 'index' | 'info' | 'show' | 'post' | 'patch' | 'delete',
     ...params: any[]
 ) => {
     try {
+        const root = unformattedRoot.split('_').join('-')
         let url: string, page, show, search, res, id: string, pageElt, showElt, searchElt, data
 
         switch (type) {

@@ -5,7 +5,7 @@ const directory = '/audios/lessons/'
 export interface LessonInterface {
     id?: string
     episode: number
-    date: number
+    date: string
     description: string
     subtitle: string
     notes: string
@@ -21,7 +21,7 @@ export const LessonSchema = new Schema<LessonInterface, Model<LessonInterface>>(
         required: true
     },
     date: {
-        type: Number,
+        type: String,
         required: true
     },
     description: {

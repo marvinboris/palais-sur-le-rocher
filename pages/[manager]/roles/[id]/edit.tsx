@@ -1,16 +1,18 @@
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 
-import Layout from '../../../../components/backend/navigation/layout'
+import Layout from "../../../../components/backend/navigation/layout";
+import ManageAddOrEditRoles from "../../../../components/backend/ui/page/add-or-edit/roles";
 
-import { _delete } from '../../../../features/backend/backendSlice'
-import ManageAddOrEditRoles from '../../../../components/backend/ui/page/add-or-edit/roles'
+import { _delete } from "../../../../features/backend/backendSlice";
 
-import { NextPageWithLayout } from '../../../_app'
+import { NextPageWithLayout } from "../../../_app";
 
-const ManagerRolesEditPage: NextPageWithLayout = () => <ManageAddOrEditRoles edit />
+const ManagerRolesEditPage: NextPageWithLayout = () => (
+  <ManageAddOrEditRoles edit />
+);
 
 ManagerRolesEditPage.getLayout = function getLayout(page: ReactElement) {
-    return <Layout>{page}</Layout>
-}
+  return <Layout>{page}</Layout>;
+};
 
-export default ManagerRolesEditPage
+export default ManagerRolesEditPage;

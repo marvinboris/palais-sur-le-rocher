@@ -1,5 +1,7 @@
 export default function PageLoader() {
-    return <div className='flex items-center justify-center min-h-[400px]'>
-        <div className="w-24 h-24 border-primary-600 border-t-transparent border-[7px] animate-spin rounded-full" />
+  return (
+    <div className="flex min-h-[400px] items-center justify-center">
+      <div className="h-24 w-24 animate-spin rounded-full border-[7px] border-primary-600 border-t-transparent" />
     </div>
+  );
 }

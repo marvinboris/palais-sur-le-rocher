@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 
-@import './frontend/ui';
-@import './frontend/home';
+@import "./frontend/ui";
+@import "./frontend/home";
 
 @tailwind utilities;
