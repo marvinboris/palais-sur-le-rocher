@@ -18,6 +18,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<unknown | { error: string }>
 ) {
+  tinify.key = process.env.TINIFY_KEY!;
   try {
     const manager = await getAccount(req);
 

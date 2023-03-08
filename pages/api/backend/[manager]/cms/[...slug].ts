@@ -49,6 +49,7 @@ export default async function handler(
   // const type = req.query.manager as string
   const slug = req.query.slug as string[];
 
+  tinify.key = process.env.TINIFY_KEY!;
   try {
     const cms = getCms();
     const cmsExample = getCms(true);

@@ -142,7 +142,6 @@ export const authSlice = createSlice({
         state.status = Status.FAILED;
       })
 
-      .addCase(userSettings.pending, dataLoading)
       .addCase(userSettings.fulfilled, (state, action) => {
         if ("name" in action.payload.data) {
           state.data = action.payload.data;

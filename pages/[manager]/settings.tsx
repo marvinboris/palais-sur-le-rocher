@@ -90,13 +90,10 @@ const SettingsPage: NextPageWithLayout = () => {
 
   const handlePhotoChange = () => document.getElementById("photo")?.click();
 
-  const handleSubmit = (e: FormEvent) => {
-    console.log(editing);
-    e.preventDefault();
+  const handleSubmit = () => {
+    if (!editing) return;
+    dispatch(userSettings(document.querySelector('form') as any));
     setEditing((editing) => !editing);
-    console.log(editing);
-    if (editing) return;
-    dispatch(userSettings(e.target as any));
   };
 
   return (
@@ -115,7 +112,7 @@ const SettingsPage: NextPageWithLayout = () => {
 
         <div className="px-[33px] pt-[29px] pb-[54px] md:px-[42px] md:pt-[47px]">
           <form
-            onSubmit={handleSubmit}
+            onSubmit={e => e.preventDefault()}
             className="mb-[25px] max-w-[700px] rounded-[30px] bg-white py-8 px-[38.36px] shadow-2xl dark:bg-secondary-800"
             encType="multipart/form-data"
           >
@@ -130,7 +127,7 @@ const SettingsPage: NextPageWithLayout = () => {
 
               <div className="order-1 ml-auto mb-8 flex items-center md:order-2 md:ml-0 md:mb-0">
                 {editing ? (
-                  <Button pill icon={ArrowDownOnSquareIcon} color="green">
+                  <Button pill icon={ArrowDownOnSquareIcon} color="green" onClick={handleSubmit}>
                     {form.save_settings}
                   </Button>
                 ) : (
