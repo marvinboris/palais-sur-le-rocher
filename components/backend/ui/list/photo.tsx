@@ -8,7 +8,7 @@ type PhotoProps = {
   photo?: string;
   see: string;
   title: string;
-  children?: ReactNode
+  children?: ReactNode;
 };
 
 export default function Photo({ photo, see, title, children }: PhotoProps) {
@@ -21,13 +21,15 @@ export default function Photo({ photo, see, title, children }: PhotoProps) {
           title={title}
           action={<EyeIcon className="w-5 cursor-pointer text-green" />}
         >
-          {photo ? <Image
-            width={1920}
-            height={1920}
-            src={photo}
-            className="w-full"
-            alt={title}
-          /> : null}
+          {photo ? (
+            <Image
+              width={1920}
+              height={1920}
+              src={photo}
+              className="w-full"
+              alt={title}
+            />
+          ) : null}
           {children}
         </View>
       </span>

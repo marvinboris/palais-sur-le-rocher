@@ -38,8 +38,7 @@ export default async function handler(
 
     if (req.method === "GET") {
       if (slug[0] === "info") return manage.info();
-      else
-        return manage.show();
+      else return manage.show();
     } else if (req.method === "PATCH")
       return manage.patch({
         validate: {

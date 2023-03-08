@@ -1,15 +1,17 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext } from "react";
 
-import CountryType from '../types/country'
+import CountryType from "../types/country";
 
-type Type = CountryType[] | null
+type Type = CountryType[] | null;
 
 const CountriesContext = createContext<{
-    countries: Type, setCountries: (countries: Type) => void
+  countries: Type;
+  setCountries: (countries: Type) => void;
 }>({
-    countries: null, setCountries: () => { }
-})
+  countries: null,
+  setCountries: () => {},
+});
 
 export const useCountriesContext = () => useContext(CountriesContext);
 
-export default CountriesContext
+export default CountriesContext;

@@ -1,52 +1,58 @@
-import { Model, Schema } from "mongoose"
-import slugify from 'slugify'
+import { Model, Schema } from "mongoose";
+import slugify from "slugify";
 
-const directory = '/images/events/'
+const directory = "/images/events/";
 
 export interface EventInterface {
-    id?: string
-    title: string
-    description: string
-    body: string
-    photo?: string
-    slug?: string
-    isActive: boolean
-    createdAt?: Date
-    updatedAt?: Date
+  id?: string;
+  title: string;
+  description: string;
+  body: string;
+  photo?: string;
+  slug?: string;
+  link?: string;
+  isActive: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export const EventSchema = new Schema<EventInterface, Model<EventInterface>>({
+export const EventSchema = new Schema<EventInterface, Model<EventInterface>>(
+  {
     title: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     description: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     body: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     photo: {
-        type: String,
-        required: true,
-        get: (photo: string) => directory + photo
+      type: String,
+      required: true,
+      get: (photo: string) => directory + photo,
     },
     slug: {
-        type: String,
-        unique: true
+      type: String,
+      unique: true,
     },
     isActive: {
-        type: Boolean,
-        required: true,
+      type: Boolean,
+      required: true,
     },
-}, { timestamps: true, toObject: { getters: true, virtuals: true } })
+  },
+  { timestamps: true, toObject: { getters: true, virtuals: true } }
+);
 
 // Virtuals
-EventSchema.virtual('link').get(function () { return `/events/${this.slug}` })
+EventSchema.virtual("link").get(function () {
+  return `/events/${this.slug}`;
+});
 
 EventSchema.pre<EventInterface>("save", function (next) {
-    this.slug = slugify(this.title, { lower: true });
-    next();
+  this.slug = slugify(this.title, { lower: true });
+  next();
 });

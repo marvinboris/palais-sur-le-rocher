@@ -1,16 +1,14 @@
 import Image from "next/image";
 import { ReactElement } from "react";
 
-import { Publication } from "../../app/models";
-import { CategoryInterface } from "../../app/models/category";
-import { PublicationInterface } from "../../app/models/publication";
+import { Publication } from "../../../app/models";
+import { CategoryInterface } from "../../../app/models/category";
+import { PublicationInterface } from "../../../app/models/publication";
 
-import Layout, { Head } from "../../components/frontend/navigation/layout";
-import PublicationBlock from "../../components/frontend/ui/blocks/publication";
+import Layout, { Head } from "../../../components/frontend/navigation/layout";
+import PublicationBlock from "../../../components/frontend/ui/blocks/publication";
 
-type PublicationType = Omit<PublicationInterface, "category"> & {
-  _id: string;
-  link: string;
+type PublicationType = PublicationInterface & {
   category: CategoryInterface;
 };
 

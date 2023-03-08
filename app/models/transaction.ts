@@ -1,34 +1,38 @@
-import { Model, Schema, Types } from "mongoose"
+import { Model, Schema, Types } from "mongoose";
 
 export enum TransactionStatus {
-    Pending,
-    Failed,
-    Completed,
+  Pending,
+  Failed,
+  Completed,
 }
 
 export interface TransactionInterface {
-    id?: string
-    method?: Types.ObjectId
-    amount: number
-    address?: string
-    currency?: string
-    txId?: string
-    txHash?: string
-    data?: object
-    status?: TransactionStatus
-    createdAt?: Date
-    updatedAt?: Date
+  id?: string;
+  method?: Types.ObjectId;
+  amount: number;
+  address?: string;
+  currency?: string;
+  txId?: string;
+  txHash?: string;
+  data?: object;
+  status?: TransactionStatus;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export const TransactionSchema = new Schema<TransactionInterface, Model<TransactionInterface>>({
+export const TransactionSchema = new Schema<
+  TransactionInterface,
+  Model<TransactionInterface>
+>(
+  {
     method: {
-        type: Types.ObjectId,
-        required: true,
-        ref: 'Method'
+      type: Types.ObjectId,
+      required: true,
+      ref: "Method",
     },
     amount: {
-        type: Number,
-        required: true,
+      type: Number,
+      required: true,
     },
     address: String,
     currency: String,
@@ -36,13 +40,15 @@ export const TransactionSchema = new Schema<TransactionInterface, Model<Transact
     txHash: String,
     data: Object,
     status: {
-        type: Number,
-        required: true,
-        enum: [
-            TransactionStatus.Pending,
-            TransactionStatus.Failed,
-            TransactionStatus.Completed,
-        ],
-        default: TransactionStatus.Pending,
+      type: Number,
+      required: true,
+      enum: [
+        TransactionStatus.Pending,
+        TransactionStatus.Failed,
+        TransactionStatus.Completed,
+      ],
+      default: TransactionStatus.Pending,
     },
-}, { timestamps: true })
+  },
+  { timestamps: true }
+);

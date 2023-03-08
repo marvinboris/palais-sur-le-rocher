@@ -1,4 +1,4 @@
 export default interface MessageType {
-    type: 'danger' | 'warning' | 'success' | 'info'
-    content: string
+  type: "danger" | "warning" | "success" | "info";
+  content: string;
 }

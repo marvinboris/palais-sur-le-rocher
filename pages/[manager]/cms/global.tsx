@@ -6,8 +6,10 @@ import {
 import Image from "next/image";
 import {
   ChangeEvent,
+  Dispatch,
   FormEvent,
   ReactElement,
+  SetStateAction,
   useEffect,
   useState,
 } from "react";
@@ -32,9 +34,7 @@ import {
 } from "../../../features/backend/backendSlice";
 
 type ValueType = any;
-type SetValueType = (
-  value: ValueType | ((value: ValueType) => ValueType)
-) => void;
+type SetValueType = Dispatch<SetStateAction<ValueType>>;
 
 const readURL = (
   input: EventTarget & HTMLInputElement,
@@ -45,10 +45,28 @@ const readURL = (
     const reader = new FileReader();
 
     reader.onload = function (e) {
-      setValue((value: ValueType) => ({
-        ...value,
-        photo: e.target!.result as string,
-      }));
+      setValue((value: ValueType) => {
+        let result = { ...value };
+        const keys = input.name.split("[").map((x) => x.replace("]", ""));
+        let current: any = result;
+        for (let i = 0; i < keys.length; i++) {
+          const k = keys[i];
+          if (i === keys.length - 1) {
+            if (!current[k]) current[k] = {};
+            current[k] = e.target!.result;
+          } else {
+            if (
+              i === keys.length - 2 &&
+              Number.isInteger(+keys[i + 1]) &&
+              !Array.isArray(current[k])
+            )
+              current[k] = [];
+            else if (!current[k]) current[k] = {};
+            current = current[k];
+          }
+        }
+        return { ...value, ...result };
+      });
     };
 
     reader.readAsDataURL(file); // convert to base64 string
@@ -94,10 +112,11 @@ const ManagerCmsGlobalPage: NextPageWithLayout = () => {
 
   const onChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value: val } = e.target;
-    if ("files" in e.target && e.target.files) readURL(e.target, setValue);
+    if ("files" in e.target && e.target.files)
+      return readURL(e.target, setValue);
     setValue((value: ValueType) => ({
       ...value,
-      [name]: "files" in e.target && e.target.files ? e.target.files[0] : val,
+      [name]: val,
     }));
   };
 
@@ -139,7 +158,7 @@ const ManagerCmsGlobalPage: NextPageWithLayout = () => {
                   <Input
                     onChange={onChange}
                     value={value.app_name}
-                    name="app_name"
+                    name="global[app_name]"
                     required
                     validation={{ required: true }}
                     label={form.app_name}
@@ -147,21 +166,35 @@ const ManagerCmsGlobalPage: NextPageWithLayout = () => {
                   <Input
                     onChange={onChange}
                     value={value.company_name}
-                    name="company_name"
+                    name="global[company_name]"
                     required
                     validation={{ required: true }}
                     label={form.company_name}
                   />
                   {Object.keys(logo).map((key) => (
-                    <div key={`global-input-logo${key}`}>
-                      <InputImage
-                        label={`${form.logo}(${key})`}
-                        name={`logo-${key}`}
-                        value={value.logo[key]!}
-                        onClick={() => handlePhotoChange(`logo-${key}`)}
-                      />
-                    </div>
+                    <InputImage
+                      label={`${form.logo}(${key})`}
+                      key={`global-input-logo-${key}`}
+                      name={`global-logo-${key}`}
+                      value={value.logo[key]!}
+                      onClick={() => handlePhotoChange(`global-logo-${key}`)}
+                    />
                   ))}
+                </div>
+
+                <div>
+                  <InputImage
+                    label={form.favicon}
+                    name="global-favicon"
+                    value={value.favicon!}
+                    onClick={() => handlePhotoChange("global-favicon")}
+                  />
+                  <InputImage
+                    label={form.company_logo}
+                    name="global-company-logo"
+                    value={value.company_logo!}
+                    onClick={() => handlePhotoChange("global-company-logo")}
+                  />
                 </div>
               </div>
 
@@ -173,48 +206,56 @@ const ManagerCmsGlobalPage: NextPageWithLayout = () => {
 
               <input
                 type="file"
-                id="company_logo"
-                name="company_logo"
+                id="global-company-logo"
+                name="global[company_logo]"
                 className="hidden"
                 onChange={onChange}
                 accept=".png,.jpg,.jpeg"
               />
               <input
                 type="file"
-                id="logo-big"
-                name="logo[big]"
+                id="global-favicon"
+                name="global[favicon]"
                 className="hidden"
                 onChange={onChange}
                 accept=".png,.jpg,.jpeg"
               />
               <input
                 type="file"
-                id="logo-dark"
-                name="logo[dark]"
+                id="global-logo-big"
+                name="global[logo][big]"
                 className="hidden"
                 onChange={onChange}
                 accept=".png,.jpg,.jpeg"
               />
               <input
                 type="file"
-                id="logo-default"
-                name="logo[default]"
+                id="global-logo-dark"
+                name="global[logo][dark]"
                 className="hidden"
                 onChange={onChange}
                 accept=".png,.jpg,.jpeg"
               />
               <input
                 type="file"
-                id="logo-light"
-                name="logo[light]"
+                id="global-logo-default"
+                name="global[logo][default]"
                 className="hidden"
                 onChange={onChange}
                 accept=".png,.jpg,.jpeg"
               />
               <input
                 type="file"
-                id="logo-named"
-                name="logo[named]"
+                id="global-logo-light"
+                name="global[logo][light]"
+                className="hidden"
+                onChange={onChange}
+                accept=".png,.jpg,.jpeg"
+              />
+              <input
+                type="file"
+                id="global-logo-named"
+                name="global[logo][named]"
                 className="hidden"
                 onChange={onChange}
                 accept=".png,.jpg,.jpeg"

@@ -1,3 +1,4 @@
+import { GetServerSideProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
@@ -7,23 +8,18 @@ import { EventInterface } from "../../app/models/event";
 
 import Layout, { Head } from "../../components/frontend/navigation/layout";
 
-type EventType = EventInterface & { _id: string; link: string };
-
 interface EventPageProps {
-  events: EventType[];
+  event: EventInterface | null;
 }
 
-const EventPage = ({ events }: EventPageProps) => {
-  const {
-    query: { slug },
-  } = useRouter();
+const EventPage = ({ event }: EventPageProps) => {
+  if (!event) return null;
 
-  const event = events.find((event) => event.slug === slug);
-  const { description, link, title, photo, body } = event!;
+  const { description, link, title, photo, body } = event;
 
   return (
     <>
-      <Head title={title} link={link} description={description} />
+      <Head title={title} link={link!} description={description} />
       <main id="event" className="page-main">
         <header className="relative">
           <div className="bg-img">
@@ -59,16 +55,14 @@ EventPage.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 
-export async function getServerSideProps() {
-  const events = await Event.find();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const event = await Event.findOne({ slug: context.query.slug });
 
   return {
     props: {
-      events: JSON.parse(
-        JSON.stringify(events.map((event) => event.toObject()))
-      ),
+      event: event ? JSON.parse(JSON.stringify(event.toObject())) : null,
     },
   };
-}
+};
 
 export default EventPage;

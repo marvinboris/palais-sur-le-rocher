@@ -1,18 +1,21 @@
-import { Model, Schema } from "mongoose"
+import { Model, Schema } from "mongoose";
 
-const directory = '/images/gallery/'
+const directory = "/images/gallery/";
 
 export interface ImageInterface {
-    id?: string
-    photo?: string
-    createdAt?: Date
-    updatedAt?: Date
+  id?: string;
+  photo?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export const ImageSchema = new Schema<ImageInterface, Model<ImageInterface>>({
+export const ImageSchema = new Schema<ImageInterface, Model<ImageInterface>>(
+  {
     photo: {
-        type: String,
-        required: true,
-        get: (photo: string) => directory + photo
+      type: String,
+      required: true,
+      get: (photo: string) => directory + photo,
     },
-}, { timestamps: true, toObject: { getters: true } })
+  },
+  { timestamps: true, toObject: { getters: true } }
+);

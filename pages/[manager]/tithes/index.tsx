@@ -51,9 +51,9 @@ const ManageTithesPage: NextPageWithLayout = () => {
   );
 
   const fields = [
-    { name: form.member, key: "member", className: 'w-full' },
-    { name: form.method, key: "method" },
+    { name: form.member, key: "member", className: "w-full" },
     { name: form.amount, key: "amount" },
+    { name: form.method, key: "method" },
     { name: form.created_at, key: "created_at" },
     { name: action, key: "action", fixed: true },
   ];

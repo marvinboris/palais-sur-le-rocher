@@ -44,7 +44,7 @@ const renderItem = (item: Item, close: () => void) => (
     key={item.name}
     href={item.href}
     onClick={close}
-    className="-m-3 flex items-start rounded-lg p-3 hover:bg-secondary-50 dark:hover:bg-secondary-700"
+    className="-m-3 flex items-start rounded-lg p-3 hover:bg-secondary-50 dark:hover:bg-secondary-900"
   >
     {item.icon && (
       <item.icon
@@ -68,7 +68,7 @@ const renderItem = (item: Item, close: () => void) => (
         {item.name}
       </p>
       {item.description && (
-        <p className="mt-1 text-sm text-secondary-500 dark:text-secondary-600">
+        <p className="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
           {item.description}
         </p>
       )}
@@ -80,7 +80,7 @@ const renderAction = (item: Action) => (
   <div key={item.name} className="flow-root">
     <Link
       href={item.href}
-      className="-m-3 flex items-center rounded-md p-3 text-base font-medium text-secondary-900 hover:bg-secondary-100 dark:text-secondary-50 dark:hover:bg-secondary-700"
+      className="-m-3 flex items-center rounded-md p-3 text-base font-medium text-secondary-900 hover:bg-secondary-100 dark:text-secondary-50 dark:hover:bg-secondary-900"
     >
       {item.icon && (
         <item.icon
@@ -149,14 +149,14 @@ export default function Dropdown({
                   </div>
                 </div>
                 {actions && (
-                  <div className="bg-secondary-50 px-5 py-5 dark:bg-secondary-700">
+                  <div className="bg-secondary-50 px-5 py-5 dark:bg-secondary-900">
                     <div className="container space-y-6 sm:flex sm:space-y-0 sm:space-x-10 sm:px-8">
                       {actions.map(renderAction)}
                     </div>
                   </div>
                 )}
                 {list && (
-                  <div className="bg-secondary-50 px-5 py-5 dark:bg-secondary-700 sm:px-8 sm:py-8">
+                  <div className="bg-secondary-50 px-5 py-5 dark:bg-secondary-900 sm:px-8 sm:py-8">
                     <div className="container">
                       <div>
                         <h3 className="text-base font-medium text-secondary-500">

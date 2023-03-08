@@ -59,7 +59,7 @@ const ManagerUsersPage: NextPageWithLayout = () => {
   );
 
   const fields = [
-    { name: form.full_name, key: "name", className: 'w-full' },
+    { name: form.full_name, key: "name", className: "w-full" },
     { name: form.email, key: "email" },
     { name: form.phone, key: "phone" },
     { name: form.role, key: "role" },

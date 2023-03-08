@@ -153,7 +153,7 @@ export default function Toolbar() {
           </div>
 
           <div className="absolute top-full right-0 origin-top-right scale-0 pt-1.5 opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100">
-            <div className="w-40 rounded-[14px] bg-white dark:bg-secondary-800 px-[7px] pt-[7px] pb-6 text-sm shadow-sm">
+            <div className="w-40 rounded-[14px] bg-white px-[7px] pt-[7px] pb-6 text-sm shadow-sm dark:bg-secondary-800">
               <div className="space-y-2.5 px-[13px]">
                 <Link
                   href={`/${role}/settings`}

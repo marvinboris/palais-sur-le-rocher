@@ -14,7 +14,7 @@ import { manageResource } from "../../../../../lib/utils/resource";
 const information = async () => {
   const members = await Member.find();
   const methods = await Method.find();
-  return { members: members.map(m => m.toObject()), methods };
+  return { members: members.map((m) => m.toObject()), methods };
 };
 
 export default async function handler(
@@ -39,8 +39,7 @@ export default async function handler(
 
     if (req.method === "GET") {
       if (slug[0] === "info") return manage.info();
-      else
-        return manage.show();
+      else return manage.show();
     } else if (req.method === "PATCH")
       return manage.patch({
         validate: {

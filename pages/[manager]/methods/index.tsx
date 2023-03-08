@@ -61,7 +61,7 @@ const ManagerMethodsPage: NextPageWithLayout = () => {
   );
 
   const fields = [
-    { name: form.name, key: "name", className: 'w-full' },
+    { name: form.name, key: "name", className: "w-full" },
     { name: form.is_active, key: "isActive" },
     { name: form.logo, key: "logo" },
     { name: form.created_at, key: "created_at" },

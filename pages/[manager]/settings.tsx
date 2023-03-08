@@ -10,31 +10,34 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { ChangeEvent, ReactElement, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  ReactElement,
+  SetStateAction,
+  useState,
+} from "react";
 
-import { NextPageWithLayout } from "../_app";
-
-import Layout, { Head } from "../../components/backend/navigation/layout";
+import { useContentContext } from "../../app/contexts/content";
+import { classNames } from "../../app/helpers/utils";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 import Button from "../../components/backend/ui/form/button";
+import Layout, { Head } from "../../components/backend/navigation/layout";
 import PageTitle from "../../components/backend/ui/title/page";
-
 import Input from "../../components/frontend/ui/form/input";
-import { useAppSelector } from "../../app/hooks";
-import { selectAuth } from "../../features/auth/authSlice";
 import Select from "../../components/frontend/ui/form/select";
 
-const params = {
-  link: "/user/settings",
-  title: "Settings | Valyou",
-  description: "Your favorite e-commerce platform: your settings.",
-};
+import { selectAuth, userSettings } from "../../features/auth/authSlice";
+
+import { NextPageWithLayout } from "../_app";
 
 type ValueType = any;
 
 const readURL = (
   input: EventTarget & HTMLInputElement,
-  setValue: (value: ValueType | ((value: ValueType) => ValueType)) => void
+  setValue: Dispatch<SetStateAction<ValueType>>
 ) => {
   if (input.files && input.files[0]) {
     const file = input.files[0];
@@ -52,7 +55,22 @@ const readURL = (
 };
 
 const SettingsPage: NextPageWithLayout = () => {
-  const { data } = useAppSelector(selectAuth);
+  const dispatch = useAppDispatch();
+
+  const { data, role } = useAppSelector(selectAuth);
+
+  const { content } = useContentContext();
+
+  const {
+    cms: {
+      global: { app_name },
+      backend: {
+        pages: {
+          settings: { title, subtitle, form, form_title, form_subtitle },
+        },
+      },
+    },
+  } = content!;
 
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState({
@@ -72,68 +90,99 @@ const SettingsPage: NextPageWithLayout = () => {
 
   const handlePhotoChange = () => document.getElementById("photo")?.click();
 
+  const handleSubmit = (e: FormEvent) => {
+    console.log(editing);
+    e.preventDefault();
+    setEditing((editing) => !editing);
+    console.log(editing);
+    if (editing) return;
+    dispatch(userSettings(e.target as any));
+  };
+
   return (
     <>
-      <Head {...params} />
+      <Head
+        link={`/${role}/settings`}
+        title={`${title} | ${app_name}`}
+        description={`${app_name}: Modifiez vos informations de profil.`}
+      />
       <main className="flex-1">
         <PageTitle
-          animated
           icon={AdjustmentsHorizontalIcon}
-          title="Settings"
-          subtitle="Manage your account details"
+          title={title}
+          subtitle={subtitle}
         />
 
         <div className="px-[33px] pt-[29px] pb-[54px] md:px-[42px] md:pt-[47px]">
-          <div className="mb-[25px] max-w-[700px] rounded-[30px] bg-white dark:bg-secondary-800 py-8 px-[38.36px] shadow-2xl">
+          <form
+            onSubmit={handleSubmit}
+            className="mb-[25px] max-w-[700px] rounded-[30px] bg-white py-8 px-[38.36px] shadow-2xl dark:bg-secondary-800"
+            encType="multipart/form-data"
+          >
             <div className="mb-[46.94px] flex flex-wrap items-center justify-between md:flex-nowrap">
               <div className="order-2 md:order-1">
                 <div className="mb-[4.63px] text-[25px] font-bold md:text-[22.21px] md:font-medium">
-                  User Account Settings
+                  {form_title}
                 </div>
 
-                <div className="text-[12.96px]">Edit or manage account</div>
+                <div className="text-[12.96px]">{form_subtitle}</div>
               </div>
 
               <div className="order-1 ml-auto mb-8 flex items-center md:order-2 md:ml-0 md:mb-0">
-                <Button
-                  type={editing ? "submit" : "button"}
-                  onClick={() => setEditing((editing) => !editing)}
-                  pill
-                  icon={editing ? ArrowDownOnSquareIcon : PencilIcon}
-                  color={editing ? "green" : "night"}
-                >
-                  {editing ? "Save" : "Edit"} Settings
-                </Button>
+                {editing ? (
+                  <Button pill icon={ArrowDownOnSquareIcon} color="green">
+                    {form.save_settings}
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    onClick={() => setEditing((editing) => !editing)}
+                    pill
+                    icon={PencilIcon}
+                    color="night"
+                  >
+                    {form.edit_settings}
+                  </Button>
+                )}
               </div>
             </div>
 
-            <form>
+            <div>
               <div className="md:flex md:items-start md:space-x-11">
                 <div className="grid flex-1 grid-cols-1 gap-y-2 gap-x-4 overflow-auto md:grid-cols-2">
+                  <input
+                    type="hidden"
+                    disabled={!editing}
+                    name="_method"
+                    value="PATCH"
+                  />
                   <Input
                     inputSize="sm"
                     icon={UserIcon}
                     name="name"
-                    placeholder="First Name"
+                    placeholder={form.name}
                     onChange={onChange}
                     value={value.name}
+                    disabled={!editing}
                   />
                   <Input
                     inputSize="sm"
                     icon={EnvelopeIcon}
                     type="email"
                     name="email"
-                    placeholder="E-mail Address"
+                    placeholder={form.email}
                     onChange={onChange}
                     value={value.email}
+                    disabled={!editing}
                   />
                   <Input
                     inputSize="sm"
                     type="tel"
                     name="phone"
-                    placeholder="054 430 3333"
+                    placeholder={form.phone}
                     onChange={onChange}
                     value={value.phone}
+                    disabled={!editing}
                   />
                   <Select
                     inputSize="sm"
@@ -141,38 +190,54 @@ const SettingsPage: NextPageWithLayout = () => {
                     icon={FlagIcon}
                     onChange={onChange}
                     value={value.locale}
+                    disabled={!editing}
                   >
-                    <option value="">Select locale</option>
+                    <option value="">{form.locale}</option>
                   </Select>
                   <Input
                     inputSize="sm"
                     icon={LockClosedIcon}
                     append={
-                      <EyeIcon className="w-6 cursor-pointer text-green" />
+                      <EyeIcon
+                        className={classNames(
+                          "w-6 text-green",
+                          editing ? "cursor-pointer" : ""
+                        )}
+                      />
                     }
                     type="password"
                     name="password"
-                    placeholder="Password"
+                    placeholder={form.password}
                     onChange={onChange}
                     value={value.password}
+                    disabled={!editing}
                   />
                   <Input
                     inputSize="sm"
                     icon={LockClosedIcon}
                     append={
-                      <EyeIcon className="w-6 cursor-pointer text-green" />
+                      <EyeIcon
+                        className={classNames(
+                          "w-6 text-green",
+                          editing ? "cursor-pointer" : ""
+                        )}
+                      />
                     }
                     type="password"
                     name="password_confirmation"
-                    placeholder="Retype Password"
+                    placeholder={form.password_confirmation}
                     onChange={onChange}
                     value={value.password_confirmation}
+                    disabled={!editing}
                   />
                 </div>
 
                 <div
-                  onClick={handlePhotoChange}
-                  className="relative mt-[14px] flex aspect-[5/2] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[15px] text-white md:mt-0 md:aspect-square md:w-40 md:rounded-3xl"
+                  onClick={editing ? handlePhotoChange : () => {}}
+                  className={classNames(
+                    "relative mt-[14px] flex aspect-[5/2] flex-col items-center justify-center overflow-hidden rounded-[15px] text-white md:mt-0 md:aspect-square md:w-40 md:rounded-3xl",
+                    editing ? "cursor-pointer" : ""
+                  )}
                 >
                   {value.photo && (
                     <Image
@@ -185,9 +250,18 @@ const SettingsPage: NextPageWithLayout = () => {
                   )}
                   <div className="absolute inset-0 z-10 bg-black/40" />
                   <div className="relative z-20 mb-1 flex h-9 w-9 items-center justify-center rounded-full bg-black/30 md:mb-1.5 md:h-14 md:w-14">
-                    <PencilSquareIcon className="w-4 md:w-6" />
+                    {editing ? (
+                      <PencilSquareIcon className="w-4 md:w-6" />
+                    ) : (
+                      <LockClosedIcon className="w-4 md:w-6" />
+                    )}
                   </div>
-                  <div className="relative z-20 text-[14.81px] font-medium md:font-bold">
+                  <div
+                    className={classNames(
+                      "relative z-20 text-[14.81px] font-medium md:font-bold",
+                      !editing ? "opacity-50" : "opacity-100"
+                    )}
+                  >
                     Change
                   </div>
                 </div>
@@ -200,9 +274,10 @@ const SettingsPage: NextPageWithLayout = () => {
                 className="hidden"
                 onChange={onChange}
                 accept="image/*"
+                disabled={!editing}
               />
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </main>
     </>

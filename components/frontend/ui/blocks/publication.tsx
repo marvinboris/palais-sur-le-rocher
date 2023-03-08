@@ -4,9 +4,7 @@ import Link from "next/link";
 import { CategoryInterface } from "../../../../app/models/category";
 import { PublicationInterface } from "../../../../app/models/publication";
 
-type PublicationType = Omit<PublicationInterface, "category"> & {
-  _id: string;
-  link: string;
+type PublicationType = PublicationInterface & {
   category: CategoryInterface;
 };
 
@@ -19,7 +17,7 @@ export default function Publication({
   return (
     <li>
       <Link
-        href={link}
+        href={link!}
         className="group block rounded-2xl shadow-md transition-all duration-200 hover:shadow-2xl"
       >
         <div className="relative h-[190px] w-full overflow-hidden rounded-t-2xl">
@@ -32,11 +30,13 @@ export default function Publication({
           />
         </div>
 
-        <dl className="rounded-b-2xl bg-white p-3">
+        <dl className="rounded-b-2xl bg-secondary-50 p-3 dark:bg-secondary-900">
           <div>
             <dt className="sr-only">Titre</dt>
 
-            <dd className=" font-semibold text-secondary-900 ">{title}</dd>
+            <dd className=" font-semibold text-secondary-900 dark:text-secondary-100">
+              {title}
+            </dd>
           </div>
 
           <div>

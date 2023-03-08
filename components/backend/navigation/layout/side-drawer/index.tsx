@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, ReactNode } from "react";
 
 import { useContentContext } from "../../../../../app/contexts/content";
 import { useSideDrawerContext } from "../../../../../app/contexts/side-drawer";
@@ -20,9 +20,20 @@ import Logo from "../../../../ui/logo";
 
 import NavItem from "./nav-item";
 
-export default function SideDrawer() {
-  const { width } = useWindowSize();
-  const { open, setOpen } = useSideDrawerContext();
+const Group = (props: { title: string; children?: ReactNode }) => (
+  <div>
+    <GroupTitle>{props.title}</GroupTitle>
+    <div className="space-y-3">{props.children}</div>
+  </div>
+);
+
+const GroupTitle = (props: { children?: ReactNode }) => (
+  <div className="mb-1 px-3 py-2 text-lg font-semibold uppercase">
+    {props.children}
+  </div>
+);
+
+const UserNavItem = (props: { resource: ResourceType }) => {
   const { content } = useContentContext();
 
   const { role, data } = useAppSelector(selectAuth);
@@ -37,6 +48,37 @@ export default function SideDrawer() {
         resource
       )
   );
+  const feature =
+    data &&
+    "role" in data &&
+    data.role.features.find(
+      ({ prefix }) => prefix.split("-").join("_") === props.resource
+    );
+
+  if (!feature) return null;
+
+  const resource = feature.prefix.split("-").join("_");
+  return (
+    <NavItem
+      key={JSON.stringify(cms.sidebar.menu[resource as ResourceType])}
+      icon={resourceIcon(resource as ResourceType)}
+      href={`/${role}/${feature.prefix}`}
+    >
+      {cms.sidebar.menu[resource as ResourceType].title}
+    </NavItem>
+  );
+};
+
+export default function SideDrawer() {
+  const { width } = useWindowSize();
+  const { open, setOpen } = useSideDrawerContext();
+  const { content } = useContentContext();
+
+  const { role, data } = useAppSelector(selectAuth);
+
+  const {
+    cms: { backend: cms },
+  } = content!;
 
   return (
     <Transition
@@ -60,9 +102,9 @@ export default function SideDrawer() {
               </Link>
             </div>
 
-            <div className="flex flex-1 flex-col pr-4 overflow-auto scrollbar-thin scrollbar-track-white scrollbar-thumb-primary-600 scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-              <div>
-                <div className="space-y-3">
+            <div className="flex flex-1 flex-col overflow-auto pr-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary-600/50 scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
+              <div className="space-y-6">
+                <Group title="MENU">
                   <NavItem
                     icon={ComputerDesktopIcon}
                     href={`/${role}/dashboard`}
@@ -74,32 +116,41 @@ export default function SideDrawer() {
                       {cms.sidebar.menu.admins.title}
                     </NavItem>
                   )}
-                  {data &&
+                  <UserNavItem resource="users" />
+                  <UserNavItem resource="roles" />
+                  <UserNavItem resource="features" />
+                </Group>
+
+                <Group title="CONTENU">
+                  <UserNavItem resource="categories" />
+                  <UserNavItem resource="publications" />
+                  <UserNavItem resource="events" />
+                  <UserNavItem resource="lessons" />
+                  <UserNavItem resource="images" />
+                  <UserNavItem resource="testimonials" />
+                </Group>
+
+                <Group title="FINANCES">
+                  <UserNavItem resource="donations" />
+                  <UserNavItem resource="tithes" />
+                  <UserNavItem resource="transactions" />
+                </Group>
+
+                <Group title="EFFECTIFS">
+                  <UserNavItem resource="staff_members" />
+                  <UserNavItem resource="members" />
+                  <UserNavItem resource="subscribers" />
+                  <UserNavItem resource="ministries" />
+                </Group>
+
+                <Group title="CONFIG">
+                  <UserNavItem resource="methods" />
+                  {role === "admin" ||
+                  (data &&
                     "role" in data &&
-                    data.role.features
-                      .filter(({ prefix }) =>
-                        resources.includes(prefix.split("-").join("_"))
-                      )
-                      .map(({ prefix }) => {
-                        const resource = prefix.split("-").join("_");
-                        return (
-                          <NavItem
-                            key={JSON.stringify(
-                              cms.sidebar.menu[resource as ResourceType]
-                            )}
-                            icon={resourceIcon(resource as ResourceType)}
-                            href={`/${role}/${prefix}`}
-                          >
-                            {cms.sidebar.menu[resource as ResourceType].title}
-                          </NavItem>
-                        );
-                      })}
-                  {(role === "admin" ||
-                    (data &&
-                      "role" in data &&
-                      data.role.features.find(
-                        ({ prefix }) => prefix === "cms"
-                      ))) && (
+                    data.role.features.find(
+                      ({ prefix }) => prefix === "cms"
+                    )) ? (
                     <NavItem
                       icon={Cog8ToothIcon}
                       href={`/${role}/cms`}
@@ -109,14 +160,14 @@ export default function SideDrawer() {
                     >
                       {cms.sidebar.menu.cms.title}
                     </NavItem>
-                  )}
+                  ) : null}
                   <NavItem
                     icon={AdjustmentsHorizontalIcon}
                     href={`/${role}/settings`}
                   >
                     {cms.sidebar.menu.settings.title}
                   </NavItem>
-                </div>
+                </Group>
               </div>
             </div>
           </div>

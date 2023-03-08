@@ -27,7 +27,8 @@ export default function Select({
       <div
         className={classNames(
           inputSize === "sm" ? "h-12" : "h-[60px]",
-          "relative flex items-center rounded-[300px] bg-secondary-100 dark:bg-secondary-900"
+          "relative flex items-center rounded-[300px] bg-secondary-100 dark:bg-secondary-900",
+          props.disabled ? "opacity-50" : "opacity-100"
         )}
       >
         <div>

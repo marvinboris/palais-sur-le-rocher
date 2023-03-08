@@ -36,8 +36,8 @@ const StatCard = ({ color, title, children }: StatCardProps) => (
         ? "after:bg-sky/[.15]"
         : color === "orange"
         ? "after:bg-orange/20"
-        : "after:bg-yellow text-white",
-      "bg-white dark:bg-secondary-800  after:absolute after:inset-0 after:-z-10 font-display relative overflow-hidden z-0 flex h-[156.88px] flex-col rounded-[25px] py-[23px] pl-[26px] pr-[22px] md:h-[100.92px] md:rounded-[12.625px] md:py-[13.25px] md:pl-[20.18px] md:pr-[10.72px]"
+        : "text-white after:bg-yellow",
+      "font-display relative  z-0 flex h-[156.88px] flex-col overflow-hidden rounded-[25px] bg-white py-[23px] pl-[26px] pr-[22px] after:absolute after:inset-0 after:-z-10 dark:bg-secondary-800 md:h-[100.92px] md:rounded-[12.625px] md:py-[13.25px] md:pl-[20.18px] md:pr-[10.72px]"
     )}
   >
     <div className="text-lg font-medium md:text-sm">{title}</div>

@@ -53,8 +53,8 @@ const ManageDonationsPage: NextPageWithLayout = () => {
   );
 
   const fields = [
+    { name: form.amount, key: "amount", className: "w-full" },
     { name: form.method, key: "method" },
-    { name: form.amount, key: "amount" },
     { name: form.created_at, key: "created_at" },
     { name: action, key: "action", fixed: true },
   ];

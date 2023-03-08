@@ -41,6 +41,7 @@ export default async function handler(
         return manage.show({
           keys: {
             isActive: (keys) => (keys.isActive ? "1" : "0"),
+            principal: (keys) => (keys.principal ? "1" : "0"),
           },
         });
     } else if (req.method === "PATCH")
@@ -52,6 +53,7 @@ export default async function handler(
         },
         fields: {
           isActive: (fields) => fields.isActive == "1",
+          principal: (fields) => fields.principal == "1",
         },
       });
     else if (req.method === "DELETE") return manage.delete();

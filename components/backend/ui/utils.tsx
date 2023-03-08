@@ -37,13 +37,10 @@ const readURL = (
     const reader = new FileReader();
 
     reader.onload = function (e) {
-      // const embed = document.getElementById(`embed-${input.name}`)! as HTMLImageElement
-      // embed.src = e.target!.result as string;
       setState((state) => ({
         ...state,
         [input.name]: e.target!.result as string,
       }));
-      // embed.querySelector(".file-selected")!.innerHTML = file.name;
     };
 
     reader.readAsDataURL(file); // convert to base64 string

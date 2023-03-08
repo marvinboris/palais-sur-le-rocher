@@ -63,7 +63,7 @@ const ManagePublicationsPage: NextPageWithLayout = () => {
   );
 
   const fields = [
-    { name: form.title, key: "title" },
+    { name: form.title, key: "title", className: "w-full" },
     { name: form.description, key: "description" },
     { name: form.body, key: "body" },
     { name: form.category, key: "category" },

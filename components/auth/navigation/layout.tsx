@@ -19,7 +19,7 @@ export default function Layout({ children }: LayoutProps) {
     if (token) router.push(`/${role}/dashboard`);
   }, [token, router, role]);
 
-  return !token ?
+  return !token ? (
     <div className="relative z-0 overflow-hidden bg-grid-primary-600/[0.05]">
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-primary-600/50 to-transparent" />
 
@@ -31,12 +31,13 @@ export default function Layout({ children }: LayoutProps) {
         </header>
 
         <div className="flex flex-1 flex-col items-center justify-center">
-          <div className="relative w-full max-w-4xl rounded-[40.8836px] bg-white dark:bg-secondary-800 pt-[44px] pb-[50px] shadow-lg md:pt-[51px] md:pb-[66px]">
+          <div className="relative w-full max-w-4xl rounded-[40.8836px] bg-white pt-[44px] pb-[50px] shadow-lg dark:bg-secondary-800 md:pt-[51px] md:pb-[66px]">
             {children}
           </div>
         </div>
       </div>
-    </div> : null;
+    </div>
+  ) : null;
 }
 
 export interface PageParams {

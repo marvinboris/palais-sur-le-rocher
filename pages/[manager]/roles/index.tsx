@@ -51,7 +51,7 @@ const ManageRolesPage: NextPageWithLayout = () => {
   );
 
   const fields = [
-    { name: form.name, key: "name", className: 'w-full' },
+    { name: form.name, key: "name", className: "w-full" },
     { name: form.description, key: "description" },
     { name: form.created_at, key: "created_at" },
     { name: action, key: "action", fixed: true },

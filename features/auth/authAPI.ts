@@ -24,3 +24,19 @@ export const postUserLogin = async (data: {
   }>("/api/auth/user/login", data);
   return res.data;
 };
+
+// Settings
+export const patchUserSettings = async (data: {
+  password: string;
+  password_confirmation: string;
+  name: string;
+  email: string;
+  photo?: string;
+  phone: string;
+  locale: string;
+}) => {
+  const res = await axios.post<{
+    data: ApiAccountUserType | ApiMessageType;
+  }>("/api/backend/user/settings", data);
+  return res.data;
+};

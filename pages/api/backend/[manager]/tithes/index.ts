@@ -40,7 +40,7 @@ export const data = async (req: NextApiRequest) => {
   ).map((tithe) => ({
     ...tithe.toObject(),
     member: tithe.member.name,
-    method: tithe.method.name,
+    method: tithe.method ? tithe.method.name : "",
   }));
 
   return { tithes, total };

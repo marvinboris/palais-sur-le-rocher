@@ -15,6 +15,9 @@ import { selectAuth } from "../../../features/auth/authSlice";
 import { selectBackend, _delete } from "../../../features/backend/backendSlice";
 
 import { NextPageWithLayout } from "../../_app";
+import Button from "../../../components/backend/ui/form/button";
+import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
+import Download from "../../../components/backend/ui/list/download";
 
 const ManagerImagesPage: NextPageWithLayout = () => {
   const resource: ResourceType = "images";
@@ -46,14 +49,18 @@ const ManagerImagesPage: NextPageWithLayout = () => {
     backend && backend[resource] ? (backend[resource] as ImageInterface[]) : []
   ).map((item) =>
     updateObject(item, {
+      src: item.photo,
       created_at: convertDate(item.createdAt!),
       photo: <Photo photo={item.photo} see={see} title={item.photo!} />,
+      download: <Download href={item.photo} />,
       action: <Action props={props} resource={resource} item={item} />,
     })
   );
 
   const fields = [
+    { name: form.src, key: "src", className: "w-full" },
     { name: form.photo, key: "photo" },
+    { name: form.download, key: "download" },
     { name: action, key: "action", fixed: true },
   ];
 

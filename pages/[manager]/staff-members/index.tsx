@@ -15,6 +15,7 @@ import { selectAuth } from "../../../features/auth/authSlice";
 import { selectBackend, _delete } from "../../../features/backend/backendSlice";
 
 import { NextPageWithLayout } from "../../_app";
+import Status from "../../../components/backend/ui/list/status";
 
 const ManageStaffMembersPage: NextPageWithLayout = () => {
   const resource: ResourceType = "staff_members";
@@ -49,6 +50,8 @@ const ManageStaffMembersPage: NextPageWithLayout = () => {
   ).map((item) =>
     updateObject(item, {
       created_at: convertDate(item.createdAt!),
+      isActive: <Status value={item.isActive} />,
+      principal: <Status value={item.principal} />,
       photo: (
         <Photo
           photo={item.photo}
@@ -61,10 +64,11 @@ const ManageStaffMembersPage: NextPageWithLayout = () => {
   );
 
   const fields = [
-    { name: form.name, key: "name", className: 'w-full' },
+    { name: form.name, key: "name", className: "w-full" },
     { name: form.title, key: "title" },
     { name: form.description, key: "description" },
     { name: form.principal, key: "principal" },
+    { name: form.is_active, key: "isActive" },
     { name: form.photo, key: "photo" },
     { name: action, key: "action", fixed: true },
   ];

@@ -61,7 +61,7 @@ const ManageTestimonialsPage: NextPageWithLayout = () => {
   );
 
   const fields = [
-    { name: form.name, key: "name", className: 'w-full' },
+    { name: form.name, key: "name", className: "w-full" },
     { name: form.title, key: "title" },
     { name: form.body, key: "body" },
     { name: form.photo, key: "photo" },

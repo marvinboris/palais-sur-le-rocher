@@ -1,52 +1,57 @@
-import { Model, Schema } from "mongoose"
+import { Model, Schema } from "mongoose";
 
-const directory = '/audios/lessons/'
+const directory = "/audios/lessons/";
 
 export interface LessonInterface {
-    id?: string
-    episode: number
-    date: string
-    description: string
-    subtitle: string
-    notes: string
-    audio?: string
-    isActive?: boolean
-    createdAt?: Date
-    updatedAt?: Date
+  id?: string;
+  episode: number;
+  date: string;
+  description: string;
+  subtitle: string;
+  notes: string;
+  audio?: string;
+  isActive?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-export const LessonSchema = new Schema<LessonInterface, Model<LessonInterface>>({
+export const LessonSchema = new Schema<LessonInterface, Model<LessonInterface>>(
+  {
     episode: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
     date: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     description: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     subtitle: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     notes: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     audio: {
-        type: String,
-        required: true,
-        get: (audio: string) => directory + audio
+      type: String,
+      required: true,
+      get: (audio: string) => directory + audio,
     },
     isActive: {
-        type: Boolean,
-        required: true,
-        default: true
+      type: Boolean,
+      required: true,
+      default: true,
     },
-}, { timestamps: true, toObject: { getters: true, virtuals: true } })
+  },
+  { timestamps: true, toObject: { getters: true, virtuals: true } }
+);
 
 // Virtuals
-LessonSchema.virtual('link').get(function () { return `/lessons/${this._id}` })
+LessonSchema.virtual("link").get(function () {
+  return `/lessons/${this._id}`;
+});

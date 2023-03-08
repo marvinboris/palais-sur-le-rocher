@@ -10,6 +10,7 @@ import {
   methodNotAllowed,
 } from "../../../../../lib/utils";
 import { manageResource } from "../../../../../lib/utils/resource";
+import { Options } from "formidable";
 
 export const data = async (req: NextApiRequest) => {
   const { page = 1, show = 10, search = "" } = req.query;
@@ -44,6 +45,7 @@ export const resourceConfig = {
   singular: "lesson",
   fields: ["episode", "date", "description", "subtitle", "notes", "isActive"],
   file: { name: "audio", uploadDir },
+  options: <Options>{ maxFileSize: 1_000_000_000 },
 };
 
 export default async function handler(

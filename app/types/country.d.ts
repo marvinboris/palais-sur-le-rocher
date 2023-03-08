@@ -1,5 +1,5 @@
 export default interface CountryType {
-    country: string
-    code: string
-    name: string
+  country: string;
+  code: string;
+  name: string;
 }

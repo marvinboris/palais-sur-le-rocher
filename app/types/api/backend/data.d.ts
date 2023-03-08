@@ -1,3 +1,3 @@
-type ApiBackendDataType = any 
+type ApiBackendDataType = any;
 
-export default ApiBackendDataType
+export default ApiBackendDataType;

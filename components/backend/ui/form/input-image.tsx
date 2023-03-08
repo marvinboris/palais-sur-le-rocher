@@ -18,7 +18,7 @@ export default function InputImage({
 }: InputImageProps) {
   return (
     <div>
-      {label && <label htmlFor={id ? id : name}>{label}</label>}
+      {label && <label htmlFor={id || name}>{label}</label>}
 
       <div
         onClick={onClick}

@@ -15,7 +15,6 @@ import ManagerAddOrEdit from ".";
 type Props = { edit?: boolean };
 
 const initialState = {
-  firstName: "",
   email: "",
 
   add: false,
@@ -57,15 +56,6 @@ export default function ManageAddOrEditSubscribers({ edit }: Props) {
       <div className="grid gap-4 md:grid-cols-3">
         <div className="md:col-span-2">
           <div className="grid flex-1 grid-cols-1 gap-y-2 gap-x-4 overflow-auto md:grid-cols-2">
-            <Input
-              icon={icon}
-              onChange={inputChangeHandler}
-              value={state.firstName as string}
-              name="firstName"
-              required
-              validation={{ required: true }}
-              label={form.first_name}
-            />
             <Input
               type="email"
               icon={EnvelopeIcon}

@@ -1,3 +1,4 @@
+import { GetServerSideProps } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
@@ -7,24 +8,19 @@ import { MinistryInterface } from "../../app/models/ministry";
 
 import Layout, { Head } from "../../components/frontend/navigation/layout";
 
-type MinistryType = MinistryInterface & { _id: string; link: string };
-
 interface MinistryPageProps {
-  ministries: MinistryType[];
+  ministry: MinistryInterface | null;
 }
 
-const MinistryPage = ({ ministries }: MinistryPageProps) => {
-  const {
-    query: { slug },
-  } = useRouter();
+const MinistryPage = ({ ministry }: MinistryPageProps) => {
+  if (!ministry) return null;
 
-  const ministry = ministries.find((ministry) => ministry.slug === slug);
   const { description, link, name, photo, body } = ministry!;
 
   return (
     <>
-      <Head title={name} link={link} description={description} />
-      <main id="ministries" className="page-main">
+      <Head title={name} link={link!} description={description} />
+      <main id="ministry" className="page-main">
         <header className="relative">
           <div className="bg-img">
             <Image
@@ -59,16 +55,16 @@ MinistryPage.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
 
-export async function getServerSideProps() {
-  const ministries = await Ministry.find();
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const ministry = await Ministry.findOne({ slug: context.query.slug });
 
   return {
     props: {
-      ministries: JSON.parse(
-        JSON.stringify(ministries.map((ministry) => ministry.toObject()))
-      ),
+      ministry: ministry
+        ? JSON.parse(JSON.stringify(ministry.toObject()))
+        : null,
     },
   };
-}
+};
 
 export default MinistryPage;

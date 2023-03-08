@@ -42,7 +42,7 @@ export const uploadDir = path.join(
 export const resource = "staff_members";
 export const resourceConfig = {
   singular: "staff_member",
-  fields: ["name", "title", "description", "isActive"],
+  fields: ["name", "title", "description", "isActive", "principal"],
   file: { name: "photo", uploadDir },
 };
 
@@ -73,6 +73,7 @@ export default async function handler(
         },
         fields: {
           isActive: (fields) => fields.isActive == "1",
+          principal: (fields) => fields.principal == "1",
         },
       });
     else methodNotAllowed(req, res);

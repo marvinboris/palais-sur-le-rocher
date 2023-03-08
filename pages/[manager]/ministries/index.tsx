@@ -61,7 +61,7 @@ const ManageMinistriesPage: NextPageWithLayout = () => {
   );
 
   const fields = [
-    { name: form.name, key: "name", className: 'w-full' },
+    { name: form.name, key: "name", className: "w-full" },
     { name: form.description, key: "description" },
     { name: form.body, key: "body" },
     { name: form.photo, key: "photo" },

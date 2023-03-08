@@ -34,9 +34,7 @@ const params = {
 type EventType = EventInterface & { _id: string; link: string };
 type ImageType = ImageInterface & { _id: string };
 type MinistryType = MinistryInterface & { _id: string; link: string };
-type PublicationType = Omit<PublicationInterface, "category"> & {
-  _id: string;
-  link: string;
+type PublicationType = PublicationInterface & {
   category: CategoryInterface;
 };
 type TestimonialType = TestimonialInterface & { _id: string };

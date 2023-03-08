@@ -23,7 +23,7 @@ const initialState = {
   description: "",
   photo: "",
   isActive: "1",
-  principal: "0",
+  principal: "",
 
   add: false,
 };
@@ -129,7 +129,7 @@ export default function ManageAddOrEditStaffMembers({ edit }: Props) {
               required
               validation={{ required: true }}
             >
-              <option>{form.principal}</option>
+              <option>{form.select_status}</option>
               <option value={1}>{active}</option>
               <option value={0}>{inactive}</option>
             </Select>

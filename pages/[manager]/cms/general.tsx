@@ -93,7 +93,7 @@ const ManagerCmsGeneralPage: NextPageWithLayout = () => {
     <Input
       key={Math.random()}
       id={`${prefixId}-date-${index}`}
-      name={`${prefix}[days][]`}
+      name={`${prefix}[days][${index}]`}
       label={item}
       defaultValue={value.days[index]}
     />
@@ -115,7 +115,7 @@ const ManagerCmsGeneralPage: NextPageWithLayout = () => {
     <Input
       key={Math.random()}
       id={`${prefixId}-months-${index}`}
-      name={`${prefix}[months][]`}
+      name={`${prefix}[months][${index}]`}
       label={item}
       defaultValue={value.months[index]}
     />

@@ -1,7 +1,7 @@
 enum Status {
-    IDLE = 'IDLE',
-    FAILED = 'FAILED',
-    LOADING = 'LOADING'
+  IDLE = "IDLE",
+  FAILED = "FAILED",
+  LOADING = "LOADING",
 }
 
-export default Status
+export default Status;

@@ -1,15 +1,17 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext } from "react";
 
-import ContentType from '../types/content';
+import ContentType from "../types/content";
 
-type Type = ContentType | null
+type Type = ContentType | null;
 
 const ContentContext = createContext<{
-    content: Type, setContent: (content: Type) => void
+  content: Type;
+  setContent: (content: Type) => void;
 }>({
-    content: null, setContent: () => { }
-})
+  content: null,
+  setContent: () => {},
+});
 
 export const useContentContext = () => useContext(ContentContext);
 
-export default ContentContext
+export default ContentContext;

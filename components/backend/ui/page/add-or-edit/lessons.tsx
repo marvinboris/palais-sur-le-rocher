@@ -1,7 +1,4 @@
-import {
-  CalendarDaysIcon,
-  PencilSquareIcon,
-} from "@heroicons/react/24/outline";
+import { CalendarDaysIcon } from "@heroicons/react/24/outline";
 import { ChangeEvent, useState } from "react";
 
 import { useContentContext } from "../../../../../app/contexts/content";
@@ -15,6 +12,7 @@ import TextArea from "../../form/text-area";
 import * as utility from "../../utils";
 
 import ManagerAddOrEdit from ".";
+import InputFile from "../../form/input-file";
 
 type Props = { edit?: boolean };
 
@@ -129,20 +127,13 @@ export default function ManageAddOrEditLessons({ edit }: Props) {
           </div>
         </div>
 
-        <div className="items-center justify-center md:flex">
-          <div
+        <div>
+          <InputFile
+            label={form.audio}
+            name="audio"
             onClick={() => fileUpload("audio")}
-            className="relative mt-[14px] flex aspect-[5/2] cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[15px] text-white md:mt-0 md:aspect-square md:w-40 md:rounded-3xl"
-          >
-            {/* {state.audio && <Image width={1920} height={1920} src={state.audio as string} alt="User profile pic" className="absolute z-0 inset-0 image-cover" />} */}
-            <div className="absolute inset-0 z-10 bg-black/40" />
-            <div className="relative z-20 mb-1 flex h-9 w-9 items-center justify-center rounded-full bg-black/30 md:mb-1.5 md:h-14 md:w-14">
-              <PencilSquareIcon className="w-4 md:w-6" />
-            </div>
-            <div className="relative z-20 text-[14.81px] font-medium md:font-bold">
-              Change
-            </div>
-          </div>
+            value={state.audio as string}
+          />
         </div>
       </div>
     </ManagerAddOrEdit>

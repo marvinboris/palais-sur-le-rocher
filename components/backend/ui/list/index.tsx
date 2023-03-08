@@ -255,7 +255,7 @@ export default function List({
           </div>
         </div>
 
-        <div className="scrollbar-thumb-rounded-full scrollbar-track-rounded-full overflow-auto pb-5 scrollbar-thin scrollbar-track-primary-100 scrollbar-thumb-primary-600">
+        <div className="overflow-auto pb-5 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary-600/50 scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
           <table className="w-full table-auto border-collapse text-sm">
             <thead>
               <tr className="relative z-0 after:absolute after:inset-0 after:-z-10 after:rounded-lg after:bg-secondary-500/10">

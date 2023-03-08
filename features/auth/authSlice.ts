@@ -9,7 +9,7 @@ import type ApiAccountUserType from "../../app/types/api/account/user";
 import Status from "../../app/types/enums/status";
 import MessageType from "../../app/types/message";
 
-import { getCheck, postUserLogin } from "./authAPI";
+import { getCheck, patchUserSettings, postUserLogin } from "./authAPI";
 
 interface AuthState {
   token: string | null;
@@ -42,6 +42,19 @@ const checkAuthTimeout = createAsyncThunk(
   (expirationTime: number) => {
     setTimeout(() => logout(), expirationTime);
   }
+);
+
+export const userSettings = createAsyncThunk(
+  "auth/user/settings",
+  async (data: {
+    password: string;
+    password_confirmation: string;
+    name: string;
+    email: string;
+    photo?: string;
+    phone: string;
+    locale: string;
+  }) => await patchUserSettings(data)
 );
 
 const dataLoading = (state: AuthState) => {
@@ -126,6 +139,19 @@ export const authSlice = createSlice({
         }
         state.token = null;
         state.data = null;
+        state.status = Status.FAILED;
+      })
+
+      .addCase(userSettings.pending, dataLoading)
+      .addCase(userSettings.fulfilled, (state, action) => {
+        if ("name" in action.payload.data) {
+          state.data = action.payload.data;
+          state.status = Status.IDLE;
+        } else state.message = action.payload.data.message;
+      })
+      .addCase(userSettings.rejected, (state, action) => {
+        if (action.error)
+          state.message = message(action.error.message!, "danger");
         state.status = Status.FAILED;
       });
   },

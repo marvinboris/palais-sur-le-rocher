@@ -8,7 +8,7 @@
     "start": "NODE_ENV=production node server.js -p $PORT",
     "lint": "next lint",
     "export": "next build && next export",
-    "format": "prettier {pages,components,features,styles}/**/*.{css,js,ts,jsx,tsx} --write",
+    "format": "prettier {app,data,hoc,lib,pages,components,features,styles}/**/*.{css,js,ts,jsx,tsx} --write",
     "seed": "ts-node --project tsconfig.seed.json seed.ts"
   },
   "dependencies": {

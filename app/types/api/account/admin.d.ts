@@ -1,5 +1,5 @@
-import { AdminInterface } from "../../../models/admin"
+import { AdminInterface } from "../../../models/admin";
 
-type ApiAccountAdminType = AdminInterface
+type ApiAccountAdminType = AdminInterface;
 
-export default ApiAccountAdminType
+export default ApiAccountAdminType;
