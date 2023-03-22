@@ -4,16 +4,16 @@ import { Types } from "mongoose";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 import { message } from "../../../../app/helpers/utils";
-
 import { User } from "../../../../app/models";
 import type { FeatureInterface } from "../../../../app/models/feature";
+import type { NotificationInterface } from "../../../../app/models/notification";
 import type { RoleInterface } from "../../../../app/models/role";
 
 import type ApiAccountUserType from "../../../../app/types/api/account/user";
 import type ApiMessageType from "../../../../app/types/api/message";
 
 import { sign } from "../../../../lib/jose";
-import { handleError } from "../../../../lib/utils";
+import { getCms, handleError } from "../../../../lib/utils";
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,24 +22,34 @@ export default async function handler(
     | ApiMessageType
   >
 ) {
+  const cms = getCms();
+
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ where: { email } }).populate<{
       role: RoleInterface & { features: { feature: FeatureInterface }[] };
-    }>({
-      path: "role",
-      populate: { path: "features.feature", select: "prefix _id" },
-    });
+      notifications: { notification: NotificationInterface }[];
+    }>([
+      {
+        path: "role",
+        populate: { path: "features.feature", select: "prefix _id" },
+      },
+      "notifications.notification",
+    ]);
     if (!user)
       return res
         .status(401)
-        .json({ message: message("Identifiants invalides.", "danger") });
+        .json({
+          message: message(cms.auth.messages.user.unauthorized, "danger"),
+        });
 
     const doMatch = await bcrypt.compare(password, user.password);
     if (!doMatch)
       return res
         .status(401)
-        .json({ message: message("Identifiants invalides.", "danger") });
+        .json({
+          message: message(cms.auth.messages.user.unauthorized, "danger"),
+        });
 
     const payload = { user: { _id: user._id, type: "user" } };
     const { token, expiresAt } = await sign(payload);

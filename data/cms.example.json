@@ -103,6 +103,8 @@
     "header": {
       "id": "ID",
       "sign_out": "Se déconnecter",
+      "notifications": "Notifications",
+      "settings": "Paramètres",
       "no_message": "Aucun message",
       "no_notification": "Aucune notification",
       "logout": "Déconnexion",
@@ -124,6 +126,13 @@
     "sidebar": {
       "admin": "Administrateur",
       "user": "Utilisateur",
+      "titles": {
+        "menu": "Menu",
+        "content": "Contenu",
+        "finances": "Finances",
+        "membership": "Effectifs",
+        "config": "Config"
+      },
       "menu": {
         "dashboard": { "title": "Tableau de bord" },
         "admins": {
@@ -156,9 +165,7 @@
         },
         "notifications": { "title": "Notifications" },
         "settings": {
-          "title": "Paramètres",
-          "cms": "CMS",
-          "language": "Paramètres de langue"
+          "title": "Paramètres"
         },
         "events": {
           "title": "Evènements",
@@ -293,10 +300,8 @@
         "updated": "Contenu modifié avec succès."
       },
       "settings": {
-        "not_found": "Paramètre introuvable.",
-        "created": "Paramètre créé avec succès.",
-        "updated": "Paramètre modifié avec succès.",
-        "deleted": "Paramètre supprimé avec succès."
+        "failure": "Echec.",
+        "success": "Informations mises à jour avec succès."
       },
       "events": {
         "not_found": "Evènement introuvable.",
@@ -490,7 +495,11 @@
         "show": "Détails des notifications",
         "index": "Liste des notifications",
         "form": {
-          "you_have_no_notification": "Vous n'avez pas de notification."
+          "you_have_no_notification": "Vous n'avez pas de notification.",
+          "read": "Lue?",
+          "message": "Message",
+          "type": "Type",
+          "created_at": "Date"
         }
       },
       "settings": {

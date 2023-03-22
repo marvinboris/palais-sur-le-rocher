@@ -16,6 +16,7 @@ type ResourceType =
   | "staff_members"
   | "members"
   | "testimonials"
+  | "notifications"
   | "users";
 
 export default ResourceType;

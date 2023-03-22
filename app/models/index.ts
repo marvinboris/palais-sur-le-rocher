@@ -10,6 +10,7 @@ import { LessonInterface, LessonSchema } from "./lesson";
 import { MemberInterface, MemberSchema } from "./member";
 import { MethodInterface, MethodSchema } from "./method";
 import { MinistryInterface, MinistrySchema } from "./ministry";
+import { NotificationInterface, NotificationSchema } from "./notification";
 import { SubscriberInterface, SubscriberSchema } from "./subscriber";
 import { PublicationInterface, PublicationSchema } from "./publication";
 import { RoleInterface, RoleSchema } from "./role";
@@ -49,6 +50,9 @@ export const Method =
 export const Ministry =
   (models.Ministry as Model<MinistryInterface>) ||
   model<MinistryInterface>("Ministry", MinistrySchema);
+export const Notification =
+  (models.Notification as Model<NotificationInterface>) ||
+  model<NotificationInterface>("Notification", NotificationSchema);
 export const Subscriber =
   (models.Subscriber as Model<SubscriberInterface>) ||
   model<SubscriberInterface>("Subscriber", SubscriberSchema);

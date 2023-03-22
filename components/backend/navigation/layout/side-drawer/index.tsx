@@ -3,6 +3,7 @@ import {
   ComputerDesktopIcon,
   UserPlusIcon,
   Cog8ToothIcon,
+  BellIcon,
 } from "@heroicons/react/24/outline";
 import { Transition } from "@headlessui/react";
 import Link from "next/link";
@@ -12,6 +13,7 @@ import { useContentContext } from "../../../../../app/contexts/content";
 import { useSideDrawerContext } from "../../../../../app/contexts/side-drawer";
 import { resourceIcon } from "../../../../../app/helpers/utils";
 import { useAppSelector, useWindowSize } from "../../../../../app/hooks";
+import { NotificationInterface } from "../../../../../app/models/notification";
 import ResourceType from "../../../../../app/types/resource";
 
 import { selectAuth } from "../../../../../features/auth/authSlice";
@@ -42,12 +44,6 @@ const UserNavItem = (props: { resource: ResourceType }) => {
     cms: { backend: cms },
   } = content!;
 
-  const resources = Object.keys(cms.sidebar.menu).filter(
-    (resource) =>
-      !["admins", "dashboard", "cms", "notifications", "settings"].includes(
-        resource
-      )
-  );
   const feature =
     data &&
     "role" in data &&
@@ -80,6 +76,14 @@ export default function SideDrawer() {
     cms: { backend: cms },
   } = content!;
 
+  const account = data!;
+  const notifications = (
+    (account.notifications as {
+      notification: NotificationInterface;
+      readAt?: Date;
+    }[]) || []
+  ).filter(({ readAt }) => !readAt);
+
   return (
     <Transition
       show={open || (width !== undefined && width > 768)}
@@ -102,7 +106,7 @@ export default function SideDrawer() {
               </Link>
             </div>
 
-            <div className="flex flex-1 flex-col overflow-auto pr-6 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary-600/50 scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
+            <div className="scrollbar-app flex flex-1 flex-col overflow-auto pr-6">
               <div className="space-y-6">
                 <Group title="MENU">
                   <NavItem
@@ -161,6 +165,16 @@ export default function SideDrawer() {
                       {cms.sidebar.menu.cms.title}
                     </NavItem>
                   ) : null}
+                  <NavItem icon={BellIcon} href={`/${role}/notifications`}>
+                    <>
+                      {cms.sidebar.menu.notifications.title}{" "}
+                      {notifications.length > 0 ? (
+                        <div className="relative -top-0.5 inline-flex h-[18px] w-[18px] items-center justify-center rounded-full bg-green text-xs font-bold leading-none text-white">
+                          {notifications.length}
+                        </div>
+                      ) : null}
+                    </>
+                  </NavItem>
                   <NavItem
                     icon={AdjustmentsHorizontalIcon}
                     href={`/${role}/settings`}

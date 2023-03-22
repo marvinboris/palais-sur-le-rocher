@@ -3,6 +3,7 @@ import {
   BanknotesIcon,
   BellIcon,
   BookOpenIcon,
+  CalendarDaysIcon,
   ChatBubbleLeftEllipsisIcon,
   ChatBubbleOvalLeftEllipsisIcon,
   CogIcon,
@@ -120,7 +121,7 @@ export const resourceIcon = (resource: ResourceType) =>
     users: UserGroupIcon,
     roles: TagIcon,
     features: CogIcon,
-    events: BellIcon,
+    events: CalendarDaysIcon,
     ministries: HomeIcon,
     subscribers: UserIcon,
     categories: RectangleStackIcon,
@@ -134,6 +135,7 @@ export const resourceIcon = (resource: ResourceType) =>
     donations: GiftIcon,
     tithes: BanknotesIcon,
     transactions: ArrowsRightLeftIcon,
+    notifications: BellIcon,
   }[resource]);
 
 export const htmlEntities = (str: string) => {

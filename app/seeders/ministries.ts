@@ -13,7 +13,5 @@ const ministries: MinistryInterface[] = [
 ];
 
 export default async function ministriesSeed() {
-  for await (const ministry of ministries) {
-    Ministry.create(ministry);
-  }
+  await Ministry.insertMany(ministries)
 }

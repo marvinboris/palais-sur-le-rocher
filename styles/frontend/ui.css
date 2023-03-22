@@ -2,8 +2,12 @@ html {
   @apply scroll-smooth;
 }
 
+.scrollbar-app {
+  @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary-600/50 scrollbar-track-rounded-full scrollbar-thumb-rounded-full;
+}
+
 body {
-  @apply bg-white text-secondary-500 dark:bg-secondary-800 dark:text-secondary-300;
+  @apply bg-white text-secondary-500 dark:bg-secondary-800 dark:text-secondary-300 scrollbar-app;
 }
 
 header,

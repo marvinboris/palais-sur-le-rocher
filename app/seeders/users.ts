@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 
-import { Role, User } from "../models";
+import { Notification, Role, User } from "../models";
 import type { UserInterface } from "../models/user";
 
 const users: UserInterface[] = [
@@ -20,10 +20,16 @@ const users: UserInterface[] = [
 
 export default async function usersSeed() {
   const role = await Role.findOne();
+  const notifications = await Notification.find();
   const data = await Promise.all(
     users.map(async (user) => {
       const password = await bcrypt.hash(user.password, 12);
-      const data = { ...user, password, role: role!._id };
+      const data = {
+        ...user,
+        password,
+        role: role!._id,
+        notifications: notifications.map((n) => ({ notification: n.id })),
+      };
       return data;
     })
   );

@@ -2,12 +2,11 @@ import {
   AdjustmentsHorizontalIcon,
   ArrowRightOnRectangleIcon,
   Bars3BottomLeftIcon,
-  BellIcon,
   ChatBubbleOvalLeftEllipsisIcon,
-  WalletIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
+import { useContentContext } from "../../../../app/contexts/content";
 
 import { useSideDrawerContext } from "../../../../app/contexts/side-drawer";
 import { useThemeContext } from "../../../../app/contexts/theme";
@@ -17,6 +16,8 @@ import Theme from "../../../../app/types/enums/theme";
 import { logout, selectAuth } from "../../../../features/auth/authSlice";
 
 import LanguageSelect from "./language-select";
+import Logout from "./logout";
+import Notifications from "./notifications";
 
 export default function Toolbar() {
   const { open, setOpen } = useSideDrawerContext();
@@ -24,6 +25,13 @@ export default function Toolbar() {
 
   const dispatch = useAppDispatch();
   const { role, data } = useAppSelector(selectAuth);
+
+  const { content } = useContentContext();
+  const {
+    cms: {
+      backend: { header },
+    },
+  } = content!;
 
   const account = data!;
 
@@ -51,22 +59,7 @@ export default function Toolbar() {
           <div className="mr-5 md:mr-[51.69px]">
             <LanguageSelect />
           </div>
-          <div className="group relative z-0 mr-3 cursor-pointer after:absolute after:top-0 after:right-0 after:block after:h-[12.72px] after:w-[12.72px] after:rounded-full after:bg-yellow">
-            <BellIcon className="w-[31px]" />
-
-            <div className="absolute top-full right-0 origin-top-right scale-0 pt-1 opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100">
-              <div className="truncate rounded-[14px] bg-white p-3 text-xs shadow-sm">
-                <div className="space-y-2.5">
-                  <div className="flex cursor-pointer items-center space-x-1.5">
-                    <span>
-                      <BellIcon className="w-3 text-yellow" />
-                    </span>
-                    <span>You got a winning ticket</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Notifications />
           <div className="relative z-0 cursor-pointer after:absolute after:top-0 after:right-0 after:block after:h-[12.72px] after:w-[12.72px] after:rounded-full after:bg-yellow">
             <ChatBubbleOvalLeftEllipsisIcon className="w-[31px]" />
           </div>
@@ -162,17 +155,16 @@ export default function Toolbar() {
                   <span>
                     <AdjustmentsHorizontalIcon className="w-4 opacity-20" />
                   </span>
-                  <span>Settings</span>
+                  <span>{header.settings}</span>
                 </Link>
-                <div
-                  onClick={handleLogout}
-                  className="flex cursor-pointer items-center space-x-[7px] text-red"
-                >
-                  <span>
-                    <ArrowRightOnRectangleIcon className="w-4" />
-                  </span>
-                  <span className="font-bold">Logout</span>
-                </div>
+                <Logout action={handleLogout}>
+                  <div className="flex cursor-pointer items-center space-x-[7px] text-red">
+                    <span>
+                      <ArrowRightOnRectangleIcon className="w-4" />
+                    </span>
+                    <span className="font-bold">{header.logout}</span>
+                  </div>
+                </Logout>
               </div>
             </div>
           </div>

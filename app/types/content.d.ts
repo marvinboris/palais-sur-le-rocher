@@ -71,6 +71,8 @@ export default interface ContentType {
       header: {
         id: string;
         sign_out: string;
+        notifications: string;
+        settings: string;
         no_message: string;
         no_notification: string;
         logout: string;
@@ -89,6 +91,13 @@ export default interface ContentType {
       sidebar: {
         admin: string;
         user: string;
+        titles: {
+          menu: string;
+          content: string;
+          finances: string;
+          membership: string;
+          config: string;
+        };
         menu: {
           dashboard: { title: string };
           notifications: { title: string };
@@ -118,7 +127,7 @@ export default interface ContentType {
             backend: string;
             frontend: string;
           };
-          settings: { title: string; cms: string; language: string };
+          settings: { title: string };
         };
       };
       components: {
@@ -159,12 +168,6 @@ export default interface ContentType {
           deleted: string;
         };
         users: {
-          not_found: string;
-          created: string;
-          updated: string;
-          deleted: string;
-        };
-        subjects: {
           not_found: string;
           created: string;
           updated: string;
@@ -266,7 +269,13 @@ export default interface ContentType {
           updated: string;
           deleted: string;
         };
-        notifications: { not_found: string };
+        notifications: {
+          not_found: string;
+          created: string;
+          updated: string;
+          deleted: string;
+        };
+        settings: { failure: string; success: string };
         cms: { not_found: string; updated: string };
       };
       pages: {
@@ -522,7 +531,13 @@ export default interface ContentType {
           title: string;
           show: string;
           index: string;
-          form: { you_have_no_notification: string };
+          form: {
+            you_have_no_notification: string;
+            read: string;
+            type: string;
+            message: string;
+            created_at: string;
+          };
         };
         settings: {
           title: string;

@@ -28,7 +28,7 @@ type ListProps = {
   title: string;
   subtitle?: string;
   data: string;
-  add: string;
+  add?: string;
   loading?: boolean;
   link: string;
   fields: { key: string; name: string; className?: string }[];
@@ -239,7 +239,7 @@ export default function List({
                   placeholder={cms.search}
                 />
               </div>
-              {add && (
+              {add ? (
                 <div>
                   <Link href={link}>
                     <Button icon={PlusIcon} color="yellow">
@@ -250,12 +250,12 @@ export default function List({
                     </Button>
                   </Link>
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
 
-        <div className="overflow-auto pb-5 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primary-600/50 scrollbar-track-rounded-full scrollbar-thumb-rounded-full">
+        <div className="scrollbar-app overflow-auto pb-5">
           <table className="w-full table-auto border-collapse text-sm">
             <thead>
               <tr className="relative z-0 after:absolute after:inset-0 after:-z-10 after:rounded-lg after:bg-secondary-500/10">

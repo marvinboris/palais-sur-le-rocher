@@ -30,7 +30,7 @@ export default function Layout({ children }: LayoutProps) {
       <div className="font-body relative flex h-screen overflow-hidden">
         <SideDrawer />
 
-        <div className="flex h-screen flex-1 flex-col overflow-y-auto bg-secondary-100 dark:bg-secondary-900">
+        <div className="flex h-screen flex-1 flex-col overflow-y-auto bg-secondary-100 dark:bg-secondary-900 scrollbar-app">
           <Toolbar />
           <div className="relative flex flex-1 flex-col">{children}</div>
           <Footer />

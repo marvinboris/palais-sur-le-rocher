@@ -148,7 +148,5 @@ export default function Wrapper({ children }: WrapperProps) {
         </LanguageContext.Provider>
       </ThemeContext.Provider>
     )
-  ) : (
-    <></>
-  );
+  ) : null;
 }

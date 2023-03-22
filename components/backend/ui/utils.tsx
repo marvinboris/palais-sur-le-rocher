@@ -220,7 +220,15 @@ export const add = {
             <Form
               onSubmit={saveHandler(props)}
               icon={icon}
-              title={props.edit ? cms.edit : cms.add}
+              title={
+                props.edit
+                  ? "edit" in cms
+                    ? cms.edit
+                    : undefined
+                  : "add" in cms
+                  ? cms.add
+                  : undefined
+              }
               list={cms.index}
               link={`/${role}/${resource.split("_").join("-")}`}
             >
@@ -300,7 +308,7 @@ export const index = {
               data={JSON.stringify(items)}
               get={props.get!}
               total={total}
-              add={cms.add}
+              add={"add" in cms ? cms.add : undefined}
               link={`/${role}/${resource.split("_").join("-")}/add`}
               title={cms.index}
               fields={fields}

@@ -2,17 +2,18 @@ import { existsSync, unlinkSync } from "fs";
 import path from "path";
 
 import { File } from "formidable";
+import { Types } from "mongoose";
 import { NextApiRequest, NextApiResponse, PageConfig } from "next";
 import tinify from "tinify";
 
 import { message } from "../../../../app/helpers/utils";
 
-import handleRequest from "../../../../lib/formidable";
-import { getAccount, getCms, handleError } from "../../../../lib/utils";
 import { RoleInterface } from "../../../../app/models/role";
 import { FeatureInterface } from "../../../../app/models/feature";
-import { Types } from "mongoose";
-import { UserInterface } from "../../../../app/models/user";
+
+import handleRequest from "../../../../lib/formidable";
+import { getAccount, getCms, handleError } from "../../../../lib/utils";
+import { NotificationInterface } from "../../../../app/models/notification";
 
 export default async function handler(
   req: NextApiRequest,
@@ -20,11 +21,12 @@ export default async function handler(
 ) {
   tinify.key = process.env.TINIFY_KEY!;
   try {
+    const cms = getCms();
     const manager = await getAccount(req);
 
     if (!manager)
       return res.status(401).json({
-        message: message("401", "danger"),
+        message: message(cms.backend.messages.settings.failure, "danger"),
       });
 
     const { fields, files } = await handleRequest(req, {
@@ -52,7 +54,7 @@ export default async function handler(
             process.cwd(),
             "public",
             "images",
-            "users",
+            "role" in manager ? "users" : "admins",
             (<File>file).newFilename
           );
 
@@ -97,10 +99,11 @@ export default async function handler(
         ...account.toObject(),
         role: { ...account.toObject().role, features },
       };
-    }
+    } else data = manager;
 
     res.json({
       data,
+      message: message(cms.backend.messages.settings.success, "success"),
     });
   } catch (error) {
     handleError(res, error);

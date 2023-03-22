@@ -155,14 +155,14 @@ const ManagerAddOrEdit = ({
             ? `/${role}/${resource}/${router.query.id as string}/edit`
             : `/${role}/${resource}/add`
         }
-        title={`${edit ? cms.edit : cms.add} | ${app_name}`}
-        description={`${app_name} : ${edit ? cms.edit : cms.add}`}
+        title={`${edit ? ('edit' in cms ? cms.edit : '') : ('add' in cms ? cms.add : '')} | ${app_name}`}
+        description={`${app_name} : ${edit ? ('edit' in cms ? cms.edit : '') : ('add' in cms ? cms.add : '')}`}
       />
 
       <PageTitle
         icon={icon}
         title={cms.title}
-        subtitle={edit ? cms.edit : cms.add}
+        subtitle={edit ? ('edit' in cms ? cms.edit : '') : ('add' in cms ? cms.add : '')}
       />
 
       <utility.add.lifecycle.render

@@ -18,9 +18,7 @@ export default function LanguageSelect() {
     }, 100);
   };
 
-  return language === null ? (
-    <></>
-  ) : (
+  return language === null ? null : (
     <div className="w-full">
       <Listbox value={selected} onChange={changeLanguage}>
         <div className="relative">

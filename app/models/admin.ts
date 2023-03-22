@@ -1,4 +1,5 @@
-import { Model, Schema } from "mongoose";
+import { Document, Model, PopulatedDoc, Schema, Types } from "mongoose";
+import { NotificationInterface } from "./notification";
 
 const directory = "/images/admins/";
 
@@ -10,6 +11,12 @@ export interface AdminInterface {
   photo?: string;
   phone: string;
   locale: string;
+  notifications: {
+    notification?: PopulatedDoc<
+      Document<Types.ObjectId> & NotificationInterface
+    >;
+    readAt?: Date;
+  }[];
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -47,6 +54,16 @@ export const AdminSchema = new Schema<AdminInterface, Model<AdminInterface>>(
       required: true,
       default: "fr",
     },
+    notifications: [
+      {
+        notification: {
+          type: Types.ObjectId,
+          required: true,
+          ref: "Notification",
+        },
+        readAt: Date,
+      },
+    ],
   },
   { timestamps: true, toObject: { getters: true } }
 );

@@ -8,6 +8,7 @@ import { message } from "../../app/helpers/utils";
 
 import { Admin, User } from "../../app/models";
 import ContentType from "../../app/types/content";
+import { NotificationInterface } from "../../app/models/notification";
 
 export const getCms = (example?: boolean) => {
   const jsonString = fs.readFileSync(
@@ -29,8 +30,14 @@ export const getAccount = async (req: NextApiRequest) => {
   const { _id, type } = decryptPayload(req);
 
   let account;
-  if (type === "user") account = await User.findById(_id);
-  else if (type === "admin") account = await Admin.findById(_id);
+  if (type === "user")
+    account = await User.findById(_id).populate<{
+      notifications: { notification: NotificationInterface }[];
+    }>("notifications.notification");
+  else if (type === "admin")
+    account = await Admin.findById(_id).populate<{
+      notifications: { notification: NotificationInterface }[];
+    }>("notifications.notification");
 
   return account;
 };

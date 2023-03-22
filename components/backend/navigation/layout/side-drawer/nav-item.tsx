@@ -8,7 +8,7 @@ import { useWindowSize } from "../../../../../app/hooks";
 
 interface NavItemProps {
   href: string;
-  children: ReactNode;
+  children?: ReactNode;
   main?: boolean;
   items?: { href: string; label: string }[];
   icon: (props: ComponentProps<"svg">) => JSX.Element;

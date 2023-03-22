@@ -12,7 +12,7 @@ export default async function rolesSeed() {
       ...role,
       features: features.map((f) => ({
         feature: f._id,
-        access: ["c", "u", "d"],
+        access: ["transactions"].includes(f.prefix) ? [] : ["c", "u", "d"],
       })),
     }))
   );
