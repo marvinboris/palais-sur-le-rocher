@@ -1,4 +1,5 @@
 import NextImage from "next/image";
+import Link from "next/link";
 import { ReactElement } from "react";
 
 import {
@@ -112,12 +113,12 @@ const HomePage: NextPageWithLayout<HomePageProps> = ({ home }) => {
           </p>
 
           <div className="mt-10 flex justify-center gap-x-6">
-            <a className="btn btn-primary" href="/register">
+            <Link className="btn btn-primary" href="/register">
               <span>
                 Nous rejoindre{" "}
                 <span className="hidden lg:inline">maintenant</span>
               </span>
-            </a>
+            </Link>
           </div>
         </header>
 
